@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>Datasheet</title>
+<link type="image/x-icon" rel="shortcut icon"   href="static/css/img/favicon.ico" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<style type="text/css">
+html,body{
+    margin: 0;
+    padding: 0;
+}
+iframe{
+    width: 100%;
+    height: 100%;
+}
+</style>
+</head>
+<body>
+    <iframe id="download" style="margin:auto;border:0;display:none;" src="" width="800" height="600"></iframe>
+    <script type="text/javascript">
+        function searchToJson(){
+            var search = window.location.search;
+            if (!search){
+                return false;
+            }else{
+                search = search.substr(1);
+                var searchJson = {};
+                var searchArr = search.split('&');
+                for(var i = 0 , len = searchArr.length ; i < len ; i++){
+                    var tempArr = searchArr[i].split('=');
+                    searchJson[tempArr[0]] = tempArr[1];
+                }
+                return searchJson;
+            }
+        }
+        //获取url参数值
+        function getSearchParam(param){
+            var searchJson = searchToJson();
+            if(!searchJson || !(searchJson[param])){
+                return false;
+            }else{
+                return searchJson[param];
+            }
+        }
+        function getHeight(){
+            if(document.documentElement && document.documentElement.clientHeight) {
+                return window.parseInt(document.documentElement.clientHeight);
+            }
+            if(document.body) {
+                return window.parseInt(document.body.clientHeight);
+            }
+        }
+        function setIframe(){
+            var url = window.atob(decodeURIComponent(getSearchParam('url')));
+            console.log(url);
+            var height = getHeight();
+            document.getElementById('download').setAttribute('src',url);
+            if(url.indexOf('.pdf')>=0 || url.indexOf('.PDF')>=0){
+               document.getElementById('download').style.display = "block";
+               document.getElementById('download').style.height = height + 'px';
+            }
+        }
+        setTimeout(function(){
+            setIframe();
+        },500);
+    </script>
+    
+</body>
+</html>

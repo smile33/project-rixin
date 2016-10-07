@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About</title>
+<link type="image/x-icon" rel="shortcut icon"   href="static/css/img/favicon.ico" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="/static/css/common.css">
+<link rel="stylesheet" type="text/css" href="/static/css/article.css">
+</head>
+<body>
+    <div id="site-nav"></div>
+    <div id="wrapper" class="Container">
+        <header id="header"></header>
+        <div id="main">
+            <div class="SiteMap"></div>
+            <div class="sidebar"></div>
+            <div class="main-right">
+                <div class="content"></div>
+            </div>
+            <div class="Clear"></div>
+        </div>
+        <footer id="footer"></footer>
+    </div>
+    <script src="/static/js/vendor/require/require.js"></script>
+    <script src="/static/js/config.js"></script>
+    <script>
+        require([ 'main/article' ], function(page) {
+            page.init();
+        });
+    </script>
+</body>
+<!-- <script src="/static/js/ga.js"></script> -->
+</html>

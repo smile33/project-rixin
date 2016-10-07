@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Index</title>
+<link type="image/x-icon" rel="shortcut icon"   href="static/css/img/favicon.ico" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="/static/css/common.css">
+<link rel="stylesheet" type="text/css" href="/static/css/inquiry.css">
+</head>
+<body>
+    <div id="site-nav"></div>
+    <div id="wrapper" class="Container">
+        <header id="header"></header>
+        <div id="main">
+            <div class="SiteMap"></div>
+            <div class="wayBtn">
+                <h3 class="pageTitle"></h3>
+                <form id="fileForm" method="post"  enctype="multipart/form-data"  name="inquery">
+                    <div class="textInput">
+                        <label>Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Pleast enter your name">
+                    </div>
+                    <div class="textInput">
+                        <label>E-mail:</label>
+                        <input type="text" id="email" name="email" placeholder="Pleast enter your e-mail address">
+                    </div>
+                    <div class="remarkWay">
+                        <textarea id="content" name="lookingFor"></textarea> 
+                    </div>
+                    <input type="file" id="file" name="file"  enctype="multipart/form-data"><br>
+                    <div id="error_msg" class="error_msg"></div>
+                    <div><input type="button" class="submitBtn checkBtn" value="Submit"></div>
+                </form>
+            </div>
+        </div>
+        <footer id="footer"></footer>
+    </div>
+    <script src="/static/js/vendor/require/require.js"></script>
+    <script src="/static/js/config.js"></script>
+    <script>
+        require([ 'main/inquiry_index' ], function(page) {
+            page.init();
+        });
+    </script>
+</body>
+<!-- <script src="/static/js/ga.js"></script> -->
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Home page</title>
+<link type="image/x-icon" rel="shortcut icon"   href="static/css/img/favicon.ico" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="static/css/common.css">
+<link rel="stylesheet" type="text/css" href="static/css/index.css">
+</head>
+<body>
+    <div id="site-nav"></div>
+    <div id="wrapper" class="Container">
+        <header id="header"></header>
+        <div id="main">
+            <div class="main-left">
+                <dl class="category"></dl>        
+            </div>
+            <div class="main-right">
+                <div class="contentTop">
+                    <div class="banner">
+                        <div id="ADBanner">
+                            <img src="/static/img/loading.gif" />
+                        </div>
+                    </div>
+                    <div class="identityChoose">
+                        <ul id="TabIntro" class="TabIntro">
+                            <li class="tabSelect" id="Buyers">For Buyers</li>
+                            <li>For Supplier</li>
+                        </ul>
+                        <div class="Clear"></div>
+                        <div id="TabIntroPanel">
+                            <ul class="TabIntroPanel">
+                                <li class="buy-more"><a href="javascript:;">Search for more products</a></li>
+                                <li class="buy-reply"><a href="javascript:;">Give priority to reply</a></li>
+                                <li class="buy-support"><a href="/article/about.html?tpl=customer_service_time">Customer service</a></li>
+                                <li class="buy-free"><a href="/rixin_freight_statement.html" target="_blank">Freight Statement</a></li>
+                            </ul>
+                            <ul class="TabIntroPanel" style="display:none">
+                                <li class="reply">
+                                <a href="mailto:web@rxicsource.com">Please contact our inventory management department</a>
+                            </li>
+                            </ul>
+                        </div>
+                        <div class="idcBtn">
+                            <a href="/member/register.html" class="join">Join Free</a>
+                            <a href="/member/index.html">Sign in</a>
+                        </div>
+                    </div>
+                    <div class="Clear"></div>
+                </div>
+                <div class="Clear"></div>
+                <div>
+                    <div class="Products">
+                        <ul id="TabHead" class="productsChoose"></ul>
+                        <div class="Clear"></div>
+                        <div id="TabHeadPanel"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="Clear"></div>
+            <div class="tab">
+                <ul id="TabCenter" class="tabHead">
+                    <li class="tabSelect"><a href="javascript:void(0)">Special products</a></li>
+                </ul>
+                <div class="Clear"></div>
+                <div class="Detail">
+                    <div id="TabCenterPanel">
+<!--                         <div class="tabProduct">
+                            <img src="#">
+                            <a href="/product/detail.html?id=102999&amp;part=IRLML2502TRPBF">IRLML2502TRPBF</a>
+                            <p class="price">$ 0.04</p>
+                        </div>
+                        <div class="moreItem"></div> -->
+                    </div>
+                    <div class="quickInquiry">
+                        <h2>Quick inquiry</h2>
+                        <ul>
+                            <li>
+                                <label><span>*</span>Name</label>
+                                <input type="text" id="name">
+                            </li>
+                            <li>
+                                <label><span>*</span>Email</label>
+                                <input type="text" id="email">
+                            </li>
+                            <li class="kaptchaImgCont">
+                                <label><span>*</span>Authcode</label>
+                                <input type="text" size="8" name="kaptcha" id="kaptcha" class="inputBg">
+                                <img id="kaptchaImg" src="" alt="kaptcha" class="kaptcha" title="Click to refresh image.">
+                            </li>
+                            <li>
+                                <label><span>*</span>Looking for</label>
+                                <textarea id="content"></textarea>
+                            </li>
+                          <li>
+                                <span id="error_msg" class="error_msg"></span>
+                            </li>
+                        </ul>
+                        <div class="qiBtn">
+                            <input type="button" value="Submit" class="quickInquiryBtn">
+                        </div>
+                    </div>
+                    <div class="Clear"></div>
+                </div>
+            </div>
+            <div class="BrandOverview">
+                <div class="brandHead">
+                    <h2>Global brands</h2>
+                    <a href="/brand/index.html">View all</a>
+                </div>
+                <ul class="brandList"></ul>
+                <div class="Clear"></div>
+            </div>
+        <footer id="footer"></footer>
+    </div>
+    <script src="static/js/vendor/require/require.js"></script>
+    <script src="static/js/config.js"></script>
+    <script>
+        require([ 'main/index' ], function(page) {
+            page.init();
+        });
+    </script>
+</body>
+<!-- <script src="static/js/ga.js"></script> -->
+</html>

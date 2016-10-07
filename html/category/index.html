@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Index</title>
+<link type="image/x-icon" rel="shortcut icon"   href="static/css/img/favicon.ico" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="/static/css/common.css">
+<link rel="stylesheet" type="text/css" href="/static/css/category.css">
+</head>
+<body>
+    <div id="site-nav"></div>
+    <div id="wrapper" class="Container">
+        <header id="header"></header>
+        <div id="main">
+            <div class="SiteMap"></div>
+            <div class="recordCountContainer">Results: <span class="recordCount"></span></div>
+            <table id="productTable">
+                <thead id="tblhead">
+                    <tr>
+                        <!-- <th class="th-compareParts">Compare Parts</th> -->
+                        <th class="th-datasheet">
+                            <img border="0" height="20" width="18" alt="Datasheets" src="/static/img/pdf_logo.png">
+                        </th>
+                        <th class="th-image">Image</th>
+                        <th class="th-mfgPartNumber ps-headerColumn">Manufacturer Part Number</th>
+                        <th class="th-vendor ps-headerColumn">Manufacturer</th>
+                        <th class="th-description ps-headerColumn">Description</th>
+                        <th class="th-qtyAvailable ps-headerColumn">Quantity Available</th>
+                        <th class="th-unitPrice ps-headerColumn nowrap-culture">
+                            Unit Price
+                            <br>
+                            USD
+                        </th>
+                        <th class="th-minQty ps-headerColumn">Minimum Quantity</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="pageContainer pagelist"></div>
+        </div>
+        <footer id="footer"></footer>
+    </div>
+    <script src="/static/js/vendor/require/require.js"></script>
+    <script src="/static/js/config.js"></script>
+    <script>
+        require([ 'main/category_index' ], function(page) {
+            page.init();
+        });
+    </script>
+</body>
+<!-- <script src="/static/js/ga.js"></script> -->
+</html>

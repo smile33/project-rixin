@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Product</title>
+<link type="image/x-icon" rel="shortcut icon"   href="static/css/img/favicon.ico" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="/static/css/jquery-ui-1.9.2.custom/css/ui-lightness/jquery-ui-1.9.2.custom.min.css">
+<link rel="stylesheet" type="text/css" href="/static/css/common.css">
+<link rel="stylesheet" type="text/css" href="/static/css/detail.css">
+</head>
+<body>
+    <div id="site-nav"></div>
+    <div id="wrapper" class="Container">
+        <header id="header"></header>
+        <div id="main">
+            <div class="SiteMap"></div>
+            <div class="ProductPic">
+                <div class="Large"></div>
+                <div class="Small"></div>
+            </div>
+            <div class="ProductInfo">
+                <dl class="InfoList">
+                    <dt><h1></h1></dt>
+                    <dd><label>Quantity Available：</label></dd>
+                    <dd><label>Manufacturer：</label></dd>
+                    <dd><label>Manufacturer Part Number：</label>-</dd>
+                    <dd><label>Description：</label><span></span></dd>
+                    <dd><label>Lead Free Status / RoHS Status：</label>
+                    <dd><label>Manufacturer Standard Lead Time：</label></dd>
+                    <dd><label>Moisture Sensitivity Level (MSL)：</label></dd>
+                    <dd><label>Stocks：</label></dd>
+                    <dd><label>DataSheet：</label>-</dd>
+                </dl>
+                <ul class="InfoOther">
+                    <li class="count" id="count">
+                        <label>Quantity：</label>
+                        <span class="sub">-</span>
+                        <input type="text" id="txtCount" class="count" size="6" min="1" value="1">
+                        <span class="add">+</span>pcs
+                        <span id="CountPlace">* <b></b>（Unit Price）=  $ <strong></strong>（Total Price）</span>
+                    </li>
+                    <li class="addLink">
+                        <a href="javascript:;" class="addCart">Add to cart</a>
+                        <a href="javascript:;" class="purchaseBtn">Purchase</a>
+                        <a href="/inquiry/index.html" class="inquiry" target="_blank">Post Inquiry</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="ProOther">
+                <h3>Extended Price:</h3>
+                <div class="BatchPrice">
+                    <ul id="BatchPrice">
+                        <li class="title">
+                            <label>Quantity</label>
+                            <label>Unit Price</label>
+                            <label>Total Price</label>
+                        </li>
+                        <li>
+                            <ul class="extendedPrice"></ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="Clear"></div>
+            <div class="favorProductContainer"></div>
+            <table class="attributes-table-main" id="prod-att-table" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr id="prod-att-title-row">
+                        <td class="bota-headline" id="prod-att-title">Product Attributes</td>
+                        <td></td>
+                    </tr> 
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="Clear"></div>
+        </div>
+        <footer id="footer"></footer>
+<!--         <div id="inputBox"  title="Please enter the quantity">
+            <label>Quantity:</label>
+            <input class="quantity" type="text" placeholder="Please enter the quantity"/>
+            <div class="error_msg"></div>
+            <input class="quantityBtn" type="button" value="Submit"/>
+        </div> -->
+    </div>
+    <script src="/static/js/vendor/require/require.js"></script>
+    <script src="/static/js/config.js"></script>
+    <script>
+        require([ 'main/product_detail' ], function(page) {
+            page.init();
+        });
+    </script>
+</body>
+<!-- <script src="/static/js/ga.js"></script> -->
+</html>

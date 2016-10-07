@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Index</title>
+<link type="image/x-icon" rel="shortcut icon"   href="static/css/img/favicon.ico" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="/static/css/common.css">
+<link rel="stylesheet" type="text/css" href="/static/css/datasheet.css">
+</head>
+<body>
+    <div id="site-nav"></div>
+    <div id="wrapper" class="Container">
+        <header id="header"></header>
+        <div id="main">
+            <div class="SiteMap"></div>
+            <h3 class="PageTitle">DataSheets</h3>
+            <div class="SearIndex">
+                All&nbsp;Technical information（<strong>A total 0 results</strong>）
+            </div>
+            <ul>
+                <li class="Itemhead">
+                    <span class="type">Part No.</span>
+                    <span class="down">Preview</span>
+                </li>
+            </ul>
+            <ul class="DataItem"></ul>
+            <div class="pageContainer pagelist"></div>
+        </div>
+        <footer id="footer"></footer>
+    </div>
+    <script src="/static/js/vendor/require/require.js"></script>
+    <script src="/static/js/config.js"></script>
+    <script>
+        require([ 'main/datasheet_index' ], function(page) {
+            page.init();
+        });
+    </script>
+</body>
+<!-- <script src="/static/js/ga.js"></script> -->
+</html>

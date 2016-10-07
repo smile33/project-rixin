@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Member Center</title>
+<link type="image/x-icon" rel="shortcut icon"   href="static/css/img/favicon.ico" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="/static/css/common.css">
+<link rel="stylesheet" type="text/css" href="/static/css/account.css">
+</head>
+<body>
+    <div id="site-nav"></div>
+    <div id="wrapper" class="Container">
+        <header id="header"></header>
+        <div id="main">
+            <div class="sidebar"></div>
+            <div class="main-right">
+                <div class="Topic">
+                    <h2 class="Title">Edit My Information</h2>
+                </div>
+                <div class="Clear"></div>
+                <ul class="frameEdit">      
+                    <li>
+                        <label>E-mail：</label>
+                        <span class="mail"></span></li>
+                    <li>
+                        <label>Company Name：</label>
+                        <input id="companyName" type="text" size="35" value="">
+                    </li>
+                    <li>
+                        <label>Real name：</label>
+                        <input id="realName" size="25" type="text" value="">
+                    </li>
+                    <li>
+                        <label>Mobile Phone：</label>
+                        <input id="mobilePhone" size="25" type="text" value="">
+                        <a href="#" style="display:none">未验证</a>
+                    </li>
+                    <li>
+                        <label>Fax：</label>
+                        <input id="fax" type="text" size="25" value="">
+                    </li>
+                    <li>
+                        <label>Phone：</label>
+                        <input id="telephone" type="text" size="25" value="">
+                    </li>
+                    <li>
+                        <label>Skype：</label>
+                        <input id="skype" type="text" size="25" value="">
+                    </li>
+                    <li>
+                        <input id="saveBtn" type="button" value="Save" class="saveBtn">
+                    </li>   
+                </ul>  
+            </div>
+            <div class="Clear"></div>
+        </div>
+        <footer id="footer"></footer>
+    </div>
+    <script src="/static/js/vendor/require/require.js"></script>
+    <script src="/static/js/config.js"></script>
+    <script>
+        require([ 'main/account_index' ], function(page) {
+            page.init();
+        });
+    </script>
+</body>
+<!-- <script src="/static/js/ga.js"></script> -->
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Forget Password</title>
+<link type="image/x-icon" rel="shortcut icon"   href="static/css/img/favicon.ico" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="/static/css/common.css">
+<link rel="stylesheet" type="text/css" href="/static/css/login.css">
+</head>
+<body>
+    <div id="site-nav"></div>
+    <div id="wrapper" class="Container">
+        <header id="header"></header>
+        <div id="main">
+            <div class="SiteMap"></div>
+            <div class="BoxPage">
+                <div class="loginHead">
+                    <h2>Retrieve password</h2>
+                    <div class="Clear"></div>
+                </div>
+                <ul class="BoxDetail">
+                    <li>
+                        <label>Account:</label>
+                        <input id="email" type="text" size="50" placeholder="Enter the registered mail">
+                    </li>
+                    <li>
+                        <span id="error_msg" class="error_msg"></span>
+                    </li>
+                </ul>
+                <ul class="BoxSave">
+                    <li><input id="nextStepBtn" type="button" value="Next step" class="but" /><a class="logout" href="/member/login.html">Back to login</a></li>
+                </ul>
+            </div>
+        </div>
+        <footer id="footer"></footer>
+    </div>
+    <script src="/static/js/vendor/require/require.js"></script>
+    <script src="/static/js/config.js"></script>
+    <script>
+        require([ 'main/forget' ], function(page) {
+            page.init();
+        });
+    </script>
+</body>
+<!-- <script src="/static/js/ga.js"></script> -->
+</html>

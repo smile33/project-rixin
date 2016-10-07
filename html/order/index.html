@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Order Management</title>
+<link type="image/x-icon" rel="shortcut icon"   href="static/css/img/favicon.ico" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="/static/css/jquery-ui-1.9.2.custom/css/ui-lightness/jquery-ui-1.9.2.custom.min.css">
+<link rel="stylesheet" type="text/css" href="/static/css/common.css">
+<link rel="stylesheet" type="text/css" href="/static/css/quote.css">
+</head>
+<body>
+    <div id="site-nav"></div>
+    <div id="wrapper" class="Container">
+        <header id="header"></header>
+        <div id="main">
+            <div class="sidebar"></div>
+            <div class="main-right">
+                <span id="show"></span>
+                <!-- 我的采购单 start -->
+                <div class="Topic">
+                    <h2 class="Title">Manage my order</h2>
+                    <div class="SelectLink">
+                        <a href="/order/index.html" class="all">All orders(<span>0</span>)</a>|
+                        <a href="/order/index.html?m=unpaid" class="unpaid">Unpaid orders(<span>0</span>)</a>|
+                        <a href="/order/index.html?m=cancel" class="cancel">Cancelled order(<span>0</span>)</a>|
+                        <a href="/order/index.html?m=completed" class="completed">Completed order(<span>0</span>)</a>|
+                    </div>
+                </div>
+                <table class="Table">
+                    <thead>
+                        <tr>
+                            <th>Order Time</th>
+                            <th>Status</th>
+                            <th>Address</th>
+                            <th>LinkMan</th>
+                            <th>LinkPhone</th>
+                            <th>Freight</th>
+                            <th>Order Amount</th>
+                            <th>Total Amount</th>
+                            <th>Operating</th>
+                            <th>Check</th>
+                        </tr>
+                    </thead>
+                    <tbody class="listContainer"></tbody>
+                </table>
+                <div class="pageContainer pagelist"></div>
+                <!-- 我的采购单 start -->
+            </div>
+            <div class="Clear"></div>
+        </div>
+        <footer id="footer"></footer>
+        <div id="deleteDialog" title="Confirmation Required">
+            Are you sure to delete?
+        </div>
+    </div>
+    <script src="/static/js/vendor/require/require.js"></script>
+    <script src="/static/js/config.js"></script>
+    <script>
+        require([ 'main/order_index' ], function(page) {
+            page.init();
+        });
+    </script>
+</body>
+<!-- <script src="/static/js/ga.js"></script> -->
+</html>

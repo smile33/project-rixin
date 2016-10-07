@@ -1,0 +1,440 @@
+﻿body {
+}
+* {
+    font-family: 'Microsoft YaHei',Arial,Verdana,Calibri;
+    font-size: 12px;
+    text-decoration: none;
+}
+.Container {
+    width: 1200px;
+    margin: 0 auto;
+}
+ul, li {
+    list-style: none;
+}
+img{border:0px;}
+.Clear {
+    clear: both;
+}
+a, address, b, big, blockquote, body, center, cite, code, dd, del, div, dl, dt, em, fieldset, font, form, h1, h2, h3, h4, h5, h6, html, i, iframe, img, ins, label, legend, li, ol, p, pre, small, span, strong, u, ul, var {
+        margin: 0;
+        padding: 0;
+}
+
+
+.SiteMap{margin:10px 0px;line-height:24px;color:#808080;}
+        .SiteMap span{color:#808080;}
+        .SiteMap a{margin:0px 10px;color:#000000;}
+        .SiteMap a:hover{color:#e60000;text-decoration:underline;}
+
+
+.PageTitle{    margin: 10px 0px;
+    font-size: 24px;
+    font-weight: normal;}
+
+
+.Top {
+    border-bottom: 1px solid #CCC;
+    padding-bottom: 0px;
+    background-color: #F5F5F5;
+    height: 30px;
+}
+.Top .TopSum {
+    float: left;
+    padding: 5px;
+    color: #CCC;
+}
+.Top .TopSum span {
+    color: #333;
+}
+.Top .TopSum a {
+    margin: 0px 5px;
+    color: #e60000;
+}
+
+.Top .TopMenu {
+    float: right;
+}
+.Top .TopMenu .Item {
+    float: left;
+    margin-left: 0px;
+}
+.Top .TopMenu .Item a {
+    display: block;
+    padding: 5px 10px;
+    color: #000;
+}
+.Top .TopMenu .Item a.Link {
+    display: block;
+    padding: 8px 10px;
+    padding-right: 23px;
+    color: #000;background: url('/image/Arrow_down_blur.gif') no-repeat 95% 10px;
+    border: 1px solid #EEE;
+    border-bottom-width: 0px;
+    border-top-width: 0px;
+    height: 15px;
+}
+
+.Top .TopMenu .Item a.Link:hover {
+    background: url('/image/Arrow_down.gif') no-repeat 95% 10px;
+}
+.Top .TopMenu .Lang {
+    cursor: pointer;
+     background: url('/image/NationalFlag/us.gif') no-repeat 5px 11px;
+}
+.Top .TopMenu .Lang a.Link {
+    padding-left: 25px;
+    padding-right: 20px;
+}
+    .Top .TopMenu .Item ul {
+        display: none;
+        position: absolute;
+        border: 1px solid #DDD;
+        border-top-width: 0px;
+        margin-left: 0px;
+        background-color: #FFF;
+        z-index: 99;
+        min-width: 90px;
+    }
+        .Top .TopMenu .Item ul li a:hover {
+        color:#e60000;
+        }
+
+    Top .TopMenu .Cart a.Link {
+    background: url('/Image/ICON/Cart.gif') no-repeat 5px 9px;
+    padding-left: 25px;
+    padding-right: 10px;
+}
+    .Top .TopMenu .Lang ul li{
+    background: url('/image/NationalFlag/ru.gif') no-repeat 5px 9px;padding-left:18px;
+}
+    .Top .TopMenu .Cart ul.Item {
+    width: 290px;
+}
+
+
+
+
+    /*Header*/
+
+    .Container .Header {
+    padding: 15px 0px 0px;
+}
+    .Container .Header .Logo {
+    float: left;
+    margin-right: 50px;
+    margin-top:30px;margin-left: 10px;
+}
+
+    .Container .Header .headRight{float:right;width:868px;height:70px;}
+    
+    .headRight .searchBox{float:left;width:545px;}
+    .headRight .searchBox .searSelect{color:#e2e2e2;height:30px;line-height:30px;margin-left: 20px;}
+        .headRight .searchBox .searSelect a,.headRight .searchBox .searSelect span {
+        float:left;
+        }
+    .headRight .searchBox .searSelect a{color:#000;margin:0px 14px;}
+    .headRight .searchBox .searSelect .sele{color:#e60000;background:url(/Image/seleIco.gif) no-repeat 20px 26px;}
+    .headRight .searchBox .searTxt{border:2px solid #e60000;}
+    .headRight .searchBox .searTxt input[type=text]{    padding: 7px;
+    width: 407px;
+    border: 0px;
+    background: url('/image/searchicon.png') no-repeat 8px 7px;
+    padding-left: 30px;outline:none}
+    .headRight .searchBox .searTxt input[type=submit]{border:0px;width:97px;padding:8px 0px;background-color:#e60000;color:#fff;font-size:14px;}
+
+    .Inquiry{float: left;
+    color: #555;
+    /* background-color: #F5F5F5; */
+    border: 1px solid #ddd;
+    /* width: 80px; */
+    text-align: center;
+    padding: 11px;
+    margin-top: 29px;
+    margin-left: 20px;
+    padding: 11px 10px 11px 30px;
+    background: #F9F9F9 url('/image/page_white_text.png') no-repeat 8px 11px;}
+    .Inquiry:hover{border:1px solid #e60000;}
+
+    .shopCart{
+        float:left;
+    width: 115px;
+    height: 38px;
+    border: 1px solid #DFDFDF;
+    padding: 0 28px 0 36px;
+    background: #F9F9F9;
+    text-align: center;
+    line-height: 34px;
+        margin-top: 29px;
+    margin-left: 10px;
+
+    }
+    .shopCart {
+        position: relative;
+        zoom: 1;
+    }
+    .shopCart span{color: #666;}
+    .shopCart i {
+    display: block;
+    position: absolute;
+    overflow: hidden;
+}        
+        .shopCart ul:hover {
+        display:block;
+        }
+
+.headRight .Cart {
+    float:left;
+}
+    
+        .headRight .Cart .Item{
+     display: none; position: absolute;
+    border:1px solid #DFDFDF;
+    margin-left: -159px;
+    background-color: #F9F9F9;
+    z-index: 99;
+    min-width: 90px;
+    margin-top: 75px;
+    width: 350px;
+    z-index:100;
+}
+            .headRight .Cart .Item li a {
+            color: #0029FF;
+            }
+            .headRight .Cart .Item .blockItem {
+            height:62px;
+            border-bottom:1px dotted #ccc;;
+            padding:6px;
+            }
+                .headRight .Cart .Item .blockItem img {
+                    width:60px;
+                    height:60px;
+                    margin-right:8px;
+                float:left;border:1px solid #ccc;
+                }
+                .headRight .Cart .Item .blockItem p {
+                width:200px;float:left; height:62px;line-height:22px;overflow:hidden;
+                }
+                .headRight .Cart .Item .blockItem p span{
+                color:#e60000;display:block;
+                }
+                .headRight .Cart .Item .blockItem .delete {
+                  float: left;width:50px;text-align:center; background-color:#0075E7;color:#fff; padding:6px;margin-top:20px;
+                }
+
+                 .headRight .Cart .Item .CartGoto{
+                     text-align: right;
+                        padding:15px;
+                        font-size: 14px;
+                        font-weight: normal;
+                 }
+            .headRight .Cart .Item .CartGoto a{
+                 color: #008FFF;
+                 font-size: 14px;
+            }
+
+
+        .headRight .Cart:hover .shopCart{
+    height: 47px;
+    border-bottom-width:0px;
+    position:relative;
+    z-index:10000;
+        }
+        .headRight .Cart:hover .Item{
+     display: block; 
+        }
+    .ci-left {
+    top: 9px;
+    left: 12px;
+    width: 18px;
+    height: 16px;
+    background: url(/Image/CartRed.gif) 1px 1px no-repeat;    
+}
+    .ci-right {
+    top: 13px;
+    right: 10px;
+    width: 7px;
+    height: 13px;
+    overflow: hidden;
+    font: 400 13px/13px simsun;
+    color: #999;
+}
+
+
+
+    .Container .Navigation {
+    margin:20px 0px;
+    height: 38px;
+    line-height:35px;border-bottom:2px solid #e60000;background-color:#F8F8F8
+}
+     .Container .Navigation .nav_Left a {    color: #000;
+    font-size: 16px;
+    padding: 2px 25px;
+    float: left;
+    /* width: 120px; */
+    text-align: center;
+}
+    .Container .Navigation .nav_Left .proCate {    width: 188px;
+    margin-right: 20px;
+    color: #fff;
+    text-align: left;
+    padding-left: 38px;
+    background: #e60000 url('/Image/CatMenu.png') no-repeat 12px 12px;
+}
+   .Container .Navigation .nav_Left .highlight{font-weight:bold;}
+    /*Header*/
+
+
+    .Container .Main{
+        min-height:500px;
+    }
+
+
+    /*Footer start*/
+
+    .Container .Footer {
+    margin-top: 50px;
+}
+    .ProductIndex {
+    line-height: 24px;
+    text-align: center;
+    margin: 8px 0px;
+    padding-top: 10px;
+    border-top: 1px solid #EEE;
+}
+    .ProductIndex span {
+    margin-right: 2px;
+    color: #333;
+    font-size: 14px;
+}
+    .ProductIndex a {
+    color: #333;
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+    .footFocus {
+    height: 45px;
+    line-height: 45px;
+    padding: 20px 0px;
+    border-top: 3px solid #F0F0F0;
+}
+    
+    .footFocus li {
+    width: 325px;
+    float: left;
+    padding-left: 55px;
+    background-image: url(/Image/Support.png);
+    background-repeat: no-repeat;
+    font-size: 22px;
+    margin-left: 20px;
+}
+    .footFocus .focus1 {
+    background-position: 0px -159px;
+}
+    .footFocus .focus2 {
+    background-position: 0px -217px;
+}
+    .footFocus .focus3 {
+    background-position: 0px -318px;
+}
+
+    .Container .Footer .Support {
+    padding: 30px 0px;
+}
+    .Container .Footer .Support dl {
+    float: left;
+    width: 205px;
+    margin: 0px 15px;
+}
+    .Container .Footer .Support dl dt {
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 6px;
+    color: #666;
+    padding-left: 35px;
+    background-image: url(/Image/Support.png);
+    background-repeat: no-repeat;
+}
+    .Container .Footer .Support .BuyGuide dt {
+    background-position: -5px -381px;
+}
+    .Container .Footer .Support .PayTerms dt {
+    background-position: -5px -454px;
+}
+    .Container .Footer .Support .Delivery dt {
+    background-position: -5px -416px
+}
+    .Container .Footer .Support .MyAccount dt {
+    background-position: -5px -492px;
+}
+     .Container .Footer .Support .AboutUs dt {
+    background-position: -5px -530px;
+}
+
+    .Container .Footer .Support dl dd {
+    line-height: 24px;
+    font-size: 12px;
+    padding-left: 19px;
+    border-left: 1px solid #F0F0F0;
+    margin-left: 18px;
+}
+    .Container .Footer .Support dl dd a {
+    color: #666;
+}
+
+
+    .Container .Footer .Copyright {
+    border-top: 1px solid #BBB;
+    padding-top: 10px;
+    text-align: center;
+    line-height: 22px;
+}
+
+    .Container .Footer .Copyright .FootPic {
+    margin: 10px 0px;
+}
+    .Container .Footer .Copyright .FootPic img {
+    height: 60px;
+    padding: 5px;
+    /*margin:0px 20px;*/
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+
+    /*Footer end*/
+
+
+
+    
+#Skype{
+    position: fixed;
+    right: 1px;
+    top: 30%;
+    background-color: #00aff0;
+    padding: 3px;
+    border-radius: 6px;
+    width: 30px;
+}
+#Skype a{  display: block;
+  color: #000;
+  font-weight: bold;
+  font-size: 14px;
+  font-family: cursive;
+  margin:8px 0px;
+}
+#Skype a:hover{
+  color: #0E6AC3;}
+#Skype img{    width: 30px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+#Skype .skypeLogo{margin-top:-20px;margin-left:-10px;}
+#Skype .skypeLogo img{width:60px;}
+#Skype a span{display:none}
+#Skype .onlineTopic{font-size:14px;color:#fff;margin-bottom:10px;display:none}
+#Skype .servicer{    padding: 1px;
+    background-color: #fff;
+    border-radius: 6px;
+    padding-left: 0px;}

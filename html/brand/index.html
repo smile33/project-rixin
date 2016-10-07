@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Index</title>
+<link type="image/x-icon" rel="shortcut icon"   href="static/css/img/favicon.ico" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="/static/css/common.css">
+<link rel="stylesheet" type="text/css" href="/static/css/brand.css">
+</head>
+<body>
+    <div id="site-nav"></div>
+    <div id="wrapper" class="Container">
+        <header id="header"></header>
+        <div id="main">
+            <div class="SiteMap"></div>
+            <h3 class="PageTitle">Brand Index</h3>
+            <div class="BrandNav ProductIndex">
+                <span><a href="javascript:;" class="filter" v="">All</a></span>
+                <span><a href="javascript:;" class="filter" v="A">A</a></span>
+                <span><a href="javascript:;" class="filter" v="B">B</a></span>
+                <span><a href="javascript:;" class="filter" v="C">C</a></span>
+                <span><a href="javascript:;" class="filter" v="D">D</a></span>
+                <span><a href="javascript:;" class="filter" v="E">E</a></span>
+                <span><a href="javascript:;" class="filter" v="F">F</a></span>
+                <span><a href="javascript:;" class="filter" v="G">G</a></span>
+                <span><a href="javascript:;" class="filter" v="H">H</a></span>
+                <span><a href="javascript:;" class="filter" v="I">I</a></span>
+                <span><a href="javascript:;" class="filter" v="J">J</a></span>
+                <span><a href="javascript:;" class="filter" v="K">K</a></span>
+                <span><a href="javascript:;" class="filter" v="L">L</a></span>
+                <span><a href="javascript:;" class="filter" v="M">M</a></span>
+                <span><a href="javascript:;" class="filter" v="N">N</a></span>
+                <span><a href="javascript:;" class="filter" v="O">O</a></span>
+                <span><a href="javascript:;" class="filter" v="P">P</a></span>
+                <span><a href="javascript:;" class="filter" v="Q">Q</a></span>
+                <span><a href="javascript:;" class="filter" v="R">R</a></span>
+                <span><a href="javascript:;" class="filter" v="S">S</a></span>
+                <span><a href="javascript:;" class="filter" v="T">T</a></span>
+                <span><a href="javascript:;" class="filter" v="U">U</a></span>
+                <span><a href="javascript:;" class="filter" v="V">V</a></span>
+                <span><a href="javascript:;" class="filter" v="W">W</a></span>
+                <span><a href="javascript:;" class="filter" v="X">X</a></span>
+                <span><a href="javascript:;" class="filter" v="Y">Y</a></span>
+                <span><a href="javascript:;" class="filter" v="Z">Z</a></span>
+                <!-- <span><a href="javascript:;" class="filter" v="0-9">0-9</a></span> -->
+            </div>
+            <ul id="BrandItems" class="BrandItem"></ul>
+            <div class="pageContainer pagelist"></div>
+            <div class="Clear"></div>
+        </div>
+        <footer id="footer"></footer>
+    </div>
+    <script src="/static/js/vendor/require/require.js"></script>
+    <script src="/static/js/config.js"></script>
+    <script>
+        require([ 'main/brand_index' ], function(page) {
+            page.init();
+        });
+    </script>
+</body>
+<!-- <script src="/static/js/ga.js"></script> -->
+</html>

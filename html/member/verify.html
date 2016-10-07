@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Index</title>
+<link type="image/x-icon" rel="shortcut icon"   href="static/css/img/favicon.ico" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="/static/css/common.css">
+<style>
+    .Button {
+        margin-top: 10px;
+    }
+    .PageFrame {
+        margin-top: 60px;
+    }
+    .PageFrame img{    
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+    h2 {
+        font-size: 20px;
+        font-weight: normal;
+        padding: 10px;
+        color: #0F8C00;
+        margin: 0px 30px;
+    }
+    ul.verify {
+        padding: 20px 40px 30px;
+        background-color: #F5FFF2;
+        line-height: 25px;
+        color: #333;
+    }
+    div.verify {
+        font-size: 18px;
+        color: red;
+        margin: 50px;
+    }
+    div.verify a {
+        margin-left: 20px;
+        font-size: 18px;
+        color: blue;
+    }
+    .btnVerify {
+        background-color: #00A93D;
+        border-width: 0px;
+        color: #FFF;
+        padding: 10px 25px;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    .sum a {
+        color: #FFF;
+        padding: 5px;
+        background-color: #0F8C6F;
+        border-radius: 5px;
+        margin-left: 10px;
+    }
+</style>
+</head>
+<body>
+    <div id="site-nav"></div>
+    <div id="wrapper" class="Container">
+        <header id="header"></header>
+        <div id="main">
+            <div class="PageFrame">
+                <h2><img src="/static/img/success.png">Congratulations on your account verification, and your account will be enabled..</h2>
+                <ul class="verify">
+                    <li class="sum">Click here to login&nbsp;<a href="/member/login.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+        <footer id="footer"></footer>
+    </div>
+    <script src="/static/js/vendor/require/require.js"></script>
+    <script src="/static/js/config.js"></script>
+    <script>
+        require([ 'main/verify' ], function(page) {
+            page.init();
+        });
+    </script>
+</body>
+<!-- <script src="/static/js/ga.js"></script> -->
+</html>

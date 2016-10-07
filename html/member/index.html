@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Member Center</title>
+<link type="image/x-icon" rel="shortcut icon"   href="static/css/img/favicon.ico" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="/static/css/common.css">
+<link rel="stylesheet" type="text/css" href="/static/css/member_center.css">
+</head>
+<body>
+    <div id="site-nav"></div>
+    <div id="wrapper" class="Container">
+        <header id="header"></header>
+        <div id="main">
+            <div class="sidebar"></div>
+            <div class="main-right">
+                <ul class="headList">
+                    <li class="wel"><span></span>，Hello！</li>
+                    <li class="lastLog">Last Login： <span></span></li>
+                    <li class="countDetail">
+                        Account profile：
+                        <a href="/quote/index.html">Inquiry QTY（<strong class="inquiryCount"></strong>）</a>
+                        <a href="/order/index.html">Total number of orders（<strong class="orderCount"></strong>）</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="Clear"></div>
+        </div>
+        <footer id="footer"></footer>
+    </div>
+    <script src="/static/js/vendor/require/require.js"></script>
+    <script src="/static/js/config.js"></script>
+    <script>
+        require([ 'main/member_index' ], function(page) {
+            page.init();
+        });
+    </script>
+</body>
+<!-- <script src="/static/js/ga.js"></script> -->
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Member Center</title>
+<link type="image/x-icon" rel="shortcut icon"   href="static/css/img/favicon.ico" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="/static/css/common.css">
+<style type="text/css">
+    .wrapper{
+        margin: 10px auto;
+        width: 750px;
+    }
+    .noprint{
+        text-align: right;
+    }
+    .toPrintBtn{
+        display: inline-block;
+        margin: 10px 0;
+        padding: 5px 15px;
+        background: #ff9509;
+        color: #ffffff;
+        cursor: pointer;
+    }
+    table{
+        
+        border-top: 1px solid #aaa;
+        border-left: 1px solid #aaa;
+    }
+    p{
+        margin: 5px 0;
+    }
+    th,td{
+        border-right: 1px solid #aaa;
+        border-bottom: 1px solid #aaa;
+        padding: 2px 10px;
+        min-height: 20px;
+        line-height: 20px;
+    }
+</style>
+<style media=print type="text/css"> 
+    .noprint{
+        visibility:hidden
+    } 
+</style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="noprint">
+           <a href="javascript:;" target="_self" class="toPrintBtn">Print</a> 
+        </div>
+        <table border="0" cellpadding="0" cellspacing="0" class="printContent">
+            <tbody>
+                <tr>
+                    <td colspan="4" rowspan="9">
+                        <p style="text-align: center;">
+                            <img id="companyLogo" width="230" src="" />
+                        </p>
+                        <p class="salesAddress"><!-- Room29,7/F,Sing Win Factory Building, 15-17 Shing Yip St,Kwun Tong,Kowloon,HongKong --></p>
+                        <p>Email:<span class="salesEmail"></span></p>
+                        <p>Tel: <span class="salesTel">00852-34823889</span></p>
+                    </td>
+                    <td colspan="6" rowspan="2">
+                        Wire Transfer/TT To/<span>请汇款到以下账户</span><span>:</span> 
+                    </td>
+                    <td colspan="3" rowspan="2">
+                        <span>形式发票</span><span> Pro Forma Invoice</span> 
+                    </td>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                    <td colspan="6" rowspan="2">
+                        Name: <span class="companyName"><!-- Hong Kong Ri XinInternational Trading Company --></span>
+                    </td>
+                    <td rowspan="2">
+                        Invoice No.
+                    </td>
+                    <td rowspan="2" >
+                        Invoice Date
+                    </td>
+                    <td rowspan="2">
+                        Page No.
+                    </td>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        Bank Account No: <span class="bankAccountNo"><!-- 557-857406-838 --></span>
+                    </td>
+                    <td class="invoiceNo"></td>
+                    <td class="invoiceDate"></td>
+                    <td>
+                        1 of 1
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        Bank Name: <span class="bankName"><!-- HSBC Hong Kong Office --></span>
+                    </td>
+                    <td  width="100">
+                        Purchase Order
+                    </td>
+                    <td colspan="2" class="purchaseOrder"></td>
+                </tr>
+                <tr>
+                    <td colspan="6" width="230">
+                        Swift Code: <span class="swiftCode"><!-- HSBCHKHHHKH --></span>
+                    </td>
+                    <td width="100">
+                        Master Tracker
+                    </td>
+                    <td colspan="2" class="masterTracker"></td>
+                </tr>
+                <tr>
+                    <td colspan="6" rowspan="2" height="23" width="230">
+                        Region: <span class="region"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        &emsp;
+                    </td>
+                    <td>
+                        &emsp;
+                    </td>
+                    <td>
+                        &emsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" rowspan="2" height="34">
+                        Contact Name
+                    </td>
+                    <td colspan="6" rowspan="2">
+                        Ship Via : FEDEX
+                    </td>
+                    <td rowspan="2">
+                        Customer Num
+                    </td>
+                    <td rowspan="2" width="110">
+                        Order Date
+                    </td>
+                    <td rowspan="2">
+                        Terms
+                    </td>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                    <td class="salesName" colspan="4" height="34"></td>
+                    <td class="shipVia" colspan="6"></td>
+                    <td class="customerNum"></td>
+                    <td class="orderDate"></td>
+                    <td class="terms"></td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        Bill To:
+                    </td>
+                    <td colspan="8">
+                        Ship To:
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" height="24" class="billToCompany"></td>
+                    <td colspan="8"  class="shipToCompany">
+                        <!-- abc electronics ltd -->
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" height="24" width="392" class="billToAddress">
+                        <!-- Roo2220,7,Sing Win Factory Building, 19-17 Shing Yip St,Kwun Tong,Kowloon,HongKong -->
+                    </td>
+                    <td colspan="8" width="286" class="shipToAddress">
+                        <!-- Roo2220,7,Sing Win Factory Building, 19-17 Shing Yip St,Kwun Tong,Kowloon,HongKong -->
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" height="27">
+                        TEL:<span class="tel"><!-- 00186-755-85554552 --></span>
+                    </td>
+                    <td colspan="4">
+                        FAX: <span class="fax"></span>
+                    </td>
+                    <td colspan="7">
+                        Email: <span class="email"><!-- abadfd@rxicsource.com --></span>
+                    </td>
+                </tr>
+                <tr class="orderItems">
+                    <th height="30" width="80">
+                        Line No.
+                    </th>
+                    <th width="180">
+                        Part Number
+                    </th>
+                    <th colspan="2" width="50">
+                        QTY
+                    </th>
+                    <th>
+                        Brand
+                    </th>
+                    <th colspan="4">
+                        Package
+                    </th>
+                    <th colspan="2">
+                        Price
+                    </th>
+                    <th colspan="2">
+                        Amount
+                    </th>
+                </tr>
+                <tr height="24">
+                    <td></td>
+                    <td></td>
+                    <td colspan="2"></td>
+                    <td></td>
+                    <td colspan="4"></td>
+                    <td colspan="2"></td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr height="24">
+                    <td></td>
+                    <td></td>
+                    <td colspan="2"></td>
+                    <td></td>
+                    <td colspan="4"></td>
+                    <td colspan="2"></td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr height="24">
+                    <td></td>
+                    <td></td>
+                    <td colspan="2"></td>
+                    <td></td>
+                    <td colspan="4"></td>
+                    <td colspan="2"></td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr height="24">
+                    <td></td>
+                    <td></td>
+                    <td colspan="2"></td>
+                    <td></td>
+                    <td colspan="4"></td>
+                    <td colspan="2"></td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td colspan="4" rowspan="2" width="280">
+                        货物金额
+                        <br />Merchandise
+                    </td>
+                    <td rowspan="2" width="190">
+                        <span>电汇费<br /></span>
+                        <span>Wire Transfer Fee</span> 
+                    </td>
+                    <td colspan="5" rowspan="2" width="117">
+                        <span>运费<br /></span>
+                        <span>Freight</span> 
+                    </td>
+                    <td colspan="3" rowspan="2" width="229">
+                        <span>请支付此金额</span>
+                        <span> <br />Please pay this amount&nbsp;</span> 
+                    </td>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                    <td colspan="4" width="279">
+                        &emsp;
+                    </td>
+                    <td>
+                        &emsp;
+                    </td>
+                    <td colspan="5">
+                        &emsp;
+                    </td>
+                    <td colspan="3">
+                        &emsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="13" rowspan="3">
+                        <p>1. Please TT the payment to us ASAP according to the payment terms and fax us the TT copy.</p>
+                        <p>2. After confirm the Proforma Invoice buyer can't cancel this P.O. without any reasonable reasons.</p>
+                        <p>3. Buyer has no right to reject the parts without any quality problem.</p>
+                        <p>4. If buyer complain the parts failure, buyer should provide the formal testing report authorized by authoritative organization.</p>
+                        <p>5. Any delay payment can not be accepted.</p>
+                    </td>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="/static/js/vendor/require/require.js"></script>
+    <script src="/static/js/config.js"></script>
+    <script>
+        require([ 'main/order_detail' ], function(page) {
+            page.init();
+        });
+    </script>
+</body>
+</html>

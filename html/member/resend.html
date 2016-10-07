@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Resend</title>
+<link type="image/x-icon" rel="shortcut icon"   href="static/css/img/favicon.ico" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="/static/css/common.css">
+<style>
+.PageFrame h2{
+    font-size: 20px;
+    color: #29AD00;
+    margin: 15px 0px;
+    margin-top: 75px;
+}
+.PageFrame  ul{
+    font-size: 14px;
+    line-height:25px;
+}
+</style>
+</head>
+<body>
+    <div id="site-nav"></div>
+    <div id="wrapper" class="Container">
+        <header id="header"></header>
+        <div id="main">
+            <div class="PageFrame">
+                <h2>You are welcome to register Willbe, as long as the completion of the mail validation, your account will be enabled.</h2>
+                <ul class="verify">
+                    <li class="sum">Authentication information has been sent to your registered mailbox Willbe, please log in to the registered email address and click verify link to complete the verification.</li>
+                    <li class="sum">After the validation of your email address will continue to improve your account information</li>
+                    <li class="sum" style="margin-top:10px;color:#F10000">If you do not receive the message, please click on the re send verification code. Effective in 30 minutes</li>
+                    <li style="margin-top:20px;">
+                        <input type="submit" class="btnVerify" onclick="window.location.reload()" value="Re send verification code">
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <footer id="footer"></footer>
+    </div>
+    <script src="/static/js/vendor/require/require.js"></script>
+    <script src="/static/js/config.js"></script>
+    <script>
+        require([ 'main/simple' ], function(page) {
+            page.init();
+        });
+    </script>
+</body>
+<!-- <script src="/static/js/ga.js"></script> -->
+</html>
