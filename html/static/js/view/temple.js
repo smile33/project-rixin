@@ -339,6 +339,16 @@ define('main/temple', ['jquery','xss','main/utils',], function($, xss, utils){
         });
         return html;
     }; 
+
+    //inquiry页面产品详情
+    exports.inquiryProductInfo = function(data){
+        var html =  '<li><label>Part Number：</label><span>' + (data.mfrPartNum || '-') + '</span><label>Quantity Available：</label><span>' + (data.quantityAvaliable || '-') + '</span></li>' +
+                    '<li><label>Manufacturer：</label><span>' + (data.manufacturerName || '-') + '</span><label>Description：</label><span>' + (data.description || '-') + '</span></li>' +
+                    '<li><label>Lead Free Status / RoHS Status：</label><span>' + (data.rohsStatus || '-') + '</span><label>Manufacturer Standard Lead Time：</label><span>' + (data.manufacturerLeadTime || '-') + '</span></li>' +
+                    '<li><label>Moisture Sensitivity Level (MSL)：</label><span>' + (data.msl || '-') + '</span><label>Stocks：</label><span>' + data.stock + '</span></li>';
+        return html;
+    };
+
     exports.searchMatch = function(data){
         var html = '';
         $.each(data, function(k, v){
@@ -359,12 +369,13 @@ define('main/temple', ['jquery','xss','main/utils',], function($, xss, utils){
     exports.searchProductArea = function(data,key){
         var html = '';
         $.each(data, function(k1, v1){
-            html += '<div class="productList">';
+            html += '<div class="productList" p_index="'+k1+'">';
             if(v1.datasheets && v1.datasheets.length){
                 var datasheet = v1.datasheets[0];
                 html += '<div class="pr_data">' +
                             '<a class="downloadDatasheet" href="/open_datasheet.html?url=' + encodeURIComponent(window.btoa(datasheet.url)) + '" title="' + datasheet.text + '" target="_blank">Datasheet</a>' +
-                            // (v1.datasheets.length == 1 ? '<a href="javascript:;" class="moreDatasheet">more</a>':'') +
+                            // '<span>' + datasheet.text + '</span>' +
+                            '<a href="javascript:;" class="moreDatasheet" style="' + (v1.datasheets.length > 1 ? '' :'visibility: hidden') + '">All Datasheet</a>' +
                         '</div>';
             }
             $.each(v1.products, function(k2, v2){
@@ -431,6 +442,17 @@ define('main/temple', ['jquery','xss','main/utils',], function($, xss, utils){
         return html;
     };
 
+    exports.moreDatasheet = function(data){
+        var html = '<ul>';
+        $.each(data, function(k, v){
+            html += '<li>' +
+                '<a class="downloadDatasheet" href="/open_datasheet.html?url=' + encodeURIComponent(window.btoa(v.url)) + '" title="' + v.text + '" target="_blank">Datasheet</a>' +
+                '<p>' + v.text + '</p>' + 
+            '</li>';
+        });
+        html += '</ul>';
+        return html;
+    }
 
 
     // 注册-国家

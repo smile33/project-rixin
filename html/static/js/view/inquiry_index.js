@@ -1,4 +1,4 @@
-define('main/inquiry_index', ['jquery','jqform','main/utils','main/server','main/common'], function($, jqform, utils, server, common){
+define('main/inquiry_index', ['jquery','jqform','main/utils','main/server','main/common','main/temple'], function($, jqform, utils, server, common, temple){
     var exports  = {},
     $body = $('body'),
     $name = $body.find('#name'),
@@ -11,6 +11,7 @@ define('main/inquiry_index', ['jquery','jqform','main/utils','main/server','main
     var id = utils.getSearchParam('id') || '';
     var part = utils.getSearchParam('part') || '';
     $body.find('.pageTitle').html(part);
+    //校验Inquiry参数
     exports.inquiry = function(){
         var oData = {
             productId : id
@@ -33,41 +34,94 @@ define('main/inquiry_index', ['jquery','jqform','main/utils','main/server','main
             $error.text("Please enter looking for.");
             return false;
         }
-        if($file.val()){
-            oData.file = $file.val();    
-        }         
+        // if($file.val()){
+        //     oData.file = $file.val();    
+        // }         
         // oData.kaptcha = $.md5(oData.kaptcha);
         if(isSend) return false;
         isSend = true;
-        $("#fileForm").ajaxSubmit({
-            url: window._c.path + 'inquiry/product.wb',
-            type:"post",
-            dataType: 'json',
-            data: {
-                productId : id
-            },
-            success: function(data){
-               if(data && data.flag  === 0){
-                    $name.val('');
-                    $email.val('');
-                    $content.val('');
-                    $file.val('');
-                    $error.text('');
-                    utils.tips('submit success');
-                    isSend = false;                        
-                }else{
+        if($file.val()){
+            $("#fileForm").ajaxSubmit({
+                url: window._c.path + 'upload/uploadSigle.wb',
+                type:"post",
+                dataType: 'json',
+                success: function(data){
+                   if(data.flag  === 0 && data.data){
+                        oData.fileMd5 = data.data.attMd5; 
+                        exports.inquiryProduct(oData);                    
+                    }else{
+                        $error.text(data.msg);
+                        isSend = false;                
+                    }                            
+                },
+                error:function(data){
                     $error.text(data.msg);
-                    isSend = false;                
-                }                            
-            },
-            error:function(data){
-                $error.text(data.msg);
-                isSend = false;
-            },
-            // clearForm: true, 
-            timeout: 300000                         
+                    isSend = false;
+                },
+                // clearForm: true, 
+                timeout: 300000                         
+            }); 
+        }else{
+            exports.inquiryProduct(oData);
+        }
+
+        // $("#fileForm").ajaxSubmit({
+        //     url: window._c.path + 'inquiry/product.wb',
+        //     type:"post",
+        //     dataType: 'json',
+        //     data: {
+        //         productId : id
+        //     },
+        //     success: function(data){
+        //        if(data && data.flag  === 0){
+        //             $name.val('');
+        //             $email.val('');
+        //             $content.val('');
+        //             $file.val('');
+        //             $error.text('');
+        //             utils.tips('submit success');
+        //             isSend = false;                        
+        //         }else{
+        //             $error.text(data.msg);
+        //             isSend = false;                
+        //         }                            
+        //     },
+        //     error:function(data){
+        //         $error.text(data.msg);
+        //         isSend = false;
+        //     },
+        //     // clearForm: true, 
+        //     timeout: 300000                         
+        // });
+    };
+
+    // 发布商品inquiry
+    exports.inquiryProduct = function(data){
+        server.inquiryProduct(data,function(data){
+            $name.val('');
+            $email.val('');
+            $content.val('');
+            $file.val('');
+            $error.text('');
+            utils.tips('submit success');
+            isSend = false;  
+        },function(data){
+            $error.text(data.msg);
+            isSend = false;   
         });
     };
+    //获取产品详情内容
+    exports.getProductDetailData = function(){
+        server.productDetail({
+            productId : id
+        },function(data){
+            data = data.data || {};
+            profile = data.profile;
+            $body.find('.productDetail').html(temple.inquiryProductInfo(profile));
+            
+        });
+    };
+
 
     // 事件
     exports.action = function(){
@@ -83,6 +137,7 @@ define('main/inquiry_index', ['jquery','jqform','main/utils','main/server','main
     exports.init = function(){
         common.init();
         $body.find('.currentLocation').html('Inquiry');
+        exports.getProductDetailData();
         exports.action();
     };
     return exports;

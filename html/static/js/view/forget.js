@@ -1,4 +1,4 @@
-define('main/forget', ['jquery','main/server','main/common'], function($, server, common){
+define('main/forget', ['jquery','main/server','main/common','main/utils'], function($, server, common, utils){
     var exports  = {},
     $body = $('body'),
     $email = $body.find('#email'),

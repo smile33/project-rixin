@@ -1,4 +1,4 @@
-define('main/account_index', ['jquery','main/server','main/common'], function($, server, common){
+define('main/account_index', ['jquery','main/server','main/common','main/utils'], function($, server, common, utils){
     var exports  = {},
     $body = $('body'),
     $mail = $body.find('.mail'),

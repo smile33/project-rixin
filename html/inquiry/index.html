@@ -16,21 +16,46 @@
         <header id="header"></header>
         <div id="main">
             <div class="SiteMap"></div>
+            <!-- <div  class="wayBtn"> -->
+
+            <!-- </div> -->
             <div class="wayBtn">
                 <h3 class="pageTitle"></h3>
+                <ul class="productDetail">
+                    <li>
+                        <label>Part Number：</label><span>-</span>
+                        <label>Quantity Available：</label><span>-</span>
+                    </li>
+                    <li>
+                        <label>Manufacturer：</label><span>-</span>
+                        <label>Description：</label><span>-</span>
+                    </li>
+                    <li>
+                        <label>Lead Free Status / RoHS Status：</label><span>-</span>
+                        <label>Manufacturer Standard Lead Time：</label><span>-</span>
+                    </li>
+                    <li>
+                        <label>Moisture Sensitivity Level (MSL)：</label><span>-</span>
+                        <label>Stocks：</label><span>-</span>
+                    </li>
+                </ul>
                 <form id="fileForm" method="post"  enctype="multipart/form-data"  name="inquery">
                     <div class="textInput">
                         <label>Name:</label>
-                        <input type="text" id="name" name="name" placeholder="Pleast enter your name">
+                        <input type="text" id="name" placeholder="Pleast enter your name">
                     </div>
                     <div class="textInput">
-                        <label>E-mail:</label>
-                        <input type="text" id="email" name="email" placeholder="Pleast enter your e-mail address">
+                        <label>E-mail:<b>*</b></label>
+                        <input type="text" id="email" placeholder="Pleast enter your e-mail address">
                     </div>
                     <div class="remarkWay">
-                        <textarea id="content" name="lookingFor"></textarea> 
+                        <textarea id="content"></textarea> 
                     </div>
-                    <input type="file" id="file" name="file"  enctype="multipart/form-data"><br>
+                    <div>
+                        <div class="title">Upload BOM from EXCEL Spreadsheet</div>
+                        <input type="file" id="file" name="file"  enctype="multipart/form-data"><br>
+                    </div>
+                    
                     <div id="error_msg" class="error_msg"></div>
                     <div><input type="button" class="submitBtn checkBtn" value="Submit"></div>
                 </form>

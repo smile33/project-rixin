@@ -91,18 +91,18 @@ define('main/add_address', ['jquery','main/utils','main/server','main/temple','m
         }
         // Company Name
         oData.companyName = $companyName.val();
-        if(oData.companyName == ''){
-            $companyName.focus();
-            $error.text("Please enter the company name.");
-            return false;
-        }
+        // if(oData.companyName == ''){
+        //     $companyName.focus();
+        //     $error.text("Please enter the company name.");
+        //     return false;
+        // }
         // Fax
         oData.fax = $fax.val();
-        if(oData.fax == ''){
-            $fax.focus();
-            $error.text("Please enter the fax.");
-            return false;
-        }
+        // if(oData.fax == ''){
+        //     $fax.focus();
+        //     $error.text("Please enter the fax.");
+        //     return false;
+        // }
 
         // address
         oData.address = $address.val();

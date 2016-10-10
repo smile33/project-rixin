@@ -21,6 +21,7 @@ define('main/product_search', ['jquery','main/utils','main/server','main/common'
     };
     var key = utils.getSearchParam('key') || '';
     var delivery = decodeURIComponent(utils.getSearchParam('delivery')) || 'all';
+    var skuArray = [];
     $body.find('.searchInput').html(key);
     exports.getProductSearchData = function(){
         server.productSearch({
@@ -29,6 +30,7 @@ define('main/product_search', ['jquery','main/utils','main/server','main/common'
         },function(data){
             if(data.data){
                 data = data.data;
+                skuArray = data.skus;
                 $body.find('.typeItem').html(temple.searchMatch(data.matchResult));
                 $typeMatch.find('a').html(key);
                 $typeMatch.find('span').html(data.totalPartNum);
@@ -51,15 +53,15 @@ define('main/product_search', ['jquery','main/utils','main/server','main/common'
           }
         });
     };
-    // exports.datasheetPopup = function(){
-    //     $datasheetContainer.dialog({
-    //       autoOpen: true,
-    //       width: 500,
-    //       // minHeight:160,
-    //       show: { effect: "blind", duration: 300 },
-    //       modal: true
-    //     });
-    // };
+    exports.datasheetPopup = function(){
+        $datasheetContainer.dialog({
+          autoOpen: true,
+          width: 500,
+          // minHeight:160,
+          show: { effect: "blind", duration: 300 },
+          modal: true
+        });
+    };
     function addToCart(){
         var oData = {
             id: shopCart.productId
@@ -159,9 +161,12 @@ define('main/product_search', ['jquery','main/utils','main/server','main/common'
             }else if(self.hasClass('quantityBtn')){
                 addToCart();
             }
-            // else if(self.hasClass('moreDatasheet')){
-            //     exports.datasheetPopup();
-            // }
+            else if(self.hasClass('moreDatasheet')){
+                var index = parseInt(self.closest('.productList').attr('p_index'));
+                console.log(index);
+                $datasheetContainer.html(temple.moreDatasheet(skuArray[index].datasheets));
+                exports.datasheetPopup();
+            }
         });
     };
     function setSearchInputValue(){

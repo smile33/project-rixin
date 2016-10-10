@@ -1,4 +1,4 @@
-define('main/server', ['jquery'], function($){
+define('main/server', ['jquery','main/utils'], function($, utils){
     var exports = {};
     var path  = window._c.path;
 
@@ -99,8 +99,8 @@ define('main/server', ['jquery'], function($){
 
 
     // 出错处理
-    exports.error = function(){
-
+    exports.error = function(data){
+        utils.tips(data && data.msg || 'error');
     };
     exports.ajax = function(param,callback,callback2){
         callback2 = callback2 || exports.error;
@@ -114,8 +114,8 @@ define('main/server', ['jquery'], function($){
                 callback2(data);
             }
         };
-        param.error = function(){
-            exports.error();
+        param.error = function(data){
+            exports.error(data);
         };
         $.ajax(param);
     };
