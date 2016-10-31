@@ -9,7 +9,9 @@
 <meta name="viewport" content="width=device-width">
 <link rel="stylesheet" href="/static/css/jquery-ui-1.9.2.custom/css/ui-lightness/jquery-ui-1.9.2.custom.min.css">
 <link rel="stylesheet" type="text/css" href="/static/css/common.css">
+<link rel="stylesheet" type="text/css" href="/static/css/inquiry.css">
 <link rel="stylesheet" type="text/css" href="/static/css/product_search.css">
+
 </head>
 <body>
     <div id="site-nav"></div>
@@ -17,24 +19,62 @@
         <header id="header"></header>
         <div id="main">
             <div class="SiteMap"></div>
-            <div class="SearchResults">
-                <div class="typeMatch">
-                    <a href="javascript:;"></a> Model matching results（<span>0</span>stock）:
+            <div class="SearchContainer">
+                <div class="SearchResults">
+                    <div class="typeMatch">
+                        <a href="javascript:;"></a> Model matching results（<span>0</span>stock）:
+                    </div>
+                    <div class="typeItem"></div>
                 </div>
-                <div class="typeItem"></div>
+                <div class="filter">
+                    <dl class="filterItem">
+                        <dt><span>Search condition filter</span></dt>
+                        <dd>
+                            <span>Delivery time:</span>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="supplierTab">
+                    <a href="#" class="selectTab">All Supplier(<span>0</span>)</a>
+                </div>
+                <div id="ProductArea"></div>
             </div>
-            <div class="filter">
-                <dl class="filterItem">
-                    <dt><span>Search condition filter</span></dt>
-                    <dd>
-                        <span>Delivery time:</span>
-                    </dd>
-                </dl>
+            <div class="inquiryContainer wayBtn">
+                <h3 class="pageTitle"></h3>
+                <form id="fileForm" method="post"  enctype="multipart/form-data"  name="inquery">
+                    <div class="textInput">
+                        <label>Part No. :</label>
+                        <!-- <span class="partNum">partNum</span> -->
+                        <input type="text" id="partNum" placeholder="Pleast enter your Part No.">
+                    </div>
+                    <div class="textInput">
+                        <label>Name:</label>
+                        <input type="text" id="name" placeholder="Pleast enter your name">
+                    </div>
+                    <div class="textInput">
+                        <label>E-mail:<b>*</b></label>
+                        <input type="text" id="email" placeholder="Pleast enter your e-mail address">
+                    </div>
+                    <div class="textInput">
+                        <label>Target Price:<b>*</b></label>
+                        <input type="text" id="price" placeholder="Pleast enter your target price">
+                    </div>
+                    <div class="textInput">
+                        <label>Quantity:<b>*</b></label>
+                        <input type="text" id="quantity" placeholder="Pleast enter your quantity">
+                    </div>
+                    <div class="remarkWay">
+                        <textarea id="content"></textarea> 
+                    </div>
+                    <div>
+                        <div class="title">Upload BOM from EXCEL Spreadsheet</div>
+                        <input type="file" id="file" name="file"  enctype="multipart/form-data"><br>
+                    </div>
+                    
+                    <div id="error" class="error_msg"></div>
+                    <div><input type="button" class="submitBtn checkBtn" value="Submit"></div>
+                </form>
             </div>
-            <div class="supplierTab">
-                <a href="#" class="selectTab">All Supplier(<span>0</span>)</a>
-            </div>
-            <div id="ProductArea"></div>
         </div>
         <footer id="footer"></footer>
         <div id="inputBox"  title="Please enter the quantity">

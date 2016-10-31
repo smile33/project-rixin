@@ -12,6 +12,8 @@ define('main/server', ['jquery','main/utils'], function($, utils){
     exports.path_quick_inquiry = path+'inquiry/quick.wb';
     // 发布商品inquiry
     exports.path_inquiry_product = path+'inquiry/product.wb';
+    // 发布搜索inquiry
+    exports.path_inquiry_search = path+'inquiry/search.wb';
     // 搜索datasheet
     exports.path_search_datasheet = path+'search/data_sheet.wb';
     // 供应商列表
@@ -156,6 +158,14 @@ define('main/server', ['jquery','main/utils'], function($, utils){
     exports.inquiryProduct = function(data,callback,callback2){
         exports.ajax({
             url : exports.path_inquiry_product,
+            type : 'post',
+            data : data
+        },callback,callback2);
+    };
+    //发布搜索inquiry
+    exports.inquirySearch = function(data,callback,callback2){
+        exports.ajax({
+            url : exports.path_inquiry_search,
             type : 'post',
             data : data
         },callback,callback2);

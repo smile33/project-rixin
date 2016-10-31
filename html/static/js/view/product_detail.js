@@ -108,29 +108,35 @@ define('main/product_detail', ['jquery','main/utils','main/server','main/common'
         },function(data){
             data = data.data || {};
             profile = data.profile;
-            $body.find('.currentLocation').html('<a href="/product/index.html">Product List</a> &gt; '+profile.mfrPartNum);
-            $body.find('.InfoList').html(temple.productInfo(profile));
-            if(profile.productImgs && profile.productImgs.length){
-                setLargePic(profile.productImgs[0]);
-                $body.find('.Small').html(temple.productSmallPic(profile.productImgs));
-                shopCart.productImg = profile.productImgs[0].thumbImg;
+            if(profile){
+                $body.find('.currentLocation').html('<a href="/product/index.html">Product List</a> &gt; '+profile.mfrPartNum);
+                $body.find('.InfoList').html(temple.productInfo(profile));
+                if(profile.productImgs && profile.productImgs.length){
+                    setLargePic(profile.productImgs[0]);
+                    $body.find('.Small').html(temple.productSmallPic(profile.productImgs));
+                    shopCart.productImg = profile.productImgs[0].thumbImg;
+                }
+                if(profile.productExtPrices){
+                    $body.find('.extendedPrice').html(temple.extendedPrice(profile.productExtPrices));
+                    var product = profile.productExtPrices[0];
+                    $txtCount.val(product.priceBreak);
+                    setQuantityHtml(product,product.priceBreak);
+                    shopCart.moq = product.priceBreak;
+                    shopCart.quantity = product.priceBreak;
+                }
+                if(data.favorProduct){
+                    $body.find('.favorProductContainer').html(temple.favorProduct(data.favorProduct));
+                }
+                if(profile.productAttrs){
+                    $body.find('.attributes-table-main tbody').html(temple.productAttributes(profile.productAttrs));
+                }
+                shopCart.productId = profile.productId;
+                shopCart.mfrPartNum = profile.mfrPartNum;
+                document.title = profile.mfrPartNum + ',' + profile.description;
+                var keyword = 'PartNo:' + profile.mfrPartNum + ';Manufacturer:' + profile.manufacturerName + ';Description:' + profile.description;
+                $('meta[name=keywords]').attr('content',keyword);
+                $('meta[name=description]').attr('content',keyword)
             }
-            if(profile.productExtPrices){
-                $body.find('.extendedPrice').html(temple.extendedPrice(profile.productExtPrices));
-                var product = profile.productExtPrices[0];
-                $txtCount.val(product.priceBreak);
-                setQuantityHtml(product,product.priceBreak);
-                shopCart.moq = product.priceBreak;
-                shopCart.quantity = product.priceBreak;
-            }
-            if(data.favorProduct){
-                $body.find('.favorProductContainer').html(temple.favorProduct(data.favorProduct));
-            }
-            if(profile.productAttrs){
-                $body.find('.attributes-table-main tbody').html(temple.productAttributes(profile.productAttrs));
-            }
-            shopCart.productId = profile.productId;
-            shopCart.mfrPartNum = profile.mfrPartNum;
         });
     };
 

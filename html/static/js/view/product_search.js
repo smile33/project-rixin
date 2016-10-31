@@ -1,4 +1,4 @@
-define('main/product_search', ['jquery','main/utils','main/server','main/common','main/temple','jqui'], function($, utils, server, common, temple, jqui){
+define('main/product_search', ['jquery','jqform','main/utils','main/server','main/common','main/temple','jqui'], function($, jqform, utils, server, common, temple, jqui){
     var exports  = {},
     profile,
     $body = $('body'),
@@ -7,9 +7,19 @@ define('main/product_search', ['jquery','main/utils','main/server','main/common'
     $datasheetContainer = $body.find("#datasheetContainer"),
     $error_msg = $inputBox.find(".error_msg"),
     $typeMatch = $body.find('.typeMatch'),
+
+    $partNum = $body.find('#partNum'),
+    $name = $body.find('#name'),
+    $email = $body.find('#email'),
+    $price = $body.find('#price'),
+    $inquiry_quantity = $body.find('#quantity'),
+    $content = $body.find('#content'),
+    $file = $body.find('#file');
+    $error = $body.find('#error'),
+    isSend = false, //是否在发送中  
+    rExpEmail = /^([a-zA-Z0-9]+[_|\_|\.-]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/,
     rExpNumber = /^\+?[1-9][0-9]*$/;
-    // $txtCount = $body.find('#txtCount');
-    // pageSize = 6;
+
     var shopCart = {
         // id : '',
         productId : '',
@@ -24,6 +34,7 @@ define('main/product_search', ['jquery','main/utils','main/server','main/common'
     var skuArray = [];
     $body.find('.searchInput').html(key);
     exports.getProductSearchData = function(){
+        utils.loading('show');
         server.productSearch({
             key : key,
             delivery : delivery
@@ -37,9 +48,105 @@ define('main/product_search', ['jquery','main/utils','main/server','main/common'
                 $body.find('.filterItem dd').append(temple.searchDeliveryTime(data.deliveryTime));
                 $body.find('#ProductArea').html(temple.searchProductArea(data.skus,key));
                 $body.find('.supplierTab span').html(data.skus && data.skus.length);
+                $body.find('.SearchContainer').show();
+            }else{
+                $body.find('.inquiryContainer').show().find('#partNum').val(key);
+
             }
+            utils.loading();
         });
     };
+    //校验Inquiry参数
+    exports.inquiry = function(){
+        var oData = {
+            // productId : '062d7925a14f45449bb6dfa8a7d74cb4'
+        };
+        oData.partNum = $partNum.val();
+        if($.trim(oData.partNum) == ''){
+            $partNum.focus();
+            $error.text("Please enter your  Part No.");
+            return false;
+        }
+        oData.name = $name.val();
+        if($.trim(oData.name) == ''){
+            $name.focus();
+            $error.text("Please enter your name.");
+            return false;
+        }
+        oData.email = $email.val();
+        if($.trim(oData.email) == '' || !rExpEmail.test(oData.email)){
+            $email.focus();
+            $error.text("Please enter correct email.");
+            return false;
+        }
+        oData.targetPrice = $price.val();
+        if(!rExpNumber.test(oData.targetPrice)){
+            $price.focus();
+            $error.text("Pleast enter correct target price.");
+            return false;
+        }
+        oData.quantity = $inquiry_quantity.val();
+
+        if(!rExpNumber.test(oData.quantity)){
+            $inquiry_quantity.focus();
+            $error.text("Pleast enter correct quantity.");
+            return false;
+        }
+        oData.lookingFor = $content.val();
+        if($.trim(oData.lookingFor) == ''){
+            $content.focus();
+            $error.text("Please enter looking for.");
+            return false;
+        }
+        if(isSend) return false;
+        isSend = true;
+        if($file.val()){
+            $("#fileForm").ajaxSubmit({
+                url: window._c.path + 'upload/uploadSigle.wb',
+                type:"post",
+                dataType: 'json',
+                success: function(data){
+                   if(data.flag  === 0 && data.data){
+                        oData.fileMd5 = data.data.attMd5; 
+                        exports.inquirySearch(oData);                    
+                    }else{
+                        $error.text(data.msg);
+                        isSend = false;                
+                    }                            
+                },
+                error:function(data){
+                    $error.text(data.msg);
+                    isSend = false;
+                },
+                // clearForm: true, 
+                timeout: 300000                         
+            }); 
+        }else{
+            exports.inquirySearch(oData);
+        }
+    };
+
+    // 发布商品inquiry
+    exports.inquirySearch = function(data){
+        server.inquirySearch(data,function(data){
+            $name.val('');
+            $email.val('');
+            $price.val('');
+            $inquiry_quantity.val('');
+            $content.val('');
+            $file.val('');
+            $error.text('');
+            utils.tips('submit success');
+            setTimeout(function(){
+                window.location.href = "/inquiry/success.html";
+            },1000);
+            isSend = false;  
+        },function(data){
+            $error.text(data.msg);
+            isSend = false;   
+        });
+    };
+
     exports.quantityPopup = function(){
         $inputBox.dialog({
           autoOpen: true,
@@ -134,7 +241,7 @@ define('main/product_search', ['jquery','main/utils','main/server','main/common'
     }
     // 事件
     exports.action = function(){
-        $body.on('click','.setDeliveryTime,.morePrice,.lessPrice,.addToCartBtn,.buyBtn,.quantityBtn,.moreDatasheet',function(){
+        $body.on('click','.setDeliveryTime,.morePrice,.lessPrice,.addToCartBtn,.buyBtn,.quantityBtn,.moreDatasheet,.checkBtn',function(){
             var self = $(this);
             if(self.hasClass('setDeliveryTime')){
                 var delivery = self.attr('delivery');
@@ -163,9 +270,10 @@ define('main/product_search', ['jquery','main/utils','main/server','main/common'
             }
             else if(self.hasClass('moreDatasheet')){
                 var index = parseInt(self.closest('.productList').attr('p_index'));
-                console.log(index);
                 $datasheetContainer.html(temple.moreDatasheet(skuArray[index].datasheets));
                 exports.datasheetPopup();
+            }else if(self.hasClass('checkBtn')){
+                exports.inquiry();
             }
         });
     };

@@ -3,10 +3,13 @@ define('main/inquiry_index', ['jquery','jqform','main/utils','main/server','main
     $body = $('body'),
     $name = $body.find('#name'),
     $email = $body.find('#email'),
+    $price = $body.find('#price'),
+    $quantity = $body.find('#quantity'),
     $content = $body.find('#content'),
     $file = $body.find('#file');
     $error = $body.find('#error_msg'),
     rExpEmail = /^([a-zA-Z0-9]+[_|\_|\.-]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/,
+    rExpNumber = /^\+?[1-9][0-9]*$/,
     isSend = false; //是否在发送中  
     var id = utils.getSearchParam('id') || '';
     var part = utils.getSearchParam('part') || '';
@@ -26,6 +29,18 @@ define('main/inquiry_index', ['jquery','jqform','main/utils','main/server','main
         if($.trim(oData.email) == '' || !rExpEmail.test(oData.email)){
             $email.focus();
             $error.text("Please enter correct email.");
+            return false;
+        }
+        oData.targetPrice = $price.val();
+        if(!rExpNumber.test(oData.targetPrice)){
+            $price.focus();
+            $error.text("Pleast enter correct target price.");
+            return false;
+        }
+        oData.quantity = $quantity.val();
+        if(!rExpNumber.test(oData.quantity)){
+            $quantity.focus();
+            $error.text("Pleast enter correct quantity.");
             return false;
         }
         oData.lookingFor = $content.val();
@@ -100,10 +115,15 @@ define('main/inquiry_index', ['jquery','jqform','main/utils','main/server','main
         server.inquiryProduct(data,function(data){
             $name.val('');
             $email.val('');
+            $price.val('');
+            $quantity.val('');
             $content.val('');
             $file.val('');
             $error.text('');
             utils.tips('submit success');
+            setTimeout(function(){
+                window.location.href = "/inquiry/success.html";
+            },1000);
             isSend = false;  
         },function(data){
             $error.text(data.msg);
