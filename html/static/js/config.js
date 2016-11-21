@@ -33,13 +33,18 @@ require.config({
         "main/utils": "./js/view/utils",
         "main/server": "./js/view/server",
         "page_turning_plugin": './js/view/page_turning_plugin',
-        "jquery": "./js/vendor/jquery/jquery-1.8.3.min",
-        "jqui": "./js/vendor/jqui/jquery-ui-1.9.2.custom.min",
-        "jqform": "./js/vendor/jqform/jquery.form.min",
-        "md5": "./js/vendor/md5/md5-min",
-        "require": "./js/vendor/require/require",
+        // "jquery": "./js/vendor/jquery/jquery-1.8.3.min",
+        "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min",
+        // "jqui": "./js/vendor/jqui/jquery-ui-1.9.2.custom.min",
+        "jqui": "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min",
+        // "jqform": "./js/vendor/jqform/jquery.form.min",
+        "jqform": "https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min",
+        // "md5": "./js/vendor/md5/md5-min",
+        "md5": "https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.5.0/js/md5.min",
+        // "require": "./js/vendor/require/require",
+        "require": "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min"
         // "webuploader": "./js/vendor/webuploader/webuploader.min",
-        "xss": "./js/vendor/xss/xss",
+        // "xss": "./js/vendor/xss/xss",
 
         // "zepto": "./js/vendor/zepto/zepto.min",
         // "swiper": "./js/vendor/swiper/swiper.3.1.2.min",
@@ -56,16 +61,16 @@ require.config({
         ],
         "jqui": [
             "jquery"
-        ],
+        ]
         // "webuploader": {
         //     "deps": [
         //         "jquery"
         //     ],
         //     "exports": "WebUploader"
         // },
-        "xss": {
-            "exports": "filterXSS"
-        }
+        // "xss": {
+        //     "exports": "filterXSS"
+        // }
     }
 });
  window['_c'] = {

@@ -1,4 +1,4 @@
-define('main/temple', ['jquery','xss','main/utils',], function($, xss, utils){
+define('main/temple', ['jquery','main/utils',], function($, utils){
     var exports    = {};
     // 格式化数据
     exports.formatText = function(text){

@@ -59,7 +59,7 @@ define('main/product_search', ['jquery','jqform','main/utils','main/server','mai
     //校验Inquiry参数
     exports.inquiry = function(){
         var oData = {
-            // productId : '062d7925a14f45449bb6dfa8a7d74cb4'
+            productId : '0'
         };
         oData.partNum = $partNum.val();
         if($.trim(oData.partNum) == ''){

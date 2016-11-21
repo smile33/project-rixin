@@ -17,7 +17,6 @@ define('main/order_detail', ['jquery','main/utils','main/server','main/temple'],
                 $body.find('.bankAccountNo').html(data.bankAccountNo);
                 $body.find('.invoiceNo').html(data.invoiceNo);
                 if(data.invoiceDate){
-                    console.log(data.invoiceDate);
                     $body.find('.invoiceDate').html(utils.tranTimeYMD(data.invoiceDate));
                 }
                 $body.find('.bankName').html(data.bankName);
@@ -39,6 +38,11 @@ define('main/order_detail', ['jquery','main/utils','main/server','main/temple'],
                 $body.find('.tel').html(data.tel);
                 $body.find('.fax').html(data.fax);
                 $body.find('.email').html(data.email);
+
+                $body.find('.orderAmt').html(data.orderAmt);
+                $body.find('.wireTransferFee').html(data.wireTransferFee);
+                $body.find('.freight').html(data.freight);
+                $body.find('.totalAmt').html(data.totalAmt);             
             }
         });
     };
