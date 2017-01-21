@@ -10,7 +10,9 @@ define('main/category_index', ['jquery','main/utils','main/server','main/common'
             size : pageSize,
             categoryId : categoryId
         };
+		utils.loading('show');
         PageTurningPlugin.pageServer(server.path_product_category,params,function(data){
+			utils.loading();
             if(data.data && data.data.items){
                 data = data.data;
                 console.log(data.items);

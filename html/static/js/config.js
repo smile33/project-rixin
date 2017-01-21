@@ -1,5 +1,6 @@
 require.config({
-    "baseUrl": "../static/",
+	urlArgs: "v=1.212",
+    "baseUrl": "../static/",	
     "paths": {
         "main/common": "./js/view/common",
         "main/server": "./js/view/server",
@@ -39,10 +40,10 @@ require.config({
         "jqui": "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min",
         // "jqform": "./js/vendor/jqform/jquery.form.min",
         "jqform": "https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min",
-        // "md5": "./js/vendor/md5/md5-min",
-        "md5": "https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.5.0/js/md5.min",
-        // "require": "./js/vendor/require/require",
-        "require": "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min"
+        "md5": "./js/vendor/md5/md5-min",
+        // "md5": "https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.5.0/js/md5.min",
+        "require": "./js/vendor/require/require",
+        //"require": "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min"
         // "webuploader": "./js/vendor/webuploader/webuploader.min",
         // "xss": "./js/vendor/xss/xss",
 

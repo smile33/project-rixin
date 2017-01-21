@@ -19,7 +19,7 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
     trObj,
     index; 
     function setAddress(data){
-        $body.find('.addReceiptAddress').hide();
+        //$body.find('.addReceiptAddress').hide();
         $body.find('.changeAddress').show();
         $body.find('.changeAddress .addressContent').html(temple.shopCartAddressList([data]));
     }
@@ -127,10 +127,14 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
             index: 1
         },function(data){
             if(data.data && data.data.items){
-                addressArray = data.data.items;
-                if(addressArray.length > 1){
+                addressArray = data.data.items; 
+                if(addressArray.length > 0){
                     $body.find('.changeAddressBtn').show();
-                }
+                } else {
+					$body.find('.addReceiptAddress').show();
+					$body.find('.changeAddress').hide();
+					exports.country();
+				}
                 $body.find('#addressBox .addressContent').html(temple.shopCartAddressList(addressArray));
                 var chooseAddressData = addressArray[0];
                 setAddress(chooseAddressData);
@@ -209,6 +213,7 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
             setAddress(oData);
             orderData = getOrderData(oData);
             utils.tips('success!');
+			$body.find('.addReceiptAddress').hide();
         },function(data){
             $error.text(data.msg);
             isSend = false;
@@ -228,8 +233,9 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
         server.addOrder(orderData,function(data){
             utils.tips('success');
             setTimeout(function(){
-                window.location.reload();
-            },3000);
+                //window.location.reload();
+				window.location.href = "/order/index.html";
+            },2000);
         },function(data){
             utils.tips('fail');
             console.log(data);

@@ -23,21 +23,24 @@
                 <div class="Topic">
                     <h2 class="Title">Manage my order</h2>
                     <div class="SelectLink">
-                        <a href="/order/index.html" class="all">All orders(<span>0</span>)</a>|
-                        <a href="/order/index.html?m=unpaid" class="unpaid">Unpaid orders(<span>0</span>)</a>|
-                        <a href="/order/index.html?m=cancel" class="cancel">Cancelled order(<span>0</span>)</a>|
-                        <a href="/order/index.html?m=completed" class="completed">Completed order(<span>0</span>)</a>|
+                        <a href="/order/index.html" class="all">All(<span>0</span>)</a>|
+                        <a href="/order/index.html?m=unpaid" class="unpaid">To be confirm(<span>0</span>)</a>|
+						<a href="/order/index.html?m=confirm" class="confirm">To be paied(<span>0</span>)</a>|
+                        <a href="/order/index.html?m=cancel" class="cancel">Cancelled(<span>0</span>)</a>|
+                        <a href="/order/index.html?m=completed" class="completed">Completed(<span>0</span>)</a>|
                     </div>
                 </div>
                 <table class="Table">
                     <thead>
-                        <tr>
+                        <tr>	
+							<th>Line No.</th>
                             <th>Order Time</th>
                             <th>Status</th>
                             <th>Address</th>
                             <th>LinkMan</th>
-                            <th>LinkPhone</th>
+                            <th>Tel</th>
                             <th>Freight</th>
+							<th>Wire Transfer Fee</th>
                             <th>Order Amount</th>
                             <th>Total Amount</th>
                             <th>Operating</th>
@@ -57,7 +60,7 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js"></script>
-    <script src="/static/js/config.js"></script>
+    <script src="/static/js/config.js?t=9"></script>
     <script>
         require([ 'main/order_index' ], function(page) {
             page.init();

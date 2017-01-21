@@ -239,7 +239,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
             if(v.dataSheets.length){
                 var datasheet = v.dataSheets[0];
                 datasheetHtml = '<a class="lnkDatasheet" href="/open_datasheet.html?url=' + encodeURIComponent(window.btoa(datasheet.url)) + '" target="_blank">' +
-                                '<img class="datasheet-img" src="/static/img/pdf_logo.png" alt="' + datasheet.text + ' Datasheet" title="' + datasheet.text + ' Datasheet">' +
+                                '<img class="datasheet-img" src="/static/img/pdf_logo.jpg?t=1" alt="' + datasheet.text + ' Datasheet" title="' + datasheet.text + ' Datasheet">' +
                             '</a>';
             }
             html += '<tr>' +
@@ -292,7 +292,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
 
         if(data.dataSheets && data.dataSheets.length){
             var datasheet = data.dataSheets[0];
-            html += '<dd><label>DataSheet：</label><a href="/open_datasheet.html?url=' + encodeURIComponent(window.btoa(datasheet.url)) + '" target="_blank" class="lnkDatasheet"><img class="datasheet-img" src="/static/img/pdf_logo.png" alt="' + datasheet.text + ' Datasheet" title="' + datasheet.text + ' Datasheet"> View Datasheet</a> </dd>';
+            html += '<dd><label>DataSheet：</label><a href="/open_datasheet.html?url=' + encodeURIComponent(window.btoa(datasheet.url)) + '" target="_blank" class="lnkDatasheet"><img class="datasheet-img" src="/static/img/pdf_logo.jpg?t=1" alt="' + datasheet.text + ' Datasheet" title="' + datasheet.text + ' Datasheet"> View Datasheet</a> </dd>';
         }
         return html;
     }; 
@@ -421,7 +421,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
                             }
                             html += '<p class="'+morePriceClass+'"><span class="priceBreak">'+v3.priceBreak+' :</span> $' + v3.unitPrice + '</p>';
                         });
-                        if(v2.price.length > 3){
+                        if(v2.price.length > 4){
                             html += '<p><a href="javascript:;" class="morePrice"><i></i>More ('+v2.price.length+')</a><a href="javascript:;" class="lessPrice hide"><i></i>Hidden</a></p>'
                         }
                 html += '</span>' +
@@ -483,7 +483,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
                 (v.email || '') +
             '</li>' +
             '<li>' +
-                '<label>Phone：</label>' +
+                '<label>Tel：</label>' +
                 v.areaCode + '-' + v.linkPhone +
                 '<label>Fax：</label>' +
                 (v.fax || '') +
@@ -535,20 +535,22 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
         return html;
     };
 
-    exports.orderList = function(data){
+    exports.orderList = function(data){		
         var html = '';
         $.each(data, function(k, v){
-            html += '<tr _id="' + v.id + '">' +
+            html += '<tr _id="' + v.orderCode + '">' +
+						'<td>' + v.orderCode + '</td>' +
                         '<td>' + utils.tranTimeYMDHMS(v.orderTime) + '</td>' +
                         '<td class="status">' + v.orderStatusText + '</td>' +
                         '<td>' + v.address + '</td>' +
                         '<td>' + v.linkMan + '</td>' +
                         '<td>' + v.linkPhone + '</td>' +
                         '<td>' + v.freight + '</td>' +
+						'<td>' + v.wireTransferFee + '</td>' +
                         '<td>' + v.orderAmt + '</td>' +
                         '<td>' + v.totalAmt + '</td>' +
                         '<td>' + (v.orderStatus == 0 ? '<a href="javascript:;" class="deleteBtn">Cancel</a>':'') + '</td>' +
-                        '<td><a href="/order/detail.html?id='+ v.id +'" target="_blank">查看订单详情</a></td>' +
+                        '<td><a href="/order/detail.html?id='+ v.orderCode +'" target="_blank">View Detail</a></td>' +
                         // '<td>' + (v.status != 9 ? '<a href="javascript:;" class="deleteBtn">Cancel</a>':'') + '</td>' +
                     '<tr>';
         });
@@ -559,7 +561,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
         var html = '';
         $.each(data, function(k, v){
         html += '<tr height="24">' +
-                    '<td>' + v.orderId + '</td>' +
+                    '<td>' + v.lineNo + '</td>' +
                     '<td>' + v.mfrPartNumber + '</td>' +
                     '<td colspan="2">' + v.quantity + '</td>' +
                     '<td>' + v.manufacture + '</td>' +

@@ -6,11 +6,13 @@ define('main/order_index', ['jquery','main/utils','main/server','main/common','m
     pageSize = 10,
     unpaidCount = 0,
     cancelCount = 0;
+	confirmCount = 0;
     var m = utils.getSearchParam('m') || 'all';
     $SelectLink.find('.'+m).addClass('select');
     function setStatusCount(){
         $SelectLink.find('.unpaid span').html(unpaidCount);
         $SelectLink.find('.cancel span').html(cancelCount);
+		$SelectLink.find('.confirm span').html(confirmCount);
     }
     // 我的order列表
     exports.orderList = function(params){
@@ -32,11 +34,12 @@ define('main/order_index', ['jquery','main/utils','main/server','main/common','m
 
     exports.getOrderStatusCount = function(){
         server.orderStatusCount(function(data){
-            if(data.data){
+            if(data.data){ 
                 data = data.data;
                 $SelectLink.find('.all span').html(data.all);
                 unpaidCount = data.unpaid;
                 cancelCount = data.cancel;
+				confirmCount = data.confirm;
                 setStatusCount();
                 $SelectLink.find('.completed span').html(data.complete);
             }

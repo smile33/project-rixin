@@ -63,10 +63,10 @@
                         <p>Tel: <span class="salesTel">00852-34823889</span></p>
                     </td>
                     <td colspan="6" rowspan="2">
-                        Wire Transfer/TT To/<span>请汇款到以下账户</span><span>:</span> 
+                        Wire Transfer/TT To/<span>:</span> 
                     </td>
                     <td colspan="3" rowspan="2">
-                        <span>形式发票</span><span> Pro Forma Invoice</span> 
+                        <span> Pro Forma Invoice</span> 
                     </td>
                 </tr>
                 <tr>
@@ -135,8 +135,8 @@
                     <td colspan="4" rowspan="2" height="34">
                         Contact Name
                     </td>
-                    <td colspan="6" rowspan="2">
-                        Ship Via : FEDEX
+                    <td colspan="6" rowspan="2" class="shipViaTag">
+                        Ship Via : 
                     </td>
                     <td rowspan="2">
                         Customer Num
@@ -181,7 +181,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" height="27">
-                        TEL:<span class="tel"><!-- 00186-755-85554552 --></span>
+                        TEL: <span class="tel"><!-- 00186-755-85554552 --></span>
                     </td>
                     <td colspan="4">
                         FAX: <span class="fax"></span>
@@ -251,19 +251,15 @@
                 </tr>
                 <tr>
                     <td colspan="4" rowspan="2" width="280">
-                        货物金额
-                        <br />Merchandise
+                        Merchandise
                     </td>
                     <td rowspan="2" width="190">
-                        <span>电汇费<br /></span>
                         <span>Wire Transfer Fee</span> 
                     </td>
                     <td colspan="5" rowspan="2" width="117">
-                        <span>运费<br /></span>
                         <span>Freight</span> 
                     </td>
                     <td colspan="3" rowspan="2" width="229">
-                        <span>请支付此金额</span>
                         <span> <br />Please pay this amount&nbsp;</span> 
                     </td>
                 </tr>
@@ -299,7 +295,7 @@
             </tbody>
         </table>
     </div>
-    <script src="/static/js/vendor/require/requirehttps://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js"></script>
     <script src="/static/js/config.js"></script>
     <script>
         require([ 'main/order_detail' ], function(page) {

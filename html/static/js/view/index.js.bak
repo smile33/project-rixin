@@ -52,7 +52,7 @@ define('main/index', ['jquery','main/utils','main/server','main/temple','main/co
 			$body.find('.kaptcha').attr('src',path+'kaptcha.wb?t='+Math.random());
         },function(data){
             $error.text(data.msg);
-            isSend = false; 
+            isSend = false;
         });
 
     };

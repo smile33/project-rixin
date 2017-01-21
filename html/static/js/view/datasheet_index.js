@@ -9,8 +9,9 @@ define('main/datasheet_index', ['jquery','main/utils','main/server','main/common
             size : pageSize,
             key : key
         };
+		utils.loading('show');
         PageTurningPlugin.pageServer(server.path_search_datasheet,params,function(data){
-            
+            utils.loading();
             if(data.data){
                 data = data.data;
                 $body.find('.SearIndex strong').html('A total '+data.total+' results');

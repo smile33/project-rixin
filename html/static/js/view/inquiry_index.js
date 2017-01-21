@@ -10,6 +10,7 @@ define('main/inquiry_index', ['jquery','jqform','main/utils','main/server','main
     $error = $body.find('#error_msg'),
     rExpEmail = /^([a-zA-Z0-9]+[_|\_|\.-]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/,
     rExpNumber = /^\+?[1-9][0-9]*$/,
+	rExpPositive = /^[0-9].*$/,
     isSend = false; //是否在发送中  
     var id = utils.getSearchParam('id') || '';
     var part = utils.getSearchParam('part') || '';
@@ -32,7 +33,7 @@ define('main/inquiry_index', ['jquery','jqform','main/utils','main/server','main
             return false;
         }
         oData.targetPrice = $price.val();
-        if(!rExpNumber.test(oData.targetPrice)){
+        if(!rExpPositive.test(oData.targetPrice)){
             $price.focus();
             $error.text("Pleast enter correct target price.");
             return false;

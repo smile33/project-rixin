@@ -18,8 +18,8 @@ define('main/product_search', ['jquery','jqform','main/utils','main/server','mai
     $error = $body.find('#error'),
     isSend = false, //是否在发送中  
     rExpEmail = /^([a-zA-Z0-9]+[_|\_|\.-]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/,
-    rExpNumber = /^\+?[1-9][0-9]*$/;
-
+    rExpNumber = /^\+?[1-9][0-9]*$/,
+	rExpPositive = /^[0-9].*$/;
     var shopCart = {
         // id : '',
         productId : '',
@@ -80,7 +80,7 @@ define('main/product_search', ['jquery','jqform','main/utils','main/server','mai
             return false;
         }
         oData.targetPrice = $price.val();
-        if(!rExpNumber.test(oData.targetPrice)){
+        if(!rExpPositive.test(oData.targetPrice)){
             $price.focus();
             $error.text("Pleast enter correct target price.");
             return false;
