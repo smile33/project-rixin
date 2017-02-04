@@ -16,38 +16,41 @@
         <header id="header"></header>
         <div id="main">
             <div class="SiteMap"></div>
-            <h3 class="PageTitle">Brand Index</h3>
-            <div class="BrandNav ProductIndex">
-                <span><a href="javascript:;" class="filter" v="">All</a></span>
-                <span><a href="javascript:;" class="filter" v="A">A</a></span>
-                <span><a href="javascript:;" class="filter" v="B">B</a></span>
-                <span><a href="javascript:;" class="filter" v="C">C</a></span>
-                <span><a href="javascript:;" class="filter" v="D">D</a></span>
-                <span><a href="javascript:;" class="filter" v="E">E</a></span>
-                <span><a href="javascript:;" class="filter" v="F">F</a></span>
-                <span><a href="javascript:;" class="filter" v="G">G</a></span>
-                <span><a href="javascript:;" class="filter" v="H">H</a></span>
-                <span><a href="javascript:;" class="filter" v="I">I</a></span>
-                <span><a href="javascript:;" class="filter" v="J">J</a></span>
-                <span><a href="javascript:;" class="filter" v="K">K</a></span>
-                <span><a href="javascript:;" class="filter" v="L">L</a></span>
-                <span><a href="javascript:;" class="filter" v="M">M</a></span>
-                <span><a href="javascript:;" class="filter" v="N">N</a></span>
-                <span><a href="javascript:;" class="filter" v="O">O</a></span>
-                <span><a href="javascript:;" class="filter" v="P">P</a></span>
-                <span><a href="javascript:;" class="filter" v="Q">Q</a></span>
-                <span><a href="javascript:;" class="filter" v="R">R</a></span>
-                <span><a href="javascript:;" class="filter" v="S">S</a></span>
-                <span><a href="javascript:;" class="filter" v="T">T</a></span>
-                <span><a href="javascript:;" class="filter" v="U">U</a></span>
-                <span><a href="javascript:;" class="filter" v="V">V</a></span>
-                <span><a href="javascript:;" class="filter" v="W">W</a></span>
-                <span><a href="javascript:;" class="filter" v="X">X</a></span>
-                <span><a href="javascript:;" class="filter" v="Y">Y</a></span>
-                <span><a href="javascript:;" class="filter" v="Z">Z</a></span>
-                <!-- <span><a href="javascript:;" class="filter" v="0-9">0-9</a></span> -->
+            <div class="searchContainer brandIndex">
+                <select id="brandKey">
+                    <option value="">ALL</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                    <option value="G">G</option>
+                    <option value="H">H</option>
+                    <option value="I">I</option>
+                    <option value="J">J</option>
+                    <option value="K">K</option>
+                    <option value="L">L</option>
+                    <option value="M">M</option>
+                    <option value="N">N</option>
+                    <option value="O">O</option>
+                    <option value="P">P</option>
+                    <option value="Q">Q</option>
+                    <option value="R">R</option>
+                    <option value="S">S</option>
+                    <option value="T">T</option>
+                    <option value="U">U</option>
+                    <option value="V">V</option>
+                    <option value="W">W</option>
+                    <option value="X">X</option>
+                    <option value="Y">Y</option>
+                    <option value="Z">Z</option>
+                </select>
+                <input id="keyword" type="text" placeholder="Keyword"/>
+                <input type="button" value="Search" class="searchBtn"/> 
             </div>
-            <ul id="BrandItems" class="BrandItem"></ul>
+            <div class="keyTitle">ALL</div>
+            <ul id="brandItems" class="brandItem"></ul>
             <div class="pageContainer pagelist"></div>
             <div class="Clear"></div>
         </div>

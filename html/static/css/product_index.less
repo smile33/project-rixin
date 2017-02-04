@@ -1,23 +1,32 @@
+@mainColor: #183761;
+@borderColor: #e6e6e6;
 .main-left{
     float: left;
-    padding: 5px 0px;
-    width: 250px;
+    // padding: 5px 0px;
+    width: 215px;
     min-height: 750px;
-    background-color: #f7f7f7;
+    // background-color: #f7f7f7;
     .category {
-        line-height:20px;
+        // line-height:20px;
         dt {
-            padding-left:13px;
-            margin-top:6px;
+            padding-left:12px;
+            line-height: 36px;
+            background: @mainColor;
         }
         dt a{
             font-size: 14px;
             font-weight:bold;
-            color:#555;
+            color: #fff;
+        }
+        dt a:hover {
+            // color:#e60000;
+            text-decoration:underline;
         }
         dd {
-            margin: 0px;
-            padding-left: 15px; 
+            padding: 5px 12px;
+            line-height: 16px;
+            // margin: 0px;
+            // padding-left: 10px; 
         }
         dd a {
             font-size: 12px;
@@ -26,7 +35,7 @@
             width: 200px;
 
         }
-        dd a:hover,dt a:hover {
+        dd a:hover{
             color:#e60000;
             text-decoration:underline;
         }
@@ -57,26 +66,40 @@
 }
 .main-right{
     float:right;
-    width:932px;
-    .initial-record-count{
-        display: none;
-    }
-    #matching-records-text {
-        font-weight: bold;
-        font-size: 22px;
-    }
-    #matching-records-count {
-        font-size: 22px;
-    }    
+    margin: 0;
+    width:967px;
+    // .initial-record-count{
+    //     display: none;
+    // }
+    // #matching-records-text {
+    //     font-weight: bold;
+    //     font-size: 22px;
+    // }
+    // #matching-records-count {
+    //     font-size: 22px;
+    // }    
     h1{
-        margin: 10px 0;
-        white-space:nowrap;
-        font-size: 18px;
+        // margin: 10px 0;
+        // white-space:nowrap;
+        // font-size: 18px;
+        padding-left: 10px;
+        line-height: 36px;
+        font-size: 16px;
+        font-weight: normal;
+        color: #333;
+        background: #F4F4F4;
+    }
+    .secondContainer{
+        margin-bottom: 20px;
     }
     .catfiltertopitem {
-        display: inline-block;
-        margin-top: 10px;
+        // display: inline-block;
+        margin-bottom: 10px;
         font-size: 18px;
+        span{
+            color: #666;
+            font-size: 14px;
+        }
     }
     .catfiltertopitem a {
         text-decoration: none;
@@ -84,15 +107,17 @@
         font-size: 18px;
     }
     .catfiltersub{
-        margin-left: 40px;
+        margin-left: 20px;
         font-size: 12px;
     }
     .catfiltersub li{
         white-space:nowrap;
         display: list-item;
         font-size: 12px;
-        list-style-type: disc;
+        // list-style-type: disc;
         a{
+            // color: @mainColor;
+            line-height: 24px;
             text-decoration: underline;
         }
     }

@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width">
 <link rel="stylesheet" href="/static/css/jquery-ui-1.9.2.custom/css/ui-lightness/jquery-ui-1.9.2.custom.min.css">
 <link rel="stylesheet" type="text/css" href="/static/css/common.css">
-<link rel="stylesheet" type="text/css" href="/static/css/quote.css">
+<!-- <link rel="stylesheet" type="text/css" href="/static/css/quote.css"> -->
 </head>
 <body>
     <div id="site-nav"></div>
@@ -18,32 +18,34 @@
         <div id="main">
             <div class="sidebar"></div>
             <div class="main-right">
-
-                <!-- 我的询价 start -->
-                <div class="Topic">
-                    <h2 class="Title">My inquiry</h2>
-                    <div class="SelectLink">
-                        <a href="/quote/index.html" class="all">All inquiry</a>
-                        <a href="/quote/index.html?m=cancel" class="cancel">Cancelled</a>
-                    </div>
+                <div class="searchContainer">
+                    <select id="inquiryStatus">
+                        <option value="all">Inquiry Status</option>
+                        <option value="normal">Normal</option>
+                        <option value="cancel">Cancel</option>
+                    </select>
+                    <select id="inquiryTime">
+                        <option value="0">Inquiry Time</option>
+                        <option value="1">1 month</option>
+                        <option value="2">3 month</option>
+                        <option value="3">6 month</option>
+                        <option value="4">1 year</option>
+                    </select>
+                    <input id="keyword" type="text" placeholder="Keyword"/>
+                    <input type="button" value="Search" class="searchBtn"/>    
                 </div>
-                <table class="Table">
+                <table class="table">
                     <thead>
                         <tr>
-                            <!-- <td width="4px">&nbsp;</td> -->
+                            <th>No.</th>
                             <th>Inquiry Time</th>
-                            <th>Status</th>
-                            <th>Email</th>
-                            <th>UserName</th>
                             <th>mfrPartNum</th>
+                            <th>Quantity</th>
+                            <th>Target price</th>
                             <th>LookingFor</th>
                             <th>File</th>
-                            <th>Operating</th>
-<!--                             <td width="55px">Target price</td>
-                            <td width="8px">Quote</td>
-                            <td width="8px">Lead Time</td>
-                            <td width="8px">Remark</td>
-                            <td width="8px">Operating</td> -->
+                            <th>Status</th>
+                            <th>Operat</th>
                         </tr>
                     </thead>
                     <tbody class="listContainer"></tbody>

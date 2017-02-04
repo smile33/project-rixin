@@ -33,7 +33,9 @@ define('main/add_address', ['jquery','main/utils','main/server','main/temple','m
     } 
     //显示收货地址详情
     exports.deliveryAddressDetail = function(){
+        utils.loading('show');
         server.deliveryAddressDetail(id,function(data){
+            utils.loading();
             data = data.data || {};
             $linkMan.val(data.linkMan);
             $region.val(data.region);

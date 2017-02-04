@@ -1,35 +1,55 @@
-.recordCountContainer{
-    margin-bottom: 15px;
-    font-weight: bold;
-    font-size: 22px;
-    .recordCount{
-        font-weight:normal;
-        font-size:22px;
-    }
-}
+@mainColor: #183761;
+@borderColor: #e6e6e6;
+
+// .searchIndex {
+//     margin: 20px 0 15px;
+//     height: 16px;
+//     line-height: 16px;
+//     font-size: 16px;
+//     font-weight: bold;
+//     color: #000;
+//     i{
+//         display: inline-block;
+//         margin-right: 10px;
+//         width: 7px;
+//         height: 16px;
+//         vertical-align: top;
+//         background: #D73C38;
+//     }
+//     strong {
+//         margin-left: 5px;
+//         font-size: 16px;
+//     }
+// }
+
 #productTable {
-    clear: right;
+    // clear: right;
     width: 100%;
     border-collapse: collapse;
     thead {
-        background-color: #333;
+        background-color: @mainColor;
         color: #fff;
     }
 }
-#productTable,#productTable th,#productTable tr,#productTable td{
-    border:1px solid #d3d3d3;
-}
+// #productTable,#productTable th,#productTable tr,#productTable td{
+//     border:1px solid #d3d3d3;
+// }
 #productTable th,#productTable tr,#productTable td{
-    padding:3px;
+    padding:5px 10px;
 }
 #productTable thead tr+tr td{
     padding:0;
 }
 #productTable thead{
-    background-color:#333;
+    background-color:@mainColor;
     color:#fff;
 }
 #productTable .tr-image img{
     border:solid 1px #eee;
     vertical-align:middle;
+}
+.imgContainer{
+    display: inline-block;
+    margin-left: 10px;
+    border: 1px solid @borderColor;
 }

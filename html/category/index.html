@@ -16,14 +16,14 @@
         <header id="header"></header>
         <div id="main">
             <div class="SiteMap"></div>
-            <div class="recordCountContainer">Results: <span class="recordCount"></span></div>
-            <table id="productTable">
+            <!-- <div class="recordCountContainer">Results: <span class="recordCount"></span></div> -->
+            <div class="headline">
+                <i></i>Results:<strong>0</strong>
+            </div>
+            <table id="productTable" class="table">
                 <thead id="tblhead">
                     <tr>
                         <!-- <th class="th-compareParts">Compare Parts</th> -->
-                        <th class="th-datasheet">
-                            <img border="0" height="20" width="18" alt="Datasheets" src="/static/img/pdf_logo.jpg?t=1">
-                        </th>
                         <th class="th-image">Image</th>
                         <th class="th-mfgPartNumber ps-headerColumn">Manufacturer Part Number</th>
                         <th class="th-vendor ps-headerColumn">Manufacturer</th>
@@ -35,6 +35,10 @@
                             USD
                         </th>
                         <th class="th-minQty ps-headerColumn">Minimum Quantity</th>
+                        <th class="th-datasheet">PDF</th>
+<!--                         <th class="th-datasheet">
+                            <img border="0" height="20" width="18" alt="Datasheets" src="/static/img/pdf_logo.jpg?t=1">
+                        </th> -->
                     </tr>
                 </thead>
                 <tbody></tbody>

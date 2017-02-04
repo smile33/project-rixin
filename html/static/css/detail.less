@@ -1,197 +1,271 @@
-/* CSS Document */
-.ProductPic {
+@mainColor: #183761;
+@borderColor: #e6e6e6;
+@grayBgColor: #f3f3f3;
+@emphasesColor: #DA4F4C;
+.productPic {
     width: 260px;
     float: left;
-    .Large {
+    .large {
         width: 260px;
         height: 250px;
-        border: 1px solid #ddd;
+        border: 1px solid @borderColor;
         padding: 10px 0px;
         display: table-cell;
         text-align: center;
         vertical-align: middle;
     }
-    .Large img {
+    .large img {
         max-width: 260px;
         max-height: 250px;
     }
-    .Small {
-        height: 48px;
-        margin: 5px 0px;
+    .small {
+        height: 57px;
+        margin: 10px 0px;
         overflow: hidden;
         a {
             float: left;
-            margin: 0 2px;   
+            margin-right: 10px;   
             img {
-                width: 46px;
-                height: 46px;
-                border: 1px solid #ddd;
+                width: 55px;
+                height: 55px;
+                border: 1px solid @borderColor;
+                vertical-align: bottom;
             }      
             &:last-child {
                 margin-right: 0px;
             }
         }
+
         .imgChoose img{
-            border: 1px solid #e60000;
+            border: 1px solid @mainColor;
         }
     }
 }
-.ProductInfo {
+.productInfo {
     width: 630px;
     float: left;
     margin-left: 20px;
     padding-top: 15px;
 }
-.InfoList {
+.infoList {
     line-height: 24px;
+    dt h1 {
+        font-weight: normal;
+        font-size: 30px;
+        margin-bottom: 15px;
+        padding-left: 38px;
+    }
+    dd {
+        margin: 5px 0px;
+        a{
+            color: @mainColor;
+            text-decoration: underline;
+        }
+    }
+    label {
+        width: 210px;
+        display: inline-block;
+        text-align: right;
+        padding-right: 10px;
+        color: #808080;
+    }
+    .description{
+        padding-bottom: 10px;
+        border-bottom: 1px solid @borderColor;
+    }
+    .datasheet-img{
+        margin-right: 5px;
+        height: 20px;
+        vertical-align: top;
+    }
 }
-.InfoList dt h1 {
-    font-weight: normal;
-    font-size: 30px;
-    margin-bottom: 15px;
-    padding-left: 38px;
-}
-.InfoList dd {
-    margin: 5px 0px;
-}
-.InfoList label {
-    width: 210px;
-    display: inline-block;
-    text-align: right;
-    padding-right: 10px;
-    color: #808080;
-}
-.InfoList .datasheet-img{
-    margin-right: 5px;
-    height: 20px;
-    vertical-align: top;
-}
-.InfoOther {
-    padding: 10px 0px;
-    line-height: 28px;
-    background-color: #FAFAFA;
-    min-height: 122px;
+.countContainer{
     margin-top: 10px;
+    padding: 20px 0px;
+    min-height: 40px;
     line-height: 35px;
-    border: 2px solid #F5F5F5;
+    border: 1px solid @borderColor;
     border-left-width: 0px;
     border-right-width: 0px;
+    background-color: #FAFAFA;
+    label {
+        width: 70px;
+        display: inline-block;
+        text-align: right;
+        padding-right: 10px;
+        color: #808080;
+        vertical-align: middle;
+    }
+    input {
+        width: 50px;
+        height: 18px;
+        padding: 5px;
+        border: solid 1px @borderColor;
+        text-align: center;
+    }
+    b {
+        color: #333;
+        font-size: 20px;
+    }
+    strong {
+        font-size: 20px;
+        color: @emphasesColor;
+    }
+    .sub {
+        cursor: pointer;
+        padding:6px 5px;
+        border: 1px solid @borderColor;
+        margin-right:-1px;
+        outline:none;
+    }
+    .sub::selection,.add::selection {
+        background-color:#fff;
+    }
+    .add {
+        cursor: pointer;
+        padding:6px 3px;
+        border: 1px solid @borderColor;
+        margin:0px 6px;
+        margin-left:-1px;
+    }
 }
-.InfoOther label {
-    width: 130px;
-    display: inline-block;
-    text-align: right;
-    padding-right: 10px;
-    color: #808080;
-    vertical-align: middle;
-}
-.InfoOther .count input {
-    width: 50px;
-    height: 18px;
-    padding: 5px;
-    border: solid 1px #DDD;
-    text-align: center;
-}
-.InfoOther .count b {
-    color: #D20041;
-    font-weight: normal;
-}
-.InfoOther .count strong {
-    font-size: 16px;
-    font-weight: normal;
-    color: #D20041;
-}
-.InfoOther .count .sub {
-    cursor: pointer;
-    padding:6px 5px;
-    border: 1px solid #ddd;
-    margin-right:-1px;
-    outline:none;
-}
-.InfoOther .count .sub::selection,.InfoOther .count .add::selection {
-    background-color:#fff;
-}
-.InfoOther .count .add {
-    cursor: pointer;
-    padding:6px 3px;
-    border: 1px solid #ddd;
-    margin:0px 6px;
-    margin-left:-1px;
-}
-.InfoOther .addLink {
-    margin-top: 15px;
-    margin-bottom: 10px;
-    margin-left: 140px;
-}
-.InfoOther .addLink a {
-    padding: 7px 20px;
-    margin-right: 5px;
-    background-color: #ff9509;
-    color: #FFF;
-    font-size: 16px;
-    border-radius: 3px;
-}
-.InfoOther .addLink .addCart {
-    background-color: #e60000;
-}
-.InfoOther .addLink .inquiry {
-    color: #555;
-    border: 1px solid #ddd;
-    text-align: center;
-    margin-left: 20px;
-    padding: 6px 10px 6px 30px;
-    background: #F9F9F9 url('/static/img/page_white_text.png') no-repeat 8px 9px;
+.addLink {
+    margin-top: 20px;
+    a {
+        display: inline-block;
+        margin-right: 35px;
+        width: 160px;
+        height: 38px;
+        line-height: 38px;
+        text-align: center;
+        background-color: #ff9509;
+        color: #FFF;
+        font-size: 16px;
+        border-radius: 3px;
+    }
+    i{
+        display: inline-block;
+        margin-right: 5px;
+        width: 22px;
+        height: 26px;
+        vertical-align: middle;
+        background: url('/static/img/page_white_text.png') no-repeat 0 4px;
+    }
+    .addCart {
+        background-color: @emphasesColor;
+        background:linear-gradient(top,#D73C38,#C52824);
+        background:-moz-linear-gradient(top,#D73C38,#C52824);
+        background:-webkit-linear-gradient(top,#D73C38,#C52824);
+        
+    }
+    .purchaseBtn{
+        background-color: #E5A316;
+        background:linear-gradient(top,#ECA100,#DE9800);
+        background:-moz-linear-gradient(top,#ECA100,#DE9800);
+        background:-webkit-linear-gradient(top,#ECA100,#DE9800);
+    }
+    .inquiry {
+        height: 36px;
+        line-height: 36px;
+        color: #666;
+        border: 1px solid @borderColor;
+        background-color: #fff;
+        background:linear-gradient(top,#FFF,#F2F2F2);
+        background:-moz-linear-gradient(top,#FFF,#F2F2F2);
+        background:-webkit-linear-gradient(top,#FFF,#F2F2F2);
+    }
 }
 
 
-
-.ProOther {
-    width: 260px;
-    float: right;
+h2{
+    margin-bottom: 10px;    
+    padding-left: 10px;
+    height: 36px;
+    line-height: 36px;
+    background: @grayBgColor;
 }
 h3 {
     font-size: 14px;
     font-weight: normal;
     padding: 5px 10px;
-    border: 1px solid #EEE;
-    background-color: #F9F9F9;
+    border: 1px solid @borderColor;
+    background-color: @mainColor;
+    color: #fff;
 }
-.ProOther .OtherItem {
-    margin-bottom: 20px;
-    padding: 10px;
-    line-height: 25px;    
-    height: 95px;
-    overflow:hidden;
+.proOther {
+    width: 260px;
+    float: right;
 }
-.ProOther .OtherItem a{
-    color: #555;
-    margin-right: 10px;
-    border-right: 1px solid #DDD;
-    padding-right: 10px;
+// .proOther .OtherItem {
+//     margin-bottom: 20px;
+//     padding: 10px;
+//     line-height: 25px;    
+//     height: 95px;
+//     overflow:hidden;
+// }
+// .proOther .OtherItem a{
+//     color: #555;
+//     margin-right: 10px;
+//     border-right: 1px solid #DDD;
+//     padding-right: 10px;
+// }
+.batchPrice {
+    border: 1px solid @borderColor;
 }
-.BatchPrice {
-    border: 1px solid #EEE;
-}
-.BatchPrice li {
+.batchPrice li {
     line-height: 22px;
 }
-.BatchPrice .title {
-    background-color: #EAEAEA;
+.batchPrice .title {
+    background-color: @grayBgColor;
 }
-.BatchPrice ul li label {
-    width: 65px;
+.batchPrice ul li label {
+    width: 62px;
     display: inline-block;
-    padding: 3px 5px;
+    padding: 3px 10px;
 }
-.BatchPrice .extendedPrice{
+.batchPrice .extendedPrice{
     max-height:270px;
     overflow-y:auto;
     height: 200px;
 }
 
+/* table */
+#prod-att-table {
+    margin-bottom: 40px;
+    width: 100%;
+    border: 1px solid #333;
+    border-bottom: 0;
+}
+#prod-att-title {
+    padding: 5px;
+}
+#prod-att-title-row{
+    background-color: @grayBgColor;
+    .bota-headline {
+        color: #333;
+        font-size: 14px;
+        font-weight: bold;
+    }
+}
+.attributes-table-main th {
+    text-align: right;
+    vertical-align: top;
+    background-color: #EAF2FD;
+    width: 30%;
+    border-bottom: 1px solid #333;
+    border-right: 1px solid #333;
+    font-weight: normal;
+}
+.attributes-table-main th, .attributes-table-main td {
+    padding: 10px 10px;
+    color: #666;
+    border-color: #333;
+    border-bottom: 1px solid #333;
+}
+
 /* product */
 .favorProductContainer{
-    margin:40px auto;
+    margin:0 auto;
     display: inline-block;
     clear: both;
     .productItem{
@@ -212,39 +286,35 @@ h3 {
     }
     .productItem img{
         width:130px;
-        height:140px;
+        height:130px;
+        border: 1px solid @borderColor;
     }
 }
-
-/* table */
-#prod-att-table {
-    width: 100%;
-    border: 1px solid #999;
-}
-#prod-att-title {
-    padding: 5px;
-}
-#prod-att-title-row{
-    background-color: #eee;
-    .bota-headline {
-        color: #333;
-        font-size: 14px;
-        font-weight: bold;
+.favorProductWrapper {
+    position: relative;
+    padding: 0 50px;
+    .prev,.next{ 
+        z-index:1; 
+        display:block; 
+        width:14px; 
+        height:74px; 
+        position:absolute;
+        top: 40px;
+        filter:alpha(opacity=60);
+        opacity:0.6  
     }
-}
-.attributes-table-main th {
-    text-align: right;
-    vertical-align: top;
-    background-color: #eee;
-    width: 30%;
-    border-bottom: 1px solid #999;
-    border-right: 1px solid #999;
-    font-weight: normal;
-}
-.attributes-table-main th, .attributes-table-main td {
-    padding: 5px 10px;
-    border-color: #999;
-    border-bottom: 1px solid #999;
+    .prev{
+        left: 0;
+        background:url("/static/img/arrow_left.png") 0 0 no-repeat;
+    }
+    .next{  
+        right: 0;
+        background:url("/static/img/arrow_right.png") 0 0 no-repeat;
+    }
+    .prev:hover,.next:hover{ 
+        filter:alpha(opacity=100);
+        opacity:1
+    }
 }
 #inputBox{
     display: none;

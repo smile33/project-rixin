@@ -45,7 +45,7 @@ define('main/forget', ['jquery','main/server','main/common','main/utils'], funct
 
     exports.init = function(){
         common.init();
-        $body.find('.currentLocation').html('Retrieve password');
+        // $body.find('.currentLocation').html('Retrieve password');
         exports.action();
     };
     return exports;

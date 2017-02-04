@@ -14,106 +14,73 @@
     <div id="site-nav"></div>
     <div id="wrapper" class="Container">
         <header id="header"></header>
-        <div id="main">
-            <div class="main-left">
-                <dl class="category"></dl>        
+<!--         <div class="bannerWrapper">
+            <div class="banner">
+                <img src="/static/img/loading.gif" />
             </div>
-            <div class="main-right">
-                <div class="contentTop">
-                    <div class="banner">
-                        <div id="ADBanner">
-                            <img src="/static/img/loading.gif" />
-                        </div>
-                    </div>
-                    <div class="identityChoose">
-                        <ul id="TabIntro" class="TabIntro">
-                            <li class="tabSelect" id="Buyers">For Buyers</li>
-                            <li>For Supplier</li>
-                        </ul>
-                        <div class="Clear"></div>
-                        <div id="TabIntroPanel">
-                            <ul class="TabIntroPanel">
-                                <li class="buy-more"><a href="javascript:;">Search for more products</a></li>
-                                <li class="buy-reply"><a href="javascript:;">Give priority to reply</a></li>
-                                <li class="buy-support"><a href="/article/about.html?tpl=customer_service_time">Customer service</a></li>
-                                <li class="buy-free"><a href="/rixin_freight_statement.html" target="_blank">Freight Statement</a></li>
-                            </ul>
-                            <ul class="TabIntroPanel" style="display:none">
-                                <li class="reply">
-                                <a href="mailto:web@rxicsource.com">Please contact our inventory management department</a>
-                            </li>
-                            </ul>
-                        </div>
-                        <div class="idcBtn">
-                            <a href="/member/register.html" class="join">Join Free</a>
-                            <a href="/member/index.html">Sign in</a>
-                        </div>
-                    </div>
-                    <div class="Clear"></div>
-                </div>
-                <div class="Clear"></div>
-                <div>
-                    <div class="Products">
-                        <ul id="TabHead" class="productsChoose"></ul>
-                        <div class="Clear"></div>
-                        <div id="TabHeadPanel"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="Clear"></div>
-            <div class="tab">
-                <ul id="TabCenter" class="tabHead">
-                    <li class="tabSelect"><a href="javascript:void(0)">Special products</a></li>
+        </div> -->
+        <div class="fullSlide bannerWrapper">
+            <div class="bd">
+                <ul class="bannerContainer">
+                    <img src="/static/img/loading.gif"/>
                 </ul>
-                <div class="Clear"></div>
-                <div class="Detail">
-                    <div id="TabCenterPanel">
-<!--                         <div class="tabProduct">
-                            <img src="#">
-                            <a href="/product/detail.html?id=102999&amp;part=IRLML2502TRPBF">IRLML2502TRPBF</a>
-                            <p class="price">$ 0.04</p>
-                        </div>
-                        <div class="moreItem"></div> -->
-                    </div>
-                    <div class="quickInquiry">
-                        <h2>Quick inquiry</h2>
-                        <ul>
-                            <li>
-                                <label><span>*</span>Name</label>
-                                <input type="text" id="name">
-                            </li>
-                            <li>
-                                <label><span>*</span>Email</label>
-                                <input type="text" id="email">
-                            </li>
-                            <li class="kaptchaImgCont">
-                                <label><span>*</span>Authcode</label>
-                                <input type="text" size="8" name="kaptcha" id="kaptcha" class="inputBg">
-                                <img id="kaptchaImg" src="" alt="kaptcha" class="kaptcha" title="Click to refresh image.">
-                            </li>
-                            <li>
-                                <label><span>*</span>Looking for</label>
-                                <textarea id="content"></textarea>
-                            </li>
-                          <li>
-                                <span id="error_msg" class="error_msg"></span>
-                            </li>
-                        </ul>
-                        <div class="qiBtn">
-                            <input type="button" value="Submit" class="quickInquiryBtn">
-                        </div>
-                    </div>
-                    <div class="Clear"></div>
-                </div>
             </div>
-            <div class="BrandOverview">
-                <div class="brandHead">
-                    <h2>Global brands</h2>
-                    <a href="/brand/index.html">View all</a>
-                </div>
+            <div class="hd">
+                <ul></ul>
+            </div>
+        </div>
+        <div id="main">
+            <ul class="hotProductViews"></ul>
+            <div class="products">
+                <ul id="tabHead" class="productsChoose"></ul>
+                <div id="tabHeadPanel"></div>
+            </div>
+            <div class="specialProduct">
+                <h2>Special products</h2>
+                <div class="specialProductContainer"></div>
+            </div>
+            <div class="brandOverview">
+                <h2>Global brands
+                    <a class="emphasesColor" href="/brand/index.html">View More &gt</a>
+                </h2>
                 <ul class="brandList"></ul>
-                <div class="Clear"></div>
             </div>
+            <div class="policyViews">
+                <h2>Buyer Protection Policy</h2>
+                <ul class="policyList">
+                    <li>
+                        <img src="/static/img/policy/find_products.png" />
+                        <p class="policyTitle">Find Products</p>
+                        <p class="description">Find Products, Inquiry, Parity, Receive, Check</p>
+                    </li>
+                    <li>
+                        <img src="/static/img/policy/purchasing_agent.png" />
+                        <p class="policyTitle">Purchasing Agent</p>
+                        <p class="description">Centralized Delivery,  Unified Payment</p>
+                    </li>
+                    <li>
+                        <img src="/static/img/policy/quality_assurance.png" />
+                        <p class="policyTitle">Quality Assurance</p>
+                        <p class="description">All products are 100% guaranteed New & Original</p>
+                    </li>
+                    <li>
+                        <img src="/static/img/policy/fast_delivery.png" />
+                        <p class="policyTitle">Fast Delivery</p>
+                        <p class="description">Over 100,000 products in stock</p>
+                    </li>
+                    <li>
+                        <img src="/static/img/policy/excess_inventory.png" />
+                        <p class="policyTitle">Excess Inventory</p>
+                        <p class="description">Providing Recycling, Consignment Service</p>
+                    </li>
+                    <li>
+                        <img src="/static/img/policy/bom.png" />
+                        <p class="policyTitle">BOM</p>
+                        <p class="description">One-stop Purchasing Solution</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
         <footer id="footer"></footer>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js"></script>

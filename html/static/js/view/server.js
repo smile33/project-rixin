@@ -4,10 +4,14 @@ define('main/server', ['jquery','main/utils'], function($, utils){
 
     // 首页数据
     exports.path_home = path + 'home/data.wb';
-    // 获取页面左侧分类
+    // 左侧分类
     exports.path_category_left = path + 'category/left.wb';
     // 获取页面左侧分类
     exports.path_category_tree = path + 'category/tree.wb';
+    // 首页左侧分类
+    exports.path_home_category = path + 'home/home_cagtegory.wb';
+    // 首页左侧分类展开菜单
+    // exports.path_category_left_sub = path + 'category/left_sub.wb';
     // 首页quick inquiry
     exports.path_quick_inquiry = path+'inquiry/quick.wb';
     // 发布商品inquiry
@@ -23,11 +27,14 @@ define('main/server', ['jquery','main/utils'], function($, utils){
     // 分页获取某个供应商的新商品
     exports.path_brand_new_product = path+'product/mfr/new_product.wb';
     //Product Index页面
-    exports.path_product_index = path+'product/product_index.wb';
+    // exports.path_product_index = path+'product/product_index.wb';
+    exports.path_product_index_sub_cats = path+'/category/product_index_sub_cats.wb';
     //分类商品列表
     exports.path_product_category = path+'product/category.wb';
     // 商品详情
     exports.path_product_detail = path+'product/detail.wb';
+    // 商品详情-相似商品
+    exports.path_relate_products = path+'/product/relate_products.wb';
     // 商品搜索
     exports.path_product_search = path+'search/product.wb';
     // 获取商品单价
@@ -75,7 +82,7 @@ define('main/server', ['jquery','main/utils'], function($, utils){
     exports.path_delete_inquiry = path+'inquiry/my/cancel.wb';
     
     //我的订单列表
-    exports.path_order_list = path+'order/my/list.wb';
+    exports.path_order_list = path+'order/my/list_2.wb';
     //取消order
     exports.path_delete_order = path+'order/my/cancel.wb';
     //各种状态订单数
@@ -130,6 +137,21 @@ define('main/server', ['jquery','main/utils'], function($, utils){
             type : 'get'
         },callback);
     };
+    //首页左侧分类
+    exports.homeCagtegory = function(callback){
+        exports.ajax({
+            url : exports.path_home_category,
+            type : 'get'
+        },callback);
+    };
+    // //首页左侧分类展开菜单
+    // exports.categoryLeftSub = function(data,callback){
+    //     exports.ajax({
+    //         url : exports.path_category_left_sub,
+    //         type : 'get',
+    //         data: data
+    //     },callback);
+    // };
     //获取页面左侧分类
     exports.categoryLeft = function(data,callback){
         exports.ajax({
@@ -198,16 +220,25 @@ define('main/server', ['jquery','main/utils'], function($, utils){
     // };
 
     //Product Index页面
-    exports.productIndex = function(callback){
+    exports.productIndex = function(data,callback){
         exports.ajax({
-            url : exports.path_product_index,
-            type : 'get'
+            url : exports.path_product_index_sub_cats,
+            type : 'get',
+            data: data
         },callback);
     };
     // 商品详情
     exports.productDetail = function(data,callback){
         exports.ajax({
             url : exports.path_product_detail,
+            type : 'get',
+            data : data
+        },callback);
+    };
+    // 商品详情-相似商品
+    exports.relateProducts = function(data,callback){
+        exports.ajax({
+            url : exports.path_relate_products,
             type : 'get',
             data : data
         },callback);

@@ -1,85 +1,106 @@
-/* CSS Document */
-
-
-/*我的询价 start*/
-/*我的BOM单 start*/
-.HandlePanel input {
-    padding: 4px;
-    border: 1px solid #DDD;
-    margin-right: 10px;
+@mainColor: #183761;
+@borderColor: #e6e6e6;
+// @emphasesColor: #DA4F4C;
+// .emphasesColor{
+//     color: @emphasesColor;
+// }
+.cancelColor{
+    color: #333;
 }
-.HandlePanel .but {
-    padding: 4px 10px;
-    border: 1px solid #DADADA;
-    background-color: #F9F9F9;
-    cursor: pointer;
+.completeColor{
+    color: #9CD98F;
 }
-
-.OrderTable {
+.confirmColor{
+    color: #E5A316;
+}
+.orderTable {
+    margin: 10px 0;
     width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0px;
-    border: 1px solid #EEE;
-}
-.OrderTable thead tr {
-    border: 1px solid #DDD;
-    background-color: #FAFAFA;
-    color: #000;
-}
-.OrderTable thead tr td {font-size: 12px;
-    /* text-align: center; */
-    padding: 0px 10px;border: 1px solid #EEE;
-}
+    border: 1px solid @borderColor;
+    caption{
+        position: relative;
+        padding: 5px 20px;
+        line-height: 36px;
+        border: 1px solid @borderColor;
+        border-bottom: 0;
+        background: #F5F5F5;
+        text-align: left;
+        span{
+            display: inline-block;
+            margin-right: 30px;
+        }
+        .orderTime{
+            margin: 0;
+            position: absolute;
+            right: 20px;
+        }
+    }
+    div{
+        margin-bottom: 5px;
+    }
+    // td{
+    //     padding: 20px;
+    // }
+    .freight{
+        border-left: 2px solid @borderColor;
+    }
+    .imgContainer{
+        display: inline-block;
+        width: 90px;
+        height: 90px;
+        // margin-right: 10px;
+        border: 1px solid @borderColor;
+        img{
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+    .viewDetails{
+        color: @mainColor;
+        text-decoration: underline;
+    }
 
-.Table {
-    margin-top: 20px;
-    width: 100%;
-    border-collapse: collapse;
 }
-.Table thead {
-    background-color: #EEE;
+.tableTitle{
+    text-align: center;
 }
-.Table td {
-    padding: 5px;
-    border: 1px solid #CCC;
-    word-break: break-word;
+.imgWrapper{
+    padding: 20px;
+    width: 90px;
 }
-.Table thead td, .Table tfoot td {
-    padding: 10px;
-    font-size: 12px;
+.description{
+    padding-right: 20px;
+    width: 200px;
 }
-.Table thead td label, .Table tfoot td label {
-    margin-right: 20px;
+.unitPrice{
+    padding-right: 10px;
+    width: 170px;
 }
-.Table thead td label strong, .Table tfoot td label strong {
-    color: #999;
-    margin-right: 5px;
+.freight ,.wireTransferFee{
+    // padding: 0 5px;
+    width: 80px;
+    text-align: center;
 }
-
-.btnGreen {
-    background-color: #ff9509;
-    padding: 3px 10px;
-    color: #FFF;
+.orderAmt ,.totalAmt{
+    width: 100px;
+    text-align: center;
 }
-
-
-.tdSelect{width:10px;}
-         .status{width:70px;}
-         .type{width:100px;}
-        .brand{width:80px;}
-         .package{width:60px;}
-         .batch{width:40px;}
-         .quality{width:40px;}
-         .count{width:60px;}
-         .price{width:60px;}
-        .remark{width:80px;}
-        .operate{width:60px;}
-
-
-
-
-
-
+.orderStatus{
+    // width: 100px;
+    text-align: center;
+}
+.deleteBtn{
+    display: inline-block;
+    width: 60px;
+    line-height: 24px;
+    color: #333;
+    border: 1px solid @borderColor;
+    border-radius: 2px;
+    text-align: center;
+    background:linear-gradient(top,#FEFEFE,#F2F2F2);
+    background:-moz-linear-gradient(top,#FEFEFE,#F2F2F2);
+    background:-webkit-linear-gradient(top,#FEFEFE,#F2F2F2);
+}
 
 
 

@@ -17,7 +17,7 @@ define('main/category_index', ['jquery','main/utils','main/server','main/common'
                 data = data.data;
                 console.log(data.items);
                 $body.find('#productTable tbody').html(temple.productCategory(data.items));
-                $body.find('.recordCount').html(data.total);
+                $body.find('.headline strong').html(data.total);
                 PageTurningPlugin.setPageObj({
                     pageIndex : data.page,
                     pageLast : data.maxPage

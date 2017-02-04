@@ -1,8 +1,8 @@
-define('main/product_detail', ['jquery','main/utils','main/server','main/common','main/temple'], function($, utils, server, common, temple){
+define('main/product_detail', ['jquery','main/utils','main/server','main/common','main/temple','jqsuperslide'], function($, utils, server, common, temple){
     var exports  = {},
     profile,
     $body = $('body'),
-    $Large = $body.find('.Large'),
+    $Large = $body.find('.large'),
     // $quantity = $body.find('.quantity'),
     // $inputBox = $body.find("#inputBox"),
     // $error_msg = $inputBox.find(".error_msg"),
@@ -87,7 +87,7 @@ define('main/product_detail', ['jquery','main/utils','main/server','main/common'
             // $inputBox.dialog( "close" );
             // $error_msg.html('');
             utils.tips('add success');
-            common.headShopCart();
+            // common.headShopCart();
             
         });
     };
@@ -110,10 +110,11 @@ define('main/product_detail', ['jquery','main/utils','main/server','main/common'
             profile = data.profile;
             if(profile){
                 $body.find('.currentLocation').html('<a href="/product/index.html">Product List</a> &gt; '+profile.mfrPartNum);
-                $body.find('.InfoList').html(temple.productInfo(profile));
+                $body.find('.infoList').html(temple.productInfo(profile));
+                $body.find('.manufacturer').html(profile.manufacturerName);
                 if(profile.productImgs && profile.productImgs.length){
                     setLargePic(profile.productImgs[0]);
-                    $body.find('.Small').html(temple.productSmallPic(profile.productImgs));
+                    $body.find('.small').html(temple.productSmallPic(profile.productImgs));
                     shopCart.productImg = profile.productImgs[0].thumbImg;
                 }
                 if(profile.productExtPrices){
@@ -124,9 +125,9 @@ define('main/product_detail', ['jquery','main/utils','main/server','main/common'
                     shopCart.moq = product.priceBreak;
                     shopCart.quantity = product.priceBreak;
                 }
-                if(data.favorProduct){
-                    $body.find('.favorProductContainer').html(temple.favorProduct(data.favorProduct));
-                }
+                // if(data.favorProduct){
+                //     $body.find('.favorProductContainer').html(temple.favorProduct(data.favorProduct));
+                // }
                 if(profile.productAttrs){
                     $body.find('.attributes-table-main tbody').html(temple.productAttributes(profile.productAttrs));
                 }
@@ -139,7 +140,30 @@ define('main/product_detail', ['jquery','main/utils','main/server','main/common'
             }
         });
     };
-
+    
+    //获取相关产品内容
+    exports.getRelateProducts = function(){
+        server.relateProducts({
+            productId : id
+        },function(data){
+            data = data.data || {};
+            console.log(data);
+            // if(data.favorProduct){
+                $body.find('.favorProductContainer').html(temple.favorProduct(data));
+            $(".fullSlide").slide({ 
+                titCell:".hd ul", 
+                mainCell:".bd ul", 
+                effect:"leftLoop", 
+                vis:6, 
+                scroll: 6,
+                autoPlay:true, 
+                // defaultIndex: 12,
+                autoPage:true, 
+                trigger:"click" 
+            });
+            // }
+        });
+    };
     // exports.quantityPopup = function(){
     //     $inputBox.dialog({
     //       autoOpen: true,
@@ -195,6 +219,7 @@ define('main/product_detail', ['jquery','main/utils','main/server','main/common'
     exports.init = function(){
         common.init();
         exports.getProductDetailData();
+        exports.getRelateProducts();
         exports.action();
     };
     return exports;

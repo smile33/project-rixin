@@ -4,6 +4,47 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
     exports.formatText = function(text){
         return ((!text) ? '' : text);
     };
+
+    //导航分类
+    exports.homeCagtegory = function(data){
+        var cagtegoryHtml = '';
+        var subCagtegoryHtml = '';
+        // console.log(data);
+        var countLength = 25,count;
+        $.each(data, function(k, v){
+            cagtegoryHtml += '<li cid="' + v.cid + '">' + v.cn + (v.sc?'<i class="arrowIcon"></i>':'')+'</li>';
+            subCagtegoryHtml += '<div class="subCategoryList"><div class="col">';
+            count = countLength;
+            if(v.sc){
+                $.each(v.sc, function(k2, v2){
+                    if(!count){
+                        count = countLength;
+                        subCagtegoryHtml += '</div><div class="col">';
+                    }
+                    subCagtegoryHtml += '<h3><a href="/product/index.html?cid='+v.cid+'#'+v2.cid+'">'+v2.cn+'</a></h3>';
+                    count --;
+                    if(v2.sc){
+                        $.each(v2.sc, function(k3, v3){
+                            // console.log('k1:'+k+ ';k2:'+k2+ ';k3:'+k3+':'+v3);
+                            if(!count){
+                                count = countLength;
+                                subCagtegoryHtml += '</div><div class="col">';
+                            }
+                            subCagtegoryHtml += '<a href="/category/index.html?categoryId='+v3.cid+'">'+v3.cn+'</a>';
+                            count --;
+                        });
+                    }
+                });
+            }
+            subCagtegoryHtml += '</div></div>';
+        });
+        var html = {
+            cagtegoryHtml: cagtegoryHtml,
+            subCagtegoryHtml: subCagtegoryHtml
+        };
+        return html;
+    }
+
     //首页globalBrand
     exports.globalBrandViews = function(data){
         var html = '';
@@ -11,8 +52,37 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
             html += '<li><a href="/brand/detail.html?id=' + v.manufactureId + '"><img src="' + (v.logo || '/static/img/default_pic.jpg' ) + '"><br><span>'+v.manufactureName+'</span></a></li>';
         });
         return html;
-        
     }
+
+                    
+    //首页Banner
+    exports.indexBannerViews = function(data){
+        var html = '';
+        $.each(data, function(k, v){
+            html += '<li><a target="_blank" href="'+v.url+'" title="'+v.name+'"><span style="display:inline-block;width:100%;height:300px;background:url('+ (v.logo || '/static/img/default_pic.jpg') + ') no-repeat center center;"></span></a></li>';
+
+            // html += '<li><a target="_blank" href="'+v.url+'" title="'+v.name+'"><img src="'+v.logo+'" alt="'+v.name+'"/></a></li>';
+        });
+        return html;
+    }
+    //首页
+    exports.hotProductViews = function(data){
+        var html = '';
+        $.each(data, function(k, v){
+            html += '<li>' + 
+                    '<div class="hotProductInfo">' + 
+                        '<h4 class="hotProductCategory">' + v.category + '</h4>' + 
+                        '<p class="description">' + v.description + '</p>' + 
+                        '<a href="' + v.url + '" class="emphasesColor viewMore">View More &gt</a>' + 
+                    '</div>' + 
+                    '<div class="imgWrapp">' + 
+                        '<img src="' + v.logo + '">' + 
+                    '</div>' + 
+                '</li>';
+        });
+        return html;
+    }
+
     //首页分类商品
     exports.categoryProductUlViews = function(data){
         var tabHeadHtml = '',tabPanelHtml = '';
@@ -24,15 +94,15 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
                 style = ' style="display:block"'
             }
             tabHeadHtml += '<li'+className+'>'+v.categoryName+'</li>';
-            tabPanelHtml += '<div class="Panel"'+style+'>';
+            tabPanelHtml += '<div class="panel"'+style+'>';
             $.each(v.products, function(i, product){
-                tabPanelHtml += '<a class="productItem" href="/product/detail.html?id='+product.productId+'&part='+product.productName+'">' +
+                tabPanelHtml += '<a class="productItem '+((i+1)%5?'':'noMargin')+'" href="/product/detail.html?id='+product.productId+'&part='+product.productName+'">' +
                                     '<img src="'+(product.logo || '/static/img/default_pic.jpg' ) +'">' +
-                                    '<p class="title">'+product.productName+'</p>' +
-                                    '<p class="price">Price: $ '+product.price+'</p>' +
+                                    '<p class="title">'+product.description+'</p>' +
+                                    '<p class="price">$ '+product.price+'</p>' +
                                 '</a>';
             });
-            tabPanelHtml += '<div class="Clear"></div></div>';
+            tabPanelHtml += '</div>';
         });
         var html = {
             tabHeadHtml: tabHeadHtml,
@@ -40,17 +110,17 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
         };
         return html;
     }
-    //首页
-    exports.categoryLeftIndex = function(data){
-        var html = '';
-        $.each(data, function(k, v){
-            html += '<dt><a href="/product/index.html">'+v.categoryName+'</a></dt>';
-            $.each(v.subCats, function(i, subCat){
-                html += '<dd><a href="/product/index.html#'+subCat.categoryId+'">'+subCat.categoryName+'</a></dd>';
-            });
-        });
-        return html;
-    };
+    // //首页
+    // exports.categoryLeftIndex = function(data){
+    //     var html = '';
+    //     $.each(data, function(k, v){
+    //         html += '<dt><a href="/product/index.html">'+v.categoryName+'</a></dt>';
+    //         $.each(v.subCats, function(i, subCat){
+    //             html += '<dd><a href="/product/index.html#'+subCat.categoryId+'">'+subCat.categoryName+'</a></dd>';
+    //         });
+    //     });
+    //     return html;
+    // };
     exports.categoryProductViews = function(data){
         var html = '';
         $.each(data, function(k, v){
@@ -69,7 +139,10 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
             if(k === 0){
                 html += '<div class="tabProduct">' + 
                             '<img src="'+ (v.logo || '/static/img/default_pic.jpg') + '">' +
-                            '<a href="/product/detail.html?id='+v.productId+'&part='+v.productName+'">'+v.productName+'</a>' +
+                            '<p>' +
+                                '<a href="/product/detail.html?id='+v.productId+'&part='+v.productName+'">'+v.productName+'</a>' +
+                                v.description+
+                            '</p>' +
                             '<p class="price">$ '+v.price+'</p>' +
                         '</div>' +
                         '<div class="moreItem">';
@@ -132,31 +205,31 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
         });
         return html;
     };
-    //头部购物车展示购物车商品
-    exports.headShopCart = function(data){
-        var html = '';
-        $.each(data, function(k, v){
-            html += '<li class="blockItem" _id="' + (v.id || k) + '">' +
-                        '<img src="'+(v.productImg || v.logo || '/static/img/default_pic.jpg' )+'">' +
-                        '<p>' +
-                            '<a href="/product/detail.html?id=' + v.productId + '&part=' + v.mfrPartNum + '" target="_blank">' + v.mfrPartNum + '</a>' +
-                            '<span>Price:' + utils.accMul(v.unitPrice,v.quantity) + ' Quantity:' + v.quantity + '</span>' +
-                        '</p>' +
-                        '<a href="javascript:;" class="headDeleteShopCartBtn delete">delete</a>' +
-                    '</li>';
-        });
-        if(data.length){
-            html += '<li class="CartGoto"><a href="/home/cart.html">Go to Shopping Cart</a></li>';
-        }
-        return html;
-    };
+    // //头部购物车展示购物车商品
+    // exports.headShopCart = function(data){
+    //     var html = '';
+    //     $.each(data, function(k, v){
+    //         html += '<li class="blockItem" _id="' + (v.id || k) + '">' +
+    //                     '<img src="'+(v.productImg || v.logo || '/static/img/default_pic.jpg' )+'">' +
+    //                     '<p>' +
+    //                         '<a href="/product/detail.html?id=' + v.productId + '&part=' + v.mfrPartNum + '" target="_blank">' + v.mfrPartNum + '</a>' +
+    //                         '<span>Price:' + utils.accMul(v.unitPrice,v.quantity) + ' Quantity:' + v.quantity + '</span>' +
+    //                     '</p>' +
+    //                     '<a href="javascript:;" class="headDeleteShopCartBtn delete">delete</a>' +
+    //                 '</li>';
+    //     });
+    //     if(data.length){
+    //         html += '<li class="CartGoto"><a href="/home/cart.html">Go to Shopping Cart</a></li>';
+    //     }
+    //     return html;
+    // };
     //productIndex左栏
     exports.categoryLeftProduct = function(data){
         var html = '';
         $.each(data, function(k, v){
-            html += '<dt><a href="#'+v.categoryId+'">'+v.categoryName+'</a></dt>';
+            html += '<dt><a href="javascript:;" cid="'+v.categoryId+'" class="firstCategory">'+v.categoryName+'</a></dt>';
             $.each(v.subCats, function(i, subCat){
-                html += '<dd><a href="#'+subCat.categoryId+'">'+subCat.categoryName+'</a></dd>';
+                html += '<dd><a href="/product/index.html?cid='+v.categoryId+'#'+subCat.categoryId+'" cid="'+v.categoryId+'" class="secondCategory">'+subCat.categoryName+'</a></dd>';
             });
         });
         return html;
@@ -165,18 +238,18 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
     exports.categoryTreeProduct = function(data){
         var html = '';
         $.each(data, function(k1, v1){
-            html += '<h1><a name="'+v1.cid+'"></a>'+v1.cn+'</h1>';
+            // html += '<h1><a name="'+v1.cid+'"></a>'+v1.cn+'</h1>';
             if(v1.sc){
                 $.each(v1.sc, function(k2, v2){
-                    html += '<div>' +
-                        '<h2 class="catfiltertopitem"><a name="'+v2.cid+'"></a>'+v2.cn+'</h2>' +
-                        '<span class="newProductCategory itemNum">'+v2.npc+' New Products</a></span>' +
+                    html += '<div class="secondContainer">' +
+                        '<h1 class="catfiltertopitem"><a name="'+v2.cid+'"></a>'+v2.cn+
+                            '<span class="newProductCategory itemNum">('+v2.npc+' New Products)</span>' +
+                        '</h1>' +
                         '<ul class="catfiltersub">';
                     if(v2.sc){
                         $.each(v2.sc, function(k3, v3){
                             html += '<li>' +
-                                        '<a href="/category/index.html?categoryId='+ v3.cid +'&categoryName='+v3.cn+'" class="catfilterlink">'+v3.cn+'</a>' +
-                                    '<span class="itemNum">('+v3.pc+' items)</span>' +
+                                        '<a href="/category/index.html?categoryId='+ v3.cid +'&categoryName='+v3.cn+'" class="catfilterlink">'+v3.cn+'<span>('+v3.pc+' items)</span>' +'</a>' +
                                 '</li>';
                         });
                         html += '</ul></div>';
@@ -189,10 +262,9 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
     //datasheetList
     exports.datasheetList = function(data){
         var html = '';
-        console.log(data);
         $.each(data, function(k, v){
             var colorClass = k%2 ? 'bgcolor':'';
-            html += '<li class="DataItem ' + colorClass + '">' +
+            html += '<li class="' + colorClass + '">' +
                 '<span class="type">' + v.mfrPartNum + '</span>' +
                 '<span class="down"><a href="/open_datasheet.html?url=' + encodeURIComponent(window.btoa(v.url)) + '" target="_blank">Preview</a></span>' +
             '</li>';
@@ -203,7 +275,20 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
     exports.brandList = function(data){
         var html = '';
         $.each(data, function(k, v){
-            html += '<li><a href="/brand/detail.html?id='+v.mfrId+'">'+v.mfrName+'</a></li>';
+            // html += '<li><a href="/brand/detail.html?id='+v.mfrId+'">'+v.mfrName+'</a></li>';
+            html += '<li>'+
+                        '<div class="logoWrapper">' + 
+                            '<a class="logo" href="/brand/detail.html?id='+v.mfrId+'">' + 
+                                '<img src="'+v.logo+'" />' + 
+                            '</a>' +
+                        '</div>' +
+                        '<div class="description">' + 
+                            // '<h3></h3>' + 
+                            '<p>' +
+                                '<a href="/brand/detail.html?id='+v.mfrId+'">'+v.mfrName+'</a>' + v.shortDescription +
+                            '</p>' + 
+                        '</div>' +     
+                    '</li>';
         });
         return html;
     }; 
@@ -243,10 +328,9 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
                             '</a>';
             }
             html += '<tr>' +
-                        '<td>' + datasheetHtml +'</td>' +
                         '<td>' +
-                            '<a href="/product/detail.html?id=' + v.productId + '&part=' + v.productName + '">' +
-                                '<img border="0" height="64" src="' + (v.productImg || '/static/img/default_pic.jpg') + '" alt="' + v.productName + '" title="' + v.productName + '">' +
+                            '<a href="/product/detail.html?id=' + v.productId + '&part=' + v.productName + '" class="imgContainer">' +
+                                '<img border="0" height="70" src="' + (v.productImg || '/static/img/default_pic.jpg') + '" alt="' + v.productName + '" title="' + v.productName + '">' +
                             '</a>' +
                         '</td>' +
                         '<td>' +
@@ -263,8 +347,9 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
                         '<td>' +
                             '<span>' + v.quantityAvaliable + '<br></span>' +
                         '</td>' +
-                        '<td>' + v.unitPrice + '</td>' +
+                        '<td class="emphasesColor"><b>$' + (v.unitPrice || '-') + '</b></td>' +
                         '<td>' + v.minQuantity + '</td>' +
+                        '<td>' + datasheetHtml +'</td>' +
                     '</tr>';
         });
         return html;
@@ -273,9 +358,11 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
     exports.productSmallPic = function(data){
         var html = '';
         $.each(data, function(k, v){
-            html += '<a href="javascript:;" class="'+ (k === 0 ? 'imgChoose imgTab' : 'imgTab') +'">' +
+            if (k < 4) {
+                html += '<a href="javascript:;" class="'+ (k === 0 ? 'imgChoose imgTab' : 'imgTab') +'">' +
                         '<img src="'+(v.thumbImg || '/static/img/default_pic.jpg' )+'" title="'+v.imgTip+'" bigImgUrl="' + v.bigImg + '">' +
                     '</a>';
+            }
         });
         return html;
     }; 
@@ -284,7 +371,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
         var html = '<dt><h1>' + data.mfrPartNum + '</h1></dt>' +
                     '<dd><label>Quantity Available：</label>' + (data.quantityAvaliable || '-') + '</dd>' +
                     '<dd><label>Manufacturer：</label>' + (data.manufacturerName || '-') + '</dd>' +
-                    '<dd><label>Description：</label>' + (data.description || '-') + '</dd>' +
+                    '<dd class="description"><label>Description：</label>' + (data.description || '-') + '</dd>' +
                     '<dd><label>Lead Free Status / RoHS Status：</label>' + (data.rohsStatus || '-') + '</dd>' +
                     '<dd><label>Manufacturer Standard Lead Time：</label>' + (data.manufacturerLeadTime || '-') + '</dd>' +
                     '<dd><label>Moisture Sensitivity Level (MSL)：</label>' + (data.msl || '-') + '</dd>' +
@@ -373,7 +460,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
             if(v1.datasheets && v1.datasheets.length){
                 var datasheet = v1.datasheets[0];
                 html += '<div class="pr_data">' +
-                            '<a class="downloadDatasheet" href="/open_datasheet.html?url=' + encodeURIComponent(window.btoa(datasheet.url)) + '" title="' + datasheet.text + '" target="_blank">Datasheet</a>' +
+                            '<a class="downloadDatasheet" href="/open_datasheet.html?url=' + encodeURIComponent(window.btoa(datasheet.url)) + '" title="' + datasheet.text + '" target="_blank"></a>' +
                             // '<span>' + datasheet.text + '</span>' +
                             '<a href="javascript:;" class="moreDatasheet" style="' + (v1.datasheets.length > 1 ? '' :'visibility: hidden') + '">All Datasheet</a>' +
                         '</div>';
@@ -384,9 +471,9 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
                     '<div class="pl_info">' +
                         '<a href="/product/detail.html?id=' + v2.productId + '&part=' + v2.sku + '" class="pic"><img src="' + (v2.mfrLogo || '/static/img/default_pic.jpg')+ '" style="max-width:100%;max-height:100%;"></a>' +
                         '<ul class="info">' +
-                            '<li>' + v2.manufacturer +'</li>' +
+                            '<li><b>Manufacturer:</b>  ' + v2.manufacturer +'</li>' +
                             '<li><strong><a href="/product/detail.html?id=' + v2.productId + '&part=' + v2.sku + '">' + v2.sku + '</a></strong></li>' +
-                            '<li>Description:<span class="desc">' + v2.description + '</span></li>' +
+                            '<li><b>Description</b>:<span class="desc">' + v2.description + '</span></li>' +
                         '</ul>' +
                     '</div>';
                     html += 
@@ -394,12 +481,12 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
                     '<div class="pi_list listTitle">' +
                         // '<span class="dis" style="display:none">Distributor</span>' +
                         '<span class="sku">SKU</span>' +
-                        '<span class="manu">Manufacturer</span>' +
-                        '<span class="descs">Description</span>' +
+                        // '<span class="manu">Manufacturer</span>' +
+                        // '<span class="descs">Description</span>' +
                         '<span class="stock">Stock</span>' +
                         '<span class="moq">MOQ</span>' +
-                        '<span class="price">Price</span>' +
                         '<span class="delivery">Delivery</span>' +
+                        '<span class="price">Price</span>' +
                         '<span class="operate">Operate</span>' +
                         '<div class="Clear"></div>' +
                     '</div>';
@@ -409,27 +496,27 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
                     '<div class="pi_list listItem colorItem" day="' + v2.delivery + '">' +
                         // '<span class="dis" style="display:none"></span>' +
                         '<span class="sku"><a href="/product/detail.html?id=' + v2.productId + '&part=' + v2.sku + '">' + v2.sku.replace(key,'<u>'+key+'</u>') + '</a></span>' +
-                        '<span class="manu">' + v2.manufacturer + '</span>' +
-                        '<span class="descs">' + v2.description + '</span>' +
+                        // '<span class="manu">' + v2.manufacturer + '</span>' +
+                        // '<span class="descs">' + v2.description + '</span>' +
                         '<span class="stock">' + v2.stock + '</span>' +
                         '<span class="moq">' + v2.moq + '</span>' +
+                        '<span class="delivery">' + v2.delivery + '</span>' +
                         '<span class="price"">';
                         $.each(v2.price, function(k3, v3){
                             var morePriceClass = '';
                             if(k3 > 3){
                                 morePriceClass = 'hide';
                             }
-                            html += '<p class="'+morePriceClass+'"><span class="priceBreak">'+v3.priceBreak+' :</span> $' + v3.unitPrice + '</p>';
+                            html += '<p class="'+morePriceClass+' emphasesColor"><span class="priceBreak">'+v3.priceBreak+' :</span> $' + v3.unitPrice + '</p>';
                         });
                         if(v2.price.length > 4){
                             html += '<p><a href="javascript:;" class="morePrice"><i></i>More ('+v2.price.length+')</a><a href="javascript:;" class="lessPrice hide"><i></i>Hidden</a></p>'
                         }
                 html += '</span>' +
-                        '<span class="delivery">' + v2.delivery + '</span>' +
                         '<span class="operate" _id=' + v2.productId + ' moq="' + v2.moq + '" logo="' + v2.mfrLogo + '" mfrPartNum="' + v2.sku + '">';
                 if(v2.stock){
                     html += '<a href="javascript:;" class="addToCartBtn">Add to cart</a>' +
-                            '<a href="javascript:;" class="buyBtn">Buy now</a>';
+                            '<a href="javascript:;" class="buyBtn">Purchase</a>';
                 }                
                 html += '<a href="/inquiry/index.html?id=' + v2.productId + '&part=' + v2.sku + '" target="_blank" class="btnInquiry">Post inquiry</a>' +
                         '</span>' +
@@ -468,51 +555,48 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
     exports.addressList = function(data){
         var html = '';
         $.each(data, function(k, v){
-            // aHtml.push('<option label="'+exports.formatText(v.regionName)+'" value="'+exports.formatText(v.id)+'">'+exports.formatText(v.regionName)+'</option>');
-            html += '<ul _id="' + v.id + '">'+
-            '<li>' +
-                '<label>UserName：</label>' +
-                v.linkMan +
-                '<a href="/account/add_address.html?id=' + v.id + '" class="linkBtn">Edit</a>' +
-                '<a href="javascript:;" class="linkBtn deleteBtn">Delete</a>' +
-            '</li>' +
-            '<li>' +
-                '<label>Region：</label>' +
-                v.regionName +
-                '<label>E-mail：</label>' +
-                (v.email || '') +
-            '</li>' +
-            '<li>' +
-                '<label>Tel：</label>' +
-                v.areaCode + '-' + v.linkPhone +
-                '<label>Fax：</label>' +
-                (v.fax || '') +
-            '</li>' +
+            html += '<tr _id="' + v.id + '">' + 
+                '<td>' + v.linkMan + '</td>' +
+                '<td>' + v.regionName + '</td>' +
+                '<td>' + v.areaCode + '-' + v.linkPhone + '</td>' +
+                '<td>' + (v.companyName || '') +  '</td>' +
+                '<td>' + v.address + '</td>' +
+                '<td><a href="javascript:;" class="editBtn">Edit</a> / <a href="javascript:;" class="deleteBtn">Delete</a></td>' +
+                '<td class="operate"><a href="javascript:;" class="emphasesColor" style="display:'+(v.isDefault?'none':'block')+'">Set as default</a></td>' +
+            '</tr>';
+            // html += '<ul _id="' + v.id + '">'+
             // '<li>' +
+            //     '<label>UserName：</label>' +
+            //     v.linkMan +
+            //     '<a href="/account/add_address.html?id=' + v.id + '" class="linkBtn">Edit</a>' +
+            //     '<a href="javascript:;" class="linkBtn deleteBtn">Delete</a>' +
+            // '</li>' +
+            // '<li>' +
+            //     '<label>Region：</label>' +
+            //     v.regionName +
             //     '<label>E-mail：</label>' +
             //     (v.email || '') +
             // '</li>' +
-            '<li>' +
-                '<label>Company Name：</label>' +
-                (v.companyName || '') +
-            '</li>' +
             // '<li>' +
+            //     '<label>Tel：</label>' +
+            //     v.areaCode + '-' + v.linkPhone +
             //     '<label>Fax：</label>' +
             //     (v.fax || '') +
-            // '</li>' +  
-            '<li>' +
-                '<label>Address：</label>' +
-                v.address +
-                '<label>PostalCode:</label>' +
-                v.postCode +
-            '</li>';
-
-            // if(!v.isDefault){
-            html += '<li class="operate" style="display:'+(v.isDefault?'none':'block')+'">' +
-                        '<a href="javascript:;">Set as default</a>' +
-                    '</li>';
-            // }
-            html += '</ul>';
+            // '</li>' +
+            // '<li>' +
+            //     '<label>Company Name：</label>' +
+            //     (v.companyName || '') +
+            // '</li>' +
+            // '<li>' +
+            //     '<label>Address：</label>' +
+            //     v.address +
+            //     '<label>PostalCode:</label>' +
+            //     v.postCode +
+            // '</li>';
+            // html += '<li class="operate" style="display:'+(v.isDefault?'none':'block')+'">' +
+            //             '<a href="javascript:;">Set as default</a>' +
+            //         '</li>';
+            // html += '</ul>';
         });
         
         return html;
@@ -522,37 +606,102 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
         var html = '';
         $.each(data, function(k, v){
             html += '<tr>' +
+                        '<td>' + v.lineNo + '</td>' +
+                        
                         '<td>' + utils.tranTimeYMDHMS(v.inquiryTime) + '</td>' +
-                        '<td class="status">' + v.statusText + '</td>' +
-                        '<td>' + v.email + '</td>' +
-                        '<td>' + v.userName + '</td>' +
                         '<td>' + (v.mfrPartNum || '') + '</td>' +
+                        '<td>' + v.quantity + '</td>' +
+                        '<td class="emphasesColor">' + v.targetPrice + '</td>' +
+                        // '<td>' + v.email + '</td>' +
+                        // '<td>' + v.userName + '</td>' +
+                        // '<td>' + (v.mfrPartNum || '') + '</td>' +
                         '<td>' + v.lookingFor + '</td>' +
                         '<td>' + (v.file ? '<a href="' + v.file + '" target="_blank">file</a>' : '') + '</td>' +
+                        '<td class="status">' + v.statusText + '</td>' +
                         '<td>' + (v.status != 8 ? '<a href="javascript:;" class="deleteBtn" _id="' + v.id + '">Cancel</a>':'') + '</td>' +
-                    '<tr>';
+                    '</tr>';
         });
         return html;
     };
 
-    exports.orderList = function(data){		
+    exports.orderList = function(data){     
         var html = '';
+        // $.each(data, function(k, v){
+        //     html += '<tr _id="' + v.orderCode + '">' +
+        //                 '<td>' + v.orderCode + '</td>' +
+        //                 '<td>' + utils.tranTimeYMDHMS(v.orderTime) + '</td>' +
+        //                 '<td class="status">' + v.orderStatusText + '</td>' +
+        //                 '<td>' + v.address + '</td>' +
+        //                 '<td>' + v.linkMan + '</td>' +
+        //                 '<td>' + v.linkPhone + '</td>' +
+        //                 '<td>' + v.freight + '</td>' +
+        //                 '<td>' + v.wireTransferFee + '</td>' +
+        //                 '<td>' + v.orderAmt + '</td>' +
+        //                 '<td>' + v.totalAmt + '</td>' +
+        //                 '<td>' + (v.orderStatus == 0 ? '<a href="javascript:;" class="deleteBtn">Cancel</a>':'') + '</td>' +
+        //                 '<td><a href="/order/detail.html?id='+ v.orderCode +'" target="_blank">View Detail</a></td>' +
+        //                 // '<td>' + (v.status != 9 ? '<a href="javascript:;" class="deleteBtn">Cancel</a>':'') + '</td>' +
+        //             '</tr>';
+        // });
+        var statusInfo = {
+           '0': {
+                text : 'Unpaid',
+                className : 'emphasesColor' 
+           },
+           '1': {
+                text : 'Confirm',
+                className : 'confirmColor' 
+           },
+           '2': {
+                text : 'Completed',
+                className : 'completeColor' 
+           },
+           '8': {
+                text : 'Canceled',
+                className : 'cancelColor' 
+           },
+           '9': {
+                text : 'Deleted',
+                className : '' 
+           }
+        };
         $.each(data, function(k, v){
-            html += '<tr _id="' + v.orderCode + '">' +
-						'<td>' + v.orderCode + '</td>' +
-                        '<td>' + utils.tranTimeYMDHMS(v.orderTime) + '</td>' +
-                        '<td class="status">' + v.orderStatusText + '</td>' +
-                        '<td>' + v.address + '</td>' +
-                        '<td>' + v.linkMan + '</td>' +
-                        '<td>' + v.linkPhone + '</td>' +
-                        '<td>' + v.freight + '</td>' +
-						'<td>' + v.wireTransferFee + '</td>' +
-                        '<td>' + v.orderAmt + '</td>' +
-                        '<td>' + v.totalAmt + '</td>' +
-                        '<td>' + (v.orderStatus == 0 ? '<a href="javascript:;" class="deleteBtn">Cancel</a>':'') + '</td>' +
-                        '<td><a href="/order/detail.html?id='+ v.orderCode +'" target="_blank">View Detail</a></td>' +
-                        // '<td>' + (v.status != 9 ? '<a href="javascript:;" class="deleteBtn">Cancel</a>':'') + '</td>' +
-                    '<tr>';
+            html += '<table class="orderTable" cellspacing="0" cellpadding="0" _id="' + v.orderCode + '">' +
+                        '<caption>' +
+                            '<span>Order No. ' + v.orderCode + '</span>' +
+                            '<span>LinkMan: ' + v.linkMan + '</span>' +
+                            '<span>LinkPhone: ' + v.linkPhone + '</span>' +
+                            '<span class="orderTime">Order Time: ' + utils.tranTimeYMDHMS(v.orderTime) + '</span>' +
+                        '</caption>'; 
+                        $.each(v.orderItems, function(k2, v2){
+                            html += '<tr>' +
+                                '<td class="imgWrapper">' +
+                                    '<a href="/product/detail.html?id='+v2.productId+'&part='+v2.productName+'" class="imgContainer"><img src="' + (v2.productImg || '/static/img/default_pic.jpg') + '" /></a>' +
+                                '</td>' +
+                                '<td class="description">' +
+                                    '<div>' + v2.description + '</div>' +
+                                    '<div><b>SKU:' + v2.manufacture + '</b></div>' +
+                                '</td>' +
+                                '<td class="unitPrice">' +
+                                    '<div>' + v2.quantity + '(pieces) / $ ' + v2.unitPrice + '</div>' +
+                                    '<div>total: <span class="emphases">$' + v2.totalAmt + '</span></div>' +
+                                '</td>';
+                            if(k2 === 0){
+                                var orderItemslength = v.orderItems.length;
+                                html += '<td rowspan="' + orderItemslength + '" class="freight">' + v.freight + '</td>' +
+                                '<td rowspan="' + orderItemslength + '" class="wireTransferFee">' + v.wireTransferFee + '</td>' +
+                                '<td rowspan="' + orderItemslength + '" class="orderAmt">$' + v.orderAmt + '</td>' +
+                                '<td rowspan="' + orderItemslength + '" class="totalAmt"><span class="emphases">$' + v.totalAmt + '</span></td>' +
+                                '<td rowspan="' + orderItemslength + '"  class="orderStatus">' +
+                                    '<div><span class="' + statusInfo[v.orderStatus].className + '">' + statusInfo[v.orderStatus].text + '</span></div>' +
+                                    '<div>' + (v.orderStatus == 0 ? '<a href="javascript:;" class="deleteBtn">Cancel</a>':'') + '</div>' +
+                                    '<div><a href="/order/detail.html?id='+ v.orderCode +'" target="_blank" class="viewDetails">View Details</a></div>' +
+                                '</td>';
+                            }
+                            html +='</tr>';
+                        });
+
+            html += '</table>';
         });
         return html;
     };

@@ -97,7 +97,7 @@ define('main/login', ['jquery','main/server','main/common','main/utils','md5'], 
     // 初始化
     exports.init = function(){
         common.init();
-        $body.find('.currentLocation').html('Member Login');
+        // $body.find('.currentLocation').html('Member Login');
         exports.action();
         if(userInfo){
             $email.val(userInfo.account);

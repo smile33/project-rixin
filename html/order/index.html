@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width">
 <link rel="stylesheet" href="/static/css/jquery-ui-1.9.2.custom/css/ui-lightness/jquery-ui-1.9.2.custom.min.css">
 <link rel="stylesheet" type="text/css" href="/static/css/common.css">
-<link rel="stylesheet" type="text/css" href="/static/css/quote.css">
+<link rel="stylesheet" type="text/css" href="/static/css/order.css">
 </head>
 <body>
     <div id="site-nav"></div>
@@ -20,8 +20,8 @@
             <div class="main-right">
                 <span id="show"></span>
                 <!-- 我的采购单 start -->
-                <div class="Topic">
-                    <h2 class="Title">Manage my order</h2>
+<!--                 <div class="Topic">
+                    <h2 class="topic">Manage my order</h2>
                     <div class="SelectLink">
                         <a href="/order/index.html" class="all">All(<span>0</span>)</a>|
                         <a href="/order/index.html?m=unpaid" class="unpaid">To be confirm(<span>0</span>)</a>|
@@ -29,9 +29,28 @@
                         <a href="/order/index.html?m=cancel" class="cancel">Cancelled(<span>0</span>)</a>|
                         <a href="/order/index.html?m=completed" class="completed">Completed(<span>0</span>)</a>|
                     </div>
+                </div> -->
+                <div class="searchContainer">
+                    <select id="orderStatus">
+                        <option value="">order Status</option>
+                        <option value="to be confirm">unpaid</option>
+                        <option value="to be paid">confirm</option>
+                        <option value="completed">completed</option>
+                        <option value="canceled">cancel</option>
+                        <!-- <option value="9">deleted</option> -->
+                    </select>
+                    <select id="orderTime">
+                        <option value="0">Order Time</option>
+                        <option value="1">1 month</option>
+                        <option value="2">3 month</option>
+                        <option value="3">6 month</option>
+                        <option value="4">1 year</option>
+                    </select>
+                    <input id="keyword" type="text" placeholder="SKU,Product Name,Manufacture Name"/>
+                    <input type="button" value="Search" class="searchBtn"/>    
                 </div>
-                <table class="Table">
-                    <thead>
+                <table class="tableTitle">
+<!--                     <thead>
                         <tr>	
 							<th>Line No.</th>
                             <th>Order Time</th>
@@ -46,11 +65,23 @@
                             <th>Operating</th>
                             <th>Check</th>
                         </tr>
-                    </thead>
-                    <tbody class="listContainer"></tbody>
+                    </thead> -->
+                    <tbody>
+                        <tr>
+                            <td class="imgWrapper"></td>
+                            <td class="description">Product</td>
+                            <td class="unitPrice">Unit price</td>
+                            <td class="freight">Freight</td>
+                            <td class="wireTransferFee">Wire</br>Transfer Fee</td>
+                            <td class="orderAmt">Order</br>Amount</td>
+                            <td class="totalAmt">Total</br>Amount</td>
+                            <td class="orderStatus">Order Status</td>
+                        </tr>
+                    </tbody>
+                    <!-- <tbody class="listContainer"></tbody> -->
                 </table>
+                <div class="listContainer"></div>
                 <div class="pageContainer pagelist"></div>
-                <!-- 我的采购单 start -->
             </div>
             <div class="Clear"></div>
         </div>

@@ -98,7 +98,7 @@ define('main/register', ['jquery','main/server','main/temple','main/common','jqu
 
     exports.init = function(){
         common.init();
-        $body.find('.currentLocation').html('Account Register');
+        // $body.find('.currentLocation').html('Account Register');
         exports.country();
         exports.action();
     };

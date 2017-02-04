@@ -12,15 +12,15 @@ define('main/common', ['jquery','main/utils','main/server','main/temple'], funct
             html = '<span style="margin:5px;">Hello! Welcome to ' + window._c.websiteName + '!</span>' +
                 '<a href="/member/index.html" id="aLogin">'+(data.data.realname || data.data.account)+'</a>' +
                 '<a href="/member/logout.html" id="aLogout">Logout</a>';
-            $body.find('.TopSum').html(html);    
+            $body.find('.topSum').html(html);    
         }else{
             html = '<span style="margin:5px;">Hello! Welcome to ' + window._c.websiteName + '!</span>';
-            $body.find('.TopSum span').html(html);
+            $body.find('.topSum span').html(html);
             $body.find('.logout').remove();
         }
     };
     function hasLoadedSiteNav(data){
-        if($body.find('.TopSum').length && isLogin !== 0 ){
+        if($body.find('.topSum').length && isLogin !== 0 ){
             setLoiginSiteNav(data);
         }else{
             setTimeout(function(){
@@ -28,20 +28,20 @@ define('main/common', ['jquery','main/utils','main/server','main/temple'], funct
             },500);
         }
     }
-    //渲染头部购物车样式
-    function setHeadShopCart(data){
-        if(data.length){
-            $body.find('#ShoppingCart').html(temple.headShopCart(data));
-            $body.find('.Cart .shopCartCount').html(data.length);
-        }
-    }
+    // //渲染头部购物车样式
+    // function setHeadShopCart(data){
+    //     if(data.length){
+    //         $body.find('#ShoppingCart').html(temple.headShopCart(data));
+    //         $body.find('.Cart .shopCartCount').html(data.length);
+    //     }
+    // }
     //判断头部购物车是否清空
-    function isEmptyHeadShopCart(){
-        var $ShoppingCart = $body.find('#ShoppingCart');
-        if(!$ShoppingCart.find('.blockItem').length){
-            $ShoppingCart.html('<li class="emptyCart"><a href="/product/index.html">Shopping Cart empty Oh! Just try to find sth</a></li>');
-        }
-    }
+    // function isEmptyHeadShopCart(){
+    //     var $ShoppingCart = $body.find('#ShoppingCart');
+    //     if(!$ShoppingCart.find('.blockItem').length){
+    //         $ShoppingCart.html('<li class="emptyCart"><a href="/product/index.html">Shopping Cart empty Oh! Just try to find sth</a></li>');
+    //     }
+    // }
 
     function handlerKeyup(e) {
         if (e.keyCode === 13) {
@@ -81,7 +81,17 @@ define('main/common', ['jquery','main/utils','main/server','main/temple'], funct
                 url += '?tpl=about_us';
             }
             $header.find('.navTab[href="'+url+'"]').addClass('highlight');
-            exports.headShopCart();
+            exports.homeCagtegory();
+            // exports.headShopCart();
+        });
+    };
+    // Category列表
+    exports.homeCagtegory = function(){
+        server.homeCagtegory(function(data){
+            data = data.data;
+            var html = temple.homeCagtegory(data.categories);
+            $body.find('.categoryList').html(html.cagtegoryHtml);
+            $body.find('.categoryList').after(html.subCagtegoryHtml);
         });
     };
     // 尾部
@@ -92,7 +102,7 @@ define('main/common', ['jquery','main/utils','main/server','main/temple'], funct
         });
     };
     exports.siteMap = function(){
-        $body.find('.SiteMap').html('Current Location:<a href="/">'+window._c.websiteName+'</a> &gt; <span class="currentLocation"></span>');
+        $body.find('.SiteMap').html('<a href="/">Home</a> &gt; <span class="currentLocation"></span>');
     };
     // 个人中心左侧栏
     exports.userSideBar = function(){
@@ -141,28 +151,28 @@ define('main/common', ['jquery','main/utils','main/server','main/temple'], funct
         });
     };
 
-    // 获取头部购物车数据
-    exports.headShopCart = function(){
-        if(!isLogin){
-            setTimeout(function(){
-                exports.headShopCart();
-            },500);
-        }else{
-            if(isLogin === 1){//已登录，则请求购物车数据
-                server.myShopCart({
-                    size: 50,
-                    index: 1
-                },function(data){
-                    if(data.data){
-                        setHeadShopCart(data.data);
-                    }
-                });
-            }else if(isLogin === -1){//未登录，则读取缓存数据
-                var data = utils.STORE.getItem('shopCart') || [];
-                setHeadShopCart(data);
-            }
-        }
-    };
+    // // 获取头部购物车数据
+    // exports.headShopCart = function(){
+    //     if(!isLogin){
+    //         setTimeout(function(){
+    //             exports.headShopCart();
+    //         },500);
+    //     }else{
+    //         if(isLogin === 1){//已登录，则请求购物车数据
+    //             server.myShopCart({
+    //                 size: 50,
+    //                 index: 1
+    //             },function(data){
+    //                 if(data.data){
+    //                     setHeadShopCart(data.data);
+    //                 }
+    //             });
+    //         }else if(isLogin === -1){//未登录，则读取缓存数据
+    //             var data = utils.STORE.getItem('shopCart') || [];
+    //             setHeadShopCart(data);
+    //         }
+    //     }
+    // };
     //添加购物车
     exports.addShopCart = function(oData,unloginCbf,cbf){
         if(isLogin === 1){
@@ -197,7 +207,7 @@ define('main/common', ['jquery','main/utils','main/server','main/temple'], funct
                 if(index !== undefined){//若删除的是购物车页面，则需要删除头部购物车数据
                     $ShoppingCart.find('.blockItem').eq(index).remove();
                 }
-                isEmptyHeadShopCart();
+                // isEmptyHeadShopCart();
             },function(data){
                 utils.tips(data.msg);
             });
@@ -209,10 +219,8 @@ define('main/common', ['jquery','main/utils','main/server','main/temple'], funct
             obj.remove();
             var num = parseInt($body.find('.Cart .shopCartCount').html());
             $body.find('.Cart .shopCartCount').html(num-1);
-            isEmptyHeadShopCart();
-            // window.location.reload();
+            // isEmptyHeadShopCart();
         };
-        // '<li class="emptyCart"><a href="/product/index.html">Shopping Cart empty Oh! Just try to find sth</a></li>';
     }
     exports.sureDialog = function(dialogObj,cbf){
         dialogObj.dialog({
@@ -230,9 +238,14 @@ define('main/common', ['jquery','main/utils','main/server','main/temple'], funct
           }
         });
     }
+    //  显示哪个分类
+    function showCategoryList(index){
+        $body.find('.categoryList li').removeClass('categorySelect').eq(index).addClass('categorySelect');
+        $body.find('.subCategoryList').hide().eq(index).show();
+    }
     // 事件
     exports.action = function(){
-        $body.on('mouseover','.TopMenu .Item',function(){
+        $body.on('mouseover','.topMenu .item',function(){
             var ul = this.getElementsByTagName("ul")[0];
             if(ul){
                 ul.style.display = "block";
@@ -242,8 +255,15 @@ define('main/common', ['jquery','main/utils','main/server','main/temple'], funct
                     this.style.backgroundColor = "";
                 }  
             }
-
-        }).on('click','.tabSearch,.searchSubmit,.headDeleteShopCartBtn,.needLogin',function(){
+        }).on('mouseover','.proCate',function(){
+            $body.find('.categoryContainer').show();
+            showCategoryList(0);
+        }).on('mouseover','.categoryList li',function(){
+            var index = $(this).index('.categoryList li');
+            showCategoryList(index)
+        }).on('mouseleave','.categoryContainer',function(){
+            $body.find('.categoryContainer').hide();
+        }).on('click','.tabSearch,.searchSubmit,.headDeleteShopCartBtn,.needLogin,.quickInquiry',function(){
             var self = $(this);
             var index;
             if(self.hasClass('tabSearch')){
@@ -261,10 +281,10 @@ define('main/common', ['jquery','main/utils','main/server','main/temple'], funct
                 }else{
                     window.location.href = '/datasheet/index.html?key='+searchValue;
                 }
-            }else if(self.hasClass('headDeleteShopCartBtn')){
-                var itemObj = self.closest('.blockItem');
-                var id = itemObj.attr('_id');
-                exports.deleteShopCart(id,itemObj);
+            // }else if(self.hasClass('headDeleteShopCartBtn')){//头部购物车
+            //     var itemObj = self.closest('.blockItem');
+            //     var id = itemObj.attr('_id');
+            //     exports.deleteShopCart(id,itemObj);
             }else if(self.hasClass('needLogin')){
                 if(isLogin === 1){
                     window.location.href = self.attr('link');
@@ -272,8 +292,10 @@ define('main/common', ['jquery','main/utils','main/server','main/temple'], funct
                     window.location.href = '/member/login.html?redirect_url='+self.attr('link');
                 }
                 
+            }else if(self.hasClass('quickInquiry')){
+
             }
-        })
+        });
 
 
     };

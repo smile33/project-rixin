@@ -58,7 +58,7 @@ define('main/forget_password', ['jquery','main/utils','main/server','main/common
 
     exports.init = function(){
         common.init();
-        $body.find('.currentLocation').html('Reset Password');
+        // $body.find('.currentLocation').html('Reset Password');
         exports.action();
     };
     return exports;

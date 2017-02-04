@@ -16,41 +16,42 @@
     <div id="wrapper" class="Container">
         <header id="header"></header>
         <div id="main">
-            <div class="SiteMap"></div>
-            <div class="BoxPage">
-                <div class="InfoLeft">
-                    <div class="SetupHead">
-                        <h2>Account registration
-                        </h2>
-                    </div>       
-                    <ul class="BoxDetail">
-                        <li><label>E-Mail：</label><input id="email" type="text" size="40" placeholder="Please enter the e-mail address"></li>
-                        <li><label>Region：</label>
-                        <select id="region" class="region"></select>
+            <!-- <div class="SiteMap"></div> -->
+            <div class="boxPage registerWrapper">
+                <div class="infoLeft">
+                    <h2>Account registration</h2>    
+                    <ul class="boxDetail">
+                        <li>
+                            <label>E-Mail：</label>
+                            <input id="email" type="text" placeholder="Please enter the e-mail address"/>
+                        </li>
+                        <li>
+                            <label>Region：</label>
+                            <select id="region" class="region"></select>
                         </li>
                         <li>
                             <label>Password：</label>
-                            <input id="password" type="password" size="40" placeholder="6-16 numbers, letters and underscores">
+                            <input id="password" type="password" placeholder="6-16 numbers, letters and underscores"/>
                         </li>
                         <li>
                             <label>Confirm Password：</label>
-                            <input id="re_password" type="password" size="40" />
+                            <input id="re_password" type="password" />
                         </li>
                         <li id="error_msg" class="error_msg"></li>
                     </ul>
-                    <ul class="BoxSave">
+                    <ul class="boxSave">
                         <li>
                             <label>
                                 <input name="agreement" type="checkbox" id="Main_cbAgreem" checked="checked">I have read and agree to《<a target="_blank" href="/member/register_agreement.html">User Agreement</a>》
                             </label>
                         </li>
-                        <li><input id="registerBtn" type="button" value="Register" class="but"></li>
+                        <li><input id="registerBtn" type="button" value="Create My Account" class="btnPrimary registerBtn"></li>
                     </ul>      
                     <div></div>
                 </div>
-                <div class="InfoRight">
-                    <div>Already have an account？<a href="/member/login.html">Login</a></div>
-                    <div></div>
+                <div class="infoRight">
+                    <p>Already have an account？</p>
+                    <a href="/member/login.html" class="toLoginBtn btn">Login</a>
                 </div>
                 <div class="Clear"></div>
             </div>

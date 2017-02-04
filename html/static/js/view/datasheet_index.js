@@ -14,8 +14,8 @@ define('main/datasheet_index', ['jquery','main/utils','main/server','main/common
             utils.loading();
             if(data.data){
                 data = data.data;
-                $body.find('.SearIndex strong').html('A total '+data.total+' results');
-                $body.find('.DataItem').html(temple.datasheetList(data.items));
+                $body.find('.headline strong').html(data.total);
+                $body.find('.dataItem').html(temple.datasheetList(data.items));
                 PageTurningPlugin.setPageObj({
                     pageIndex : data.page,
                     pageLast : data.maxPage

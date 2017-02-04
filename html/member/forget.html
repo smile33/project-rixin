@@ -15,23 +15,21 @@
     <div id="wrapper" class="Container">
         <header id="header"></header>
         <div id="main">
-            <div class="SiteMap"></div>
-            <div class="BoxPage">
-                <div class="loginHead">
-                    <h2>Retrieve password</h2>
-                    <div class="Clear"></div>
-                </div>
-                <ul class="BoxDetail">
+            <!-- <div class="SiteMap"></div> -->
+            <div class="boxPage">
+                <h2>Retrieve password</h2>
+                <ul class="boxDetail">
                     <li>
                         <label>Account:</label>
                         <input id="email" type="text" size="50" placeholder="Enter the registered mail">
                     </li>
-                    <li>
-                        <span id="error_msg" class="error_msg"></span>
-                    </li>
+                    <li id="error_msg" class="error_msg"></li>
                 </ul>
-                <ul class="BoxSave">
-                    <li><input id="nextStepBtn" type="button" value="Next step" class="but" /><a class="logout" href="/member/login.html">Back to login</a></li>
+                <ul class="boxSave">
+                    <li>
+                        <input id="nextStepBtn" type="button" value="Next step" class="btnPrimary nextStepBtn" />
+                        <a class="logout" href="/member/login.html">Back to login</a>
+                    </li>
                 </ul>
             </div>
         </div>

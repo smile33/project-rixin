@@ -1,65 +1,81 @@
-.SearIndex {
-	font-size: 15px;
-	margin: 20px 10px;
-	color: #000;
+@mainColor: #183761;
+@borderColor: #e6e6e6;
+// .searchIndex {
+//     margin: 20px 0 15px;
+//     height: 16px;
+//     line-height: 16px;
+//     font-size: 16px;
+//     font-weight: bold;
+//     color: #000;
+//     i{
+//         display: inline-block;
+//         margin-right: 10px;
+//         width: 7px;
+//         height: 16px;
+//         vertical-align: top;
+//         background: #D73C38;
+//     }
+//     strong {
+//         margin-left: 5px;
+//         font-size: 16px;
+//     }
+// }
+.itemhead{
+    line-height:42px;
+    font-weight: bold;
+    color: #fff;
+    background-color: @mainColor;
 }
-.SearIndex strong {
-	margin-left: 3px;
-	margin-right: 3px;
-	font-size: 14px;
-	color:#E60000;
-	font-weight: normal;
+.itemhead span{
+    display: inline-block;
+    padding-left: 57px;
+    font-size: 14px;
 }
-.DataItem li,.Itemhead{
-	min-height:22px;
-	padding:10px 0px;
+.dataItem li{
+    min-height:28px;
+    padding: 25px 0px;
+    border-bottom: 1px solid @borderColor;
 }
-.Itemhead{
-	border:1px solid #FFCC00;
-	height:19px;
-	padding:10px 0px;
-	background-color:#FFF1CF;
+.dataItem img{
+    vertical-align:top;
+    margin-right:5px;
 }
-.DataItem img{
-	vertical-align:top;
-	margin-right:5px;
+.dataItem span {
+    // float: left;
+    padding-left: 60px;
+    display:inline-block;
 }
-.DataItem span {
-	float:left;
-	padding-left:20px;
-	display:inline-block;
+.firm {
+    width:146px;
 }
-.Itemhead span{
-	padding-left:20px;
-	font-size: 14px;
+.type {
+    width:180px;
 }
-ul .firm {
-	width:146px;
+.down {
+    width:180px;
+    a{
+        text-decoration: underline;
+        color: @mainColor;
+    }
 }
-ul .type {
-	width:200px;
-}
-ul .down {
-	width:200px;
-}
-ul .desc {
-	width:470px;
+.desc {
+    width:470px;
 }
 .bgcolor{
-	background-color:#F9F9F9;
+    background-color:#F5F5F5;
 }
 
 /*Detail start*/
 h1{
-	font-size:18px;
-	margin:10px 0px;
-	margin-top:30px;
+    font-size:18px;
+    margin:10px 0px;
+    margin-top:30px;
 }
 .dslist{
-	line-height:25px;
+    line-height:25px;
 }
 .dslist label{
-	display:inline-block;
-	width:100px;
+    display:inline-block;
+    width:100px;
 }
 /*Detail end*/

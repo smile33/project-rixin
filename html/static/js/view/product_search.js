@@ -42,12 +42,12 @@ define('main/product_search', ['jquery','jqform','main/utils','main/server','mai
             if(data.data){
                 data = data.data;
                 skuArray = data.skus;
-                $body.find('.typeItem').html(temple.searchMatch(data.matchResult));
+                $body.find('.typeItem .itemContainer').html(temple.searchMatch(data.matchResult));
                 $typeMatch.find('a').html(key);
-                $typeMatch.find('span').html(data.totalPartNum);
-                $body.find('.filterItem dd').append(temple.searchDeliveryTime(data.deliveryTime));
+                $typeMatch.find('strong').html(data.totalPartNum + 'stock');
+                $body.find('.filterItem .itemContainer').html(temple.searchDeliveryTime(data.deliveryTime));
                 $body.find('#ProductArea').html(temple.searchProductArea(data.skus,key));
-                $body.find('.supplierTab span').html(data.skus && data.skus.length);
+                // $body.find('.supplierTab span').html(data.skus && data.skus.length);
                 $body.find('.SearchContainer').show();
             }else{
                 $body.find('.inquiryContainer').show().find('#partNum').val(key);
@@ -192,7 +192,7 @@ define('main/product_search', ['jquery','jqform','main/utils','main/server','mai
             $inputBox.dialog( "close" );
             $error_msg.html('');
             utils.tips('add success');
-            common.headShopCart();
+            // common.headShopCart();
         });
     };
     function toBuy(){

@@ -18,18 +18,75 @@
         <div id="main">
             <div class="sidebar"></div>
             <div class="main-right">
-                <div class="Topic"><h2 class="Title">Receiving address management</h2></div>
+                <h2 class="topic addressTitle">Add receipt address</h2>
+                <div class="Clear"></div> 
+                <ul class="frameEdit">
+                    <li>
+                        <label>Consignee：</label>
+                        <input id="linkMan" size="60" type="text" value="">
+                    </li>
+                    <li class="area">
+                        <label>Region：</label>
+                        <select id="region" name="region" class="region"></select>
+                    </li>
+                    <li>
+                        <label>Phone：</label>
+                        <input id="phone1" size="18" type="text" value="">-<input id="phone2" size="35" type="text" value="">
+                    </li>
+                    <li>
+                        <label>E-mail：</label>
+                        <!-- <span class="mail"></span> -->
+                        <input id="mail" type="text" size="60" value="">
+                    </li>
+                    <li>
+                        <label>Company Name：</label>
+                        <input id="companyName" type="text" size="60" value="">
+                    </li>
+                    <li>
+                        <label>Fax：</label>
+                        <input id="fax" type="text" size="60" value="">
+                    </li>
+                    <li>
+                        <label>Address：</label>
+                        <input id="address" size="60" type="text" value="">
+                    </li>
+                    <li>
+                        <label>Postcode：</label>
+                        <input id="postCode" size="60" type="text" value="">
+                    </li>
+                    <li>
+                        <span id="error_msg" class="error_msg"></span>
+                    </li>
+                    <li>
+                        <input type="button" value="Save" class="btnPrimary saveBtn">
+                        <input type="checkbox"  id="setAsDefault" name="setAsDefault">
+                        <span>Set as default</span>
+                    </li>
+                </ul>
+
+                <h2 class="topic">Receiving address management</h2>
                 <div class="addressList">
                     <div class="addHead">
-                        <a href="/account/add_address.html" class="addBtn">Add receipt address</a>
+                        <!-- <a href="/account/add_address.html" class="addBtn">Add receipt address</a> -->
                         <span>
                             You have created 
-                            <span class="addressNumber">0</span>
+                            <b class="addressNumber">0</b>
                              A receipt address, up to be created<b>20</b>
                         </span>
                         <div class="Clear"></div>
                     </div>
-                    <div class="addressContent"></div>
+                    <table class="table">
+                        <thead>
+                            <th>UserName</th>
+                            <th>Region</th>
+                            <th>Phone</th>
+                            <th>Company Name</th>
+                            <th>Address</th>
+                            <th>Operate</th>
+                            <th></th>
+                        </thead>
+                        <tbody class="addressContent"></tbody>
+                    </table>
                     <div class="pageContainer pagelist"></div>
                 </div>
             </div>
