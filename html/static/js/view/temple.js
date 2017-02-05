@@ -533,7 +533,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
         var html = '<ul>';
         $.each(data, function(k, v){
             html += '<li>' +
-                '<a class="downloadDatasheet" href="/open_datasheet.html?url=' + encodeURIComponent(window.btoa(v.url)) + '" title="' + v.text + '" target="_blank">Datasheet</a>' +
+                '<a class="downloadDatasheet" href="/open_datasheet.html?url=' + encodeURIComponent(window.btoa(v.url)) + '" title="' + v.text + '" target="_blank"></a>' +
                 '<p>' + v.text + '</p>' + 
             '</li>';
         });

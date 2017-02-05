@@ -43,4 +43,31 @@
     </div>
     <div class="Clear"></div>  
 </div>
-
+<div id="quickInquiry" class="inquiryPopup">
+    <h3><i></i>Quick Inquiry</h3>
+    <ul class="quickInquiryContainer">
+        <li>
+            <label><span>*</span>Name:</label>
+            <input type="text" id="quick_inquiry_name">
+        </li>
+        <li>
+            <label><span>*</span>Email:</label>
+            <input type="text" id="quick_inquiry_email">
+        </li>
+        <li class="kaptchaImgCont">
+            <label><span>*</span>Authcode:</label>
+            <input type="text" size="8" name="kaptcha" id="kaptcha" class="inputBg">
+            <img id="kaptchaImg" src="" alt="kaptcha" class="kaptcha" title="Click to refresh image.">
+        </li>
+        <li>
+            <label><span>*</span>Looking for:</label>
+            <textarea id="quick_inquiry_content"></textarea>
+        </li>
+      <li>
+            <span class="error_msg"></span>
+        </li>
+    </ul>
+    <div class="inquiryBtn">
+        <input type="button" value="Submit" class="quickInquirySubmit btnPrimary">
+    </div>
+</div>

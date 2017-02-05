@@ -724,11 +724,6 @@ a{
     }
 }
 /*loading end*/
-/*sure to delete popup begin*/
-#deleteDialog{
-    display:none;
-}
-/*sure to delete popup end*/
 
 /*条件查询 begin*/
 .searchContainer {
@@ -796,3 +791,175 @@ a{
     text-decoration: underline;
 }
 /*table end*/
+
+
+/*sure to delete popup begin*/
+#deleteDialog,#setAsDefaultDialog{
+    display:none;
+    font-size: 16px;
+}
+/*sure to delete popup end*/
+
+/*jq ui popup begin*/
+.ui-widget-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #666 url(/static/css/jquery-ui-1.9.2.custom/css/ui-lightness/images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat;
+    opacity: .5;
+    filter: Alpha(Opacity=50);
+}
+.ui-widget-content{
+    padding: 5px 10px 10px;
+    background: #fff;
+    border-radius: 0;
+
+    position: relative;
+    border: 0;
+    overflow: auto;
+    zoom: 1;
+
+}
+.ui-draggable .ui-dialog-titlebar {
+    height: 30px;
+    line-height: 30px;
+    background: #fff;
+    border: 0;
+}
+.ui-dialog .ui-dialog-titlebar-close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    // padding: 0;
+    // &:hover{
+    //     border: #fff;
+    //     background: none;
+    // }
+}
+.ui-widget-header .ui-icon{
+    display: block;
+    text-indent: -99999px;
+    width: 15px;
+    height: 15px;
+    background: url("/static/img/icon_small_close.png");
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    float: right;
+}
+.ui-dialog .ui-dialog-buttonpane button {
+    margin: .5em .4em .5em 0;
+    cursor: pointer;
+    border: 1px solid @borderColor;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    background:linear-gradient(top,#ffffff,#e6e6e6);
+    background:-moz-linear-gradient(top,#ffffff,#e6e6e6);
+    background:-webkit-linear-gradient(top,#ffffff,#e6e6e6);
+    font-weight: bold;
+    color: #1c94c4;
+    &:hover{
+        background:linear-gradient(top,#FEFEFE,#F2F2F2);
+        background:-moz-linear-gradient(top,#FEFEFE,#F2F2F2);
+        background:-webkit-linear-gradient(top,#FEFEFE,#F2F2F2);
+    }
+}
+.ui-button-text-only .ui-button-text {
+    padding: .4em 1em;
+}
+.ui-button .ui-button-text {
+    display: block;
+    line-height: 1.4;
+}
+/*jq ui popup end*/
+.inquiryPopup{
+    // width:300px;
+    // float:right;
+    // border-left:1px solid #d8d8d8;
+    display: none;
+    padding:0 30px 50px;
+    h3{
+        margin: 10px 0;
+        height: 50px;
+        line-height: 50px;
+        font-size:20px;
+        text-align: center;
+        color: @mainColor;
+        i{
+            display: inline-block;
+            margin-right: 10px;
+            width: 30px;
+            height: 30px;
+            vertical-align: middle;
+            background: #eee url("/static/img/page_white_text.png");
+        }
+    }
+    ul{
+        margin-top:10px;
+        li {
+            margin:10px 0px;
+            label{
+                display:inline-block;
+                width:130px;
+                text-align:right;
+                margin-right:5px;
+                font-size:14px;
+                color:#666;
+            }
+            label span{
+                color: @emphasesColor;
+                vertical-align:text-top;
+            }
+            input[type=text]{
+                border:1px solid #ddd;
+                padding:5px;
+                width:280px;
+            }
+            textarea{
+                border:1px solid #ddd;
+                padding:5px;
+                height:92px;
+                vertical-align:text-top;
+                width:280px;
+            }
+            .error_msg {
+                padding-left: 135px;
+                color: @emphasesColor;
+            }
+        }
+        .kaptchaImgCont{
+            input[type=text]{
+                width:200px;
+            }
+            img{
+                max-width: 80px;
+                height:28px;
+                vertical-align: top;
+                cursor: pointer;
+            }            
+        }
+    }    
+    .inquiryBtn{
+        margin-left: 140px;
+    }
+    .inquiryBtn input{
+        width: 140px;
+        border:0px;
+        color:#fff;
+        font-size:14px;
+    }
+    .title{
+        margin-left: 140px;
+        padding: 0 15px 0 30px;
+        width: 248px;
+        height: 28px;
+        line-height: 28px;
+        color: @mainColor;
+        background: #EAF1FF;
+    }
+    #file{
+        display: none;
+    }
+} 

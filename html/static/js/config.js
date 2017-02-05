@@ -30,6 +30,7 @@ require.config({
         "main/search": "./js/view/search",
         "main/article": "./js/view/article",
         "main/cart": "./js/view/cart",
+        "main/post_inquiry": "./js/view/post_inquiry",
         "main/simple": "./js/view/simple",
         "main/utils": "./js/view/utils",
         "main/server": "./js/view/server",

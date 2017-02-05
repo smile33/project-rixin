@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width">
-<link rel="stylesheet" href="/static/css/jquery-ui-1.9.2.custom/css/ui-lightness/jquery-ui-1.9.2.custom.min.css">
+<!-- <link rel="stylesheet" href="/static/css/jquery-ui-1.9.2.custom/css/ui-lightness/jquery-ui-1.9.2.custom.min.css"> -->
 <link rel="stylesheet" type="text/css" href="/static/css/common.css">
 <link rel="stylesheet" type="text/css" href="/static/css/detail.css">
 </head>
@@ -48,7 +48,7 @@
                 <div class="addLink">
                     <a href="javascript:;" class="addCart"><i></i>Add to cart</a>
                     <a href="javascript:;" class="purchaseBtn"><i></i>Purchase</a>
-                    <a href="/inquiry/index.html" class="inquiry" target="_blank"><i></i>Post Inquiry</a>
+                    <a href="javascript:;" class="inquiry"><i></i>Post Inquiry</a>
                 </div>
                 <!-- </ul> -->
             </div>
@@ -95,6 +95,44 @@
             <div class="error_msg"></div>
             <input class="quantityBtn" type="button" value="Submit"/>
         </div> -->
+        <div id="postInquiry" class="inquiryPopup">
+            <h3><i></i>Post Inquiry</h3>
+            <form id="fileForm" method="post"  enctype="multipart/form-data"  name="inquery">
+                <ul class="postInquiryContainer">
+                    <li>
+                        <label><span>*</span>Name:</label>
+                        <input type="text" id="post_inquiry_name">
+                    </li>
+                    <li>
+                        <label><span>*</span>Email:</label>
+                        <input type="text" id="post_inquiry_email">
+                    </li>
+                    <li>
+                        <label><span>*</span>Target Price:</label>
+                        <input type="text" id="post_inquiry_price" placeholder="USD">
+                    </li>
+                    <li>
+                        <label><span>*</span>Quantity:</label>
+                        <input type="text" id="post_inquiry_quantity">
+                    </li>
+                    <li class="remarkWay">
+                        <label><span>*</span>remark:</label>
+                        <textarea id="post_inquiry_content"></textarea> 
+                    </li>
+                    <li>
+                        <div class="title">Upload BOM from EXCEL Spreadsheet</div>
+                        <input type="file" id="file" name="file"  enctype="multipart/form-data">
+                    </li>
+                    <li>
+                        <span class="error_msg"></span>
+                    </li>
+                </ul>
+                <div class="inquiryBtn">
+                    <input type="button" value="Submit" class="postInquirySubmit btnPrimary">
+                </div>
+            </form>    
+        </div>
+
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js"></script>
     <script src="/static/js/config.js"></script>

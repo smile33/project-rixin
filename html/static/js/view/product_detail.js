@@ -1,4 +1,4 @@
-define('main/product_detail', ['jquery','main/utils','main/server','main/common','main/temple','jqsuperslide'], function($, utils, server, common, temple){
+define('main/product_detail', ['jquery','main/utils','main/server','main/common','main/temple','main/post_inquiry', 'jqsuperslide'], function($, utils, server, common, temple, post_inquiry){
     var exports  = {},
     profile,
     $body = $('body'),
@@ -23,7 +23,7 @@ define('main/product_detail', ['jquery','main/utils','main/server','main/common'
         unitPrice : ''
     };
 
-    $body.find('.inquiry').attr('href','/inquiry/index.html?id=' + id + '&part=' + part);
+    // $body.find('.inquiry').attr('href','/inquiry/index.html?id=' + id + '&part=' + part);
     function setQuantityHtml(product,val) {
         $body.find('#CountPlace b').html(product.unitPrice);
         $body.find('#CountPlace strong').html(utils.accMul(product.unitPrice,val));
@@ -221,6 +221,7 @@ define('main/product_detail', ['jquery','main/utils','main/server','main/common'
         exports.getProductDetailData();
         exports.getRelateProducts();
         exports.action();
+        post_inquiry.init(id);
     };
     return exports;
 });

@@ -99,9 +99,9 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
             "Confirm" : function() {
               common.deleteShopCart(id,trObj,index);
               $(this).dialog("close");
-            },
-            "Cancel" : function() {
-             $(this).dialog("close");
+            // },
+            // "Cancel" : function() {
+            //  $(this).dialog("close");
             }
           }
         });

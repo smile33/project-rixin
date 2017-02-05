@@ -1,10 +1,68 @@
-define('main/common', ['jquery','main/utils','main/server','main/temple'], function($, utils, server, temple){
+define('main/common', ['jquery','main/utils','main/server','main/temple','jqui'], function($, utils, server, temple, jqui){
 
     var exports = {},
     path  = window._c.path,
     isLogin = 0,
-    $body   = $('body');    
+    $body   = $('body'),
+
+
+    path = window._c.path,
+    rExpEmail = /^([a-zA-Z0-9]+[_|\_|\.-]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/,
+    isSend = false;
+    function quickInquiry(){
+        var $name = $body.find('#quick_inquiry_name');
+        var $email = $body.find('#quick_inquiry_email');
+        var $kaptcha = $body.find('#kaptcha');
+        var $content = $body.find('#quick_inquiry_content');
+        var $error = $body.find('.quickInquiryContainer .error_msg');
+        var oData = {};
+        oData.name = $name.val();
+        if($.trim(oData.name) == ''){
+            $name.focus();
+            $error.text("Please enter your name.");
+            return false;
+        }
+        oData.email = $email.val();
+        if($.trim(oData.email) == '' || !rExpEmail.test(oData.email)){
+            $email.focus();
+            $error.text("Please enter correct email.");
+            return false;
+        }
+        oData.kaptcha = $kaptcha.val();
+        if($.trim(oData.kaptcha) == '' || oData.kaptcha.length != 4){
+            $kaptcha.focus();
+            $error.text("Please enter authcode.");
+            return false;
+        }
+        // oData.kaptcha = '110ee873d70440eb80b10315e23661cf';
+        oData.lookingFor = $content.val();
+        if($.trim(oData.lookingFor) == ''){
+            $content.focus();
+            $error.text("Please enter looking for.");
+            return false;
+        }
+        // oData.kaptcha = $.md5(oData.kaptcha);
+        if(isSend) return false;
+        isSend = true;
+        server.quickInquiry(oData,function(data){
+            $name.val('');
+            $email.val('');
+            $kaptcha.val('');
+            $content.val('');
+            $error.text('');
+            $("#quickInquiry").dialog("close");
+            utils.tips('submit success');
+            isSend = false;
+            $body.find('.kaptcha').attr('src',path+'kaptcha.wb?t='+Math.random());
+        },function(data){
+            $error.text(data.msg);
+            isSend = false; 
+        });
+
+    };
     
+
+
     // 头部-用户登录模块
     function setLoiginSiteNav(data){
         var html = '';
@@ -82,6 +140,7 @@ define('main/common', ['jquery','main/utils','main/server','main/temple'], funct
             }
             $header.find('.navTab[href="'+url+'"]').addClass('highlight');
             exports.homeCagtegory();
+            exports.inquiryDialog($('#quickInquiry'));
             // exports.headShopCart();
         });
     };
@@ -222,6 +281,13 @@ define('main/common', ['jquery','main/utils','main/server','main/temple'], funct
             // isEmptyHeadShopCart();
         };
     }
+    exports.inquiryDialog = function(dialogObj){
+        dialogObj.dialog({
+          autoOpen: false,
+          modal: true,
+          width: 600
+        });
+    }
     exports.sureDialog = function(dialogObj,cbf){
         dialogObj.dialog({
           autoOpen: false,
@@ -231,9 +297,9 @@ define('main/common', ['jquery','main/utils','main/server','main/temple'], funct
                 cbf();
               // exports.deleteDeliveryAddress();
                 $(this).dialog("close");
-            },
-            "Cancel" : function() {
-                $(this).dialog("close");
+            // },
+            // "Cancel" : function() {
+            //     $(this).dialog("close");
             }
           }
         });
@@ -263,13 +329,13 @@ define('main/common', ['jquery','main/utils','main/server','main/temple'], funct
             showCategoryList(index)
         }).on('mouseleave','.categoryContainer',function(){
             $body.find('.categoryContainer').hide();
-        }).on('click','.tabSearch,.searchSubmit,.headDeleteShopCartBtn,.needLogin,.quickInquiry',function(){
+        }).on('click','.tabSearch,.searchSubmit,.headDeleteShopCartBtn,.needLogin,.quickInquiry,.quickInquirySubmit,.kaptcha',function(){
             var self = $(this);
             var index;
-            if(self.hasClass('tabSearch')){
+            if(self.hasClass('tabSearch')){//头部切换搜索
                 index = self.index('.tabSearch');
                 self.addClass('sele').siblings('a').removeClass('sele');
-            }else if(self.hasClass('searchSubmit')){
+            }else if(self.hasClass('searchSubmit')){//提交搜索
                 var searchType = $body.find('.sele').attr('v');
                 var searchValue = $body.find('#searchInput').val();
                 if(searchValue.length <= 3){
@@ -285,16 +351,21 @@ define('main/common', ['jquery','main/utils','main/server','main/temple'], funct
             //     var itemObj = self.closest('.blockItem');
             //     var id = itemObj.attr('_id');
             //     exports.deleteShopCart(id,itemObj);
-            }else if(self.hasClass('needLogin')){
+            }else if(self.hasClass('needLogin')){//点击链接，判断是否需要登录
                 if(isLogin === 1){
                     window.location.href = self.attr('link');
                 }else{
                     window.location.href = '/member/login.html?redirect_url='+self.attr('link');
                 }
                 
-            }else if(self.hasClass('quickInquiry')){
-
-            }
+            }else if(self.hasClass('quickInquiry')){//弹出quick inquiry popup
+                $body.find('.kaptcha').attr('src',path+'/kaptcha.wb');
+                $("#quickInquiry").dialog("open");
+            }else if(self.hasClass('quickInquirySubmit')){//提交quick inquiry
+                quickInquiry();
+            }else if(self.hasClass('kaptcha')){//图片验证码 
+                self.attr('src',path+'kaptcha.wb?t='+Math.random());
+            } 
         });
 
 
