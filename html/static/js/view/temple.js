@@ -1,4 +1,4 @@
-define('main/temple', ['jquery','main/utils',], function($, utils){
+define('main/temple', ['jquery','main/utils','main/base64'], function($, utils, base64){
     var exports    = {};
     // 格式化数据
     exports.formatText = function(text){
@@ -49,7 +49,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
     exports.globalBrandViews = function(data){
         var html = '';
         $.each(data, function(k, v){
-            html += '<li><a href="/brand/detail.html?id=' + v.manufactureId + '"><img src="' + (v.logo || '/static/img/default_pic.jpg' ) + '"><br><span>'+v.manufactureName+'</span></a></li>';
+            html += '<li><a href="/brand/detail.html?id=' + v.manufactureId + '"><img src="' + (v.logo || '/static/img/default_pic.png' ) + '"><br><span>'+v.manufactureName+'</span></a></li>';
         });
         return html;
     }
@@ -59,7 +59,11 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
     exports.indexBannerViews = function(data){
         var html = '';
         $.each(data, function(k, v){
-            html += '<li><a target="_blank" href="'+v.url+'" title="'+v.name+'"><span style="display:inline-block;width:100%;height:300px;background:url('+ (v.logo || '/static/img/default_pic.jpg') + ') no-repeat center center;"></span></a></li>';
+            if(v.url){
+                html += '<li><a target="_blank" href="'+v.url+'"><span style="display:inline-block;width:100%;height:300px;background:url('+ (v.logo || '/static/img/default_pic.png') + ') no-repeat center center;"></span></a></li>';
+            }else{
+                html += '<li><a  href="javascript:;"><span style="display:inline-block;width:100%;height:300px;background:url('+ (v.logo || '/static/img/default_pic.png') + ') no-repeat center center;"></span></a></li>';
+            }
 
             // html += '<li><a target="_blank" href="'+v.url+'" title="'+v.name+'"><img src="'+v.logo+'" alt="'+v.name+'"/></a></li>';
         });
@@ -97,7 +101,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
             tabPanelHtml += '<div class="panel"'+style+'>';
             $.each(v.products, function(i, product){
                 tabPanelHtml += '<a class="productItem '+((i+1)%5?'':'noMargin')+'" href="/product/detail.html?id='+product.productId+'&part='+product.productName+'">' +
-                                    '<img src="'+(product.logo || '/static/img/default_pic.jpg' ) +'">' +
+                                    '<img src="'+(product.logo || '/static/img/default_pic.png' ) +'">' +
                                     '<p class="title">'+product.description+'</p>' +
                                     '<p class="price">$ '+product.price+'</p>' +
                                 '</a>';
@@ -138,7 +142,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
         $.each(data, function(k, v){
             if(k === 0){
                 html += '<div class="tabProduct">' + 
-                            '<img src="'+ (v.logo || '/static/img/default_pic.jpg') + '">' +
+                            '<img src="'+ (v.logo || '/static/img/default_pic.png') + '">' +
                             '<p>' +
                                 '<a href="/product/detail.html?id='+v.productId+'&part='+v.productName+'">'+v.productName+'</a>' +
                                 v.description+
@@ -157,31 +161,41 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
     exports.shopCartAddressList = function(data){
         var html = '';
         $.each(data, function(k, v){
-            html += '<ul class="addressList">' +
-                '<li>' +
+            html += '<li class="addressList'+(k%3?'':' noMargin')+(v.isDefault || data.length === 1 ? ' select':'')+'">' +
+                '<div>' +
                     '<label>UserName:</label>' +
                     '<span>' + (v.linkMan || '') + '</span>' +
                     '<label>Region:</label>' +
                     '<span>' + (v.regionName || '') + '</span>' +
+                '</div>' +
+                '<div>' +
                     '<label>Phone:</label>' +
                     '<span>' + (v.areaCode || '') + '-' + (v.linkPhone || '') + '</span>' +
-                '</li>' +
-                '<li>' +
+                '</div>' +
+                '<div>' +
                     '<label>E-mail:</label>' +
                     '<span>' + (v.email || '') + '</span>' +
+                '</div>' +
+                '<div>' +
                     '<label>Fax:</label>' +
                     '<span>' + (v.fax || '') + '</span>' +
 
                     '<label>PostCode:</label>' +
                     '<span>' + (v.postCode || '') + '</span>' +
-                '</li>' +
-                '<li>' +
+                '</div>' +
+                '<div>' +
                     '<label>Company Name:</label>' +
                     '<span>' + (v.companyName || '') + '</span>' +
+
+                '</div>' +
+                '<div>' +
                     '<label>Address:</label>' +
                     '<span>' + (v.address || '') + '</span>' +
-                '</li>' +
-            '</ul>';
+                '</div>' +
+                '<div>' +
+                    (v.isDefault ? '<span class="emphasesColor">Default address</span>':'')+
+                '</div>' 
+            '</li>';
         });
         return html;
     }
@@ -191,16 +205,21 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
         $.each(data, function(k, v){
             html += '<tr _id="'+v.id+'" product_id="'+v.productId+'">' +
                             '<td><input type="checkbox" checked="checked" name="shopCartOrder"></td>' +
+                            '<td class="imgWrapp">' +
+                                '<a href="/product/detail.html?id=' + v.productId + '&part=' + v.productName + '" class="imgContainer">' +
+                                    '<img height="72" src="' + (v.productImg || '/static/img/default_pic.png') + '" alt="' + v.productName + '" title="' + v.productName + '">' +
+                                '</a>' +
+                            '</td>' +
                             '<td>'+v.mfrPartNum+'</td>' +
                             '<td>' + v.manufacture + '</td>' +
                             '<td>' + v.description +'</td>' +
-                            '<td></td>' +
+                            // '<td></td>' +
                             '<td class="stock">' + v.stock + '</td>' +
                             '<td><input type="text" class="count" size="6" placeholder="0" value="' + v.quantity + '" quantity="' + v.quantity + '"></td>' +
                             '<td class="unitPrice" unit_price="' + v.unitPrice + '">' + v.unitPrice + '</td>' +
                             '<td class="price">'+utils.accMul(v.unitPrice,v.quantity)+'</td>' +
                             '<td><input type="text" class="remark" value=""></td>' +
-                            '<td><a href="javascript:;" class="deleteBtn">Delete</a></td>' +
+                            // '<td><a href="javascript:;" class="deleteBtn">Delete</a></td>' +
                         '</tr>';
         });
         return html;
@@ -210,7 +229,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
     //     var html = '';
     //     $.each(data, function(k, v){
     //         html += '<li class="blockItem" _id="' + (v.id || k) + '">' +
-    //                     '<img src="'+(v.productImg || v.logo || '/static/img/default_pic.jpg' )+'">' +
+    //                     '<img src="'+(v.productImg || v.logo || '/static/img/default_pic.png' )+'">' +
     //                     '<p>' +
     //                         '<a href="/product/detail.html?id=' + v.productId + '&part=' + v.mfrPartNum + '" target="_blank">' + v.mfrPartNum + '</a>' +
     //                         '<span>Price:' + utils.accMul(v.unitPrice,v.quantity) + ' Quantity:' + v.quantity + '</span>' +
@@ -224,10 +243,11 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
     //     return html;
     // };
     //productIndex左栏
-    exports.categoryLeftProduct = function(data){
+    exports.categoryLeftProduct = function(data,id){
+        console.log(id);
         var html = '';
         $.each(data, function(k, v){
-            html += '<dt><a href="javascript:;" cid="'+v.categoryId+'" class="firstCategory">'+v.categoryName+'</a></dt>';
+            html += '<dt><a href="javascript:;" cid="'+v.categoryId+'" class="firstCategory'+(v.categoryId === id?' choose':'')+'">'+v.categoryName+'<i></i></a></dt>';
             $.each(v.subCats, function(i, subCat){
                 html += '<dd><a href="/product/index.html?cid='+v.categoryId+'#'+subCat.categoryId+'" cid="'+v.categoryId+'" class="secondCategory">'+subCat.categoryName+'</a></dd>';
             });
@@ -266,7 +286,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
             var colorClass = k%2 ? 'bgcolor':'';
             html += '<li class="' + colorClass + '">' +
                 '<span class="type">' + v.mfrPartNum + '</span>' +
-                '<span class="down"><a href="/open_datasheet.html?url=' + encodeURIComponent(window.btoa(v.url)) + '" target="_blank">Preview</a></span>' +
+                '<span class="down"><a href="/open_datasheet.html?url=' + encodeURIComponent(base64.encode(v.url)) + '" target="_blank"  class="textLink">Preview</a></span>' +
             '</li>';
         });
         return html;
@@ -285,7 +305,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
                         '<div class="description">' + 
                             // '<h3></h3>' + 
                             '<p>' +
-                                '<a href="/brand/detail.html?id='+v.mfrId+'">'+v.mfrName+'</a>' + v.shortDescription +
+                                '<a href="/brand/detail.html?id='+v.mfrId+'" class="textLink">'+v.mfrName+'</a>' + v.shortDescription +
                             '</p>' + 
                         '</div>' +     
                     '</li>';
@@ -300,7 +320,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
             tdHtml += '<td class="tdbody">' +
                 '<div class="newestProductImageHolder">' +
                     '<a href="/product/detail.html?id='+v.productId+'&part=' + v.productName + '">' +
-                        '<img src="'+(v.logo || '/static/img/default_pic.jpg') +'" class="newestProductImg" alt="'+v.productName+'" title="'+v.productName+'" />' +
+                        '<img src="'+(v.logo || '/static/img/default_pic.png') +'" class="newestProductImg" alt="'+v.productName+'" title="'+v.productName+'" />' +
                     '</a>' +
                 '</div>' +
                 '<p class="newestProductTitle">' +
@@ -323,14 +343,14 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
             var datasheetHtml = '';
             if(v.dataSheets.length){
                 var datasheet = v.dataSheets[0];
-                datasheetHtml = '<a class="lnkDatasheet" href="/open_datasheet.html?url=' + encodeURIComponent(window.btoa(datasheet.url)) + '" target="_blank">' +
+                datasheetHtml = '<a class="lnkDatasheet" href="/open_datasheet.html?url=' + encodeURIComponent(base64.encode(datasheet.url)) + '" target="_blank">' +
                                 '<img class="datasheet-img" src="/static/img/pdf_logo.jpg?t=1" alt="' + datasheet.text + ' Datasheet" title="' + datasheet.text + ' Datasheet">' +
                             '</a>';
             }
             html += '<tr>' +
                         '<td>' +
                             '<a href="/product/detail.html?id=' + v.productId + '&part=' + v.productName + '" class="imgContainer">' +
-                                '<img border="0" height="70" src="' + (v.productImg || '/static/img/default_pic.jpg') + '" alt="' + v.productName + '" title="' + v.productName + '">' +
+                                '<img border="0" height="70" src="' + (v.productImg || '/static/img/default_pic.png') + '" alt="' + v.productName + '" title="' + v.productName + '">' +
                             '</a>' +
                         '</td>' +
                         '<td>' +
@@ -360,7 +380,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
         $.each(data, function(k, v){
             if (k < 4) {
                 html += '<a href="javascript:;" class="'+ (k === 0 ? 'imgChoose imgTab' : 'imgTab') +'">' +
-                        '<img src="'+(v.thumbImg || '/static/img/default_pic.jpg' )+'" title="'+v.imgTip+'" bigImgUrl="' + v.bigImg + '">' +
+                        '<img src="'+(v.thumbImg || '/static/img/default_pic.png' )+'" title="'+v.imgTip+'" bigImgUrl="' + v.bigImg + '">' +
                     '</a>';
             }
         });
@@ -369,17 +389,17 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
     //产品详情ProductInfo
     exports.productInfo = function(data){
         var html = '<dt><h1>' + data.mfrPartNum + '</h1></dt>' +
-                    '<dd><label>Quantity Available：</label>' + (data.quantityAvaliable || '-') + '</dd>' +
-                    '<dd><label>Manufacturer：</label>' + (data.manufacturerName || '-') + '</dd>' +
-                    '<dd class="description"><label>Description：</label>' + (data.description || '-') + '</dd>' +
-                    '<dd><label>Lead Free Status / RoHS Status：</label>' + (data.rohsStatus || '-') + '</dd>' +
-                    '<dd><label>Manufacturer Standard Lead Time：</label>' + (data.manufacturerLeadTime || '-') + '</dd>' +
-                    '<dd><label>Moisture Sensitivity Level (MSL)：</label>' + (data.msl || '-') + '</dd>' +
-                    '<dd><label>Stocks：</label>' + data.stock + '</dd>';
+                    '<dd><label>Quantity Available：</label><span>' + (data.quantityAvaliable || '-') + '</span></dd>' +
+                    '<dd><label>Manufacturer：</label><span>' + (data.manufacturerName || '-') + '</span></dd>' +
+                    '<dd class="description"><label>Description：</label><span>' + (data.description || '-') + '</span></dd>' +
+                    '<dd><label>Lead Free Status / RoHS Status：</label><span>' + (data.rohsStatus || '-') + '</span></dd>' +
+                    '<dd><label>Manufacturer Standard Lead Time：</label><span>' + (data.manufacturerLeadTime || '-') + '</span></dd>' +
+                    '<dd><label>Moisture Sensitivity Level (MSL)：</label><span>' + (data.msl || '-') + '</span></dd>' +
+                    '<dd><label>Stock：</label><span>' + data.stock + '</span></dd>';
 
         if(data.dataSheets && data.dataSheets.length){
             var datasheet = data.dataSheets[0];
-            html += '<dd><label>DataSheet：</label><a href="/open_datasheet.html?url=' + encodeURIComponent(window.btoa(datasheet.url)) + '" target="_blank" class="lnkDatasheet"><img class="datasheet-img" src="/static/img/pdf_logo.jpg?t=1" alt="' + datasheet.text + ' Datasheet" title="' + datasheet.text + ' Datasheet"> View Datasheet</a> </dd>';
+            html += '<dd><label>DataSheet：</label><a href="/open_datasheet.html?url=' + encodeURIComponent(base64.encode(datasheet.url)) + '" target="_blank" class="lnkDatasheet textLink"><img class="datasheet-img" src="/static/img/pdf_logo.jpg?t=1" alt="' + datasheet.text + ' Datasheet" title="' + datasheet.text + ' Datasheet"> View Datasheet</a> </dd>';
         }
         return html;
     }; 
@@ -418,11 +438,28 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
         });
         return html;
     };
+    //产品详情Browsing History
+    exports.historyProduct = function(data){
+        var html = '';
+        $.each(data, function(k, v){
+            html += '<li>' +
+                        '<a href="/product/detail.html?id=' + v.productId + '&part=' + v.productName + '" target="_blank" class="textLink">' +
+                            '<img src="' + (v.logo || '/static/img/default_pic.png') + '" alt="' + v.productName + '" title="' + v.description + '" />' +
+                            '<div class="historyProductInfo">' +
+                                '<span class="description">' + v.description + '</span>' +
+                                '<span class="price">US ' + v.priceFrom + '-' + v.priceTo + '</span>' +
+                            '</div>' +
+                        '</a>' +
+                    '</li>';
+        });
+        return html;
+    }; 
+
     //产品详情favor Product
     exports.favorProduct = function(data){
         var html = '';
         $.each(data, function(k, v){
-            html += '<a class="productItem" href="/product/detail.html?id=' + v.productId + '&part=' + v.productName + '"><img src="' + (v.logo || '/static/img/default_pic.jpg') + '" alt="' + v.productName + '" title="' + v.description + '"><p class="title">' + v.productName + '</p><p class="price">Price: $ ' + v.price + '</p></a>';
+            html += '<a class="productItem textLink" href="/product/detail.html?id=' + v.productId + '&part=' + v.productName + '" target="_blank"><img src="' + (v.logo || '/static/img/default_pic.png') + '" alt="' + v.productName + '" title="' + v.description + '"><p class="title">' + v.productName + '</p><p class="price">Price: $ ' + v.price + '</p></a>';
         });
         return html;
     }; 
@@ -460,7 +497,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
             if(v1.datasheets && v1.datasheets.length){
                 var datasheet = v1.datasheets[0];
                 html += '<div class="pr_data">' +
-                            '<a class="downloadDatasheet" href="/open_datasheet.html?url=' + encodeURIComponent(window.btoa(datasheet.url)) + '" title="' + datasheet.text + '" target="_blank"></a>' +
+                            '<a class="downloadDatasheet" href="/open_datasheet.html?url=' + encodeURIComponent(base64.encode(datasheet.url)) + '" title="' + datasheet.text + '" target="_blank"></a>' +
                             // '<span>' + datasheet.text + '</span>' +
                             '<a href="javascript:;" class="moreDatasheet" style="' + (v1.datasheets.length > 1 ? '' :'visibility: hidden') + '">All Datasheet</a>' +
                         '</div>';
@@ -469,10 +506,10 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
                 if(k2 === 0){
                     html += 
                     '<div class="pl_info">' +
-                        '<a href="/product/detail.html?id=' + v2.productId + '&part=' + v2.sku + '" class="pic"><img src="' + (v2.mfrLogo || '/static/img/default_pic.jpg')+ '" style="max-width:100%;max-height:100%;"></a>' +
+                        '<a href="/product/detail.html?id=' + v2.productId + '&part=' + v2.sku + '" class="pic"><img src="' + (v2.mfrLogo || '/static/img/default_pic.png')+ '" style="max-width:100%;max-height:100%;"></a>' +
                         '<ul class="info">' +
                             '<li><b>Manufacturer:</b>  ' + v2.manufacturer +'</li>' +
-                            '<li><strong><a href="/product/detail.html?id=' + v2.productId + '&part=' + v2.sku + '">' + v2.sku + '</a></strong></li>' +
+                            '<li><strong><a href="/product/detail.html?id=' + v2.productId + '&part=' + v2.sku + '" class="textLink">' + v2.sku + '</a></strong></li>' +
                             '<li><b>Description</b>:<span class="desc">' + v2.description + '</span></li>' +
                         '</ul>' +
                     '</div>';
@@ -480,7 +517,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
                     '<div class="Clear"></div>' +
                     '<div class="pi_list listTitle">' +
                         // '<span class="dis" style="display:none">Distributor</span>' +
-                        '<span class="sku">SKU</span>' +
+                        '<span class="sku">Part No.</span>' +
                         // '<span class="manu">Manufacturer</span>' +
                         // '<span class="descs">Description</span>' +
                         '<span class="stock">Stock</span>' +
@@ -495,7 +532,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
                 '<div pos="product">' +
                     '<div class="pi_list listItem colorItem" day="' + v2.delivery + '">' +
                         // '<span class="dis" style="display:none"></span>' +
-                        '<span class="sku"><a href="/product/detail.html?id=' + v2.productId + '&part=' + v2.sku + '">' + v2.sku.replace(key,'<u>'+key+'</u>') + '</a></span>' +
+                        '<span class="sku"><a href="/product/detail.html?id=' + v2.productId + '&part=' + v2.sku + '" class="textLink">' + v2.sku.toUpperCase().replace(key.toUpperCase(),'<u>'+key.toUpperCase()+'</u>') + '</a></span>' +
                         // '<span class="manu">' + v2.manufacturer + '</span>' +
                         // '<span class="descs">' + v2.description + '</span>' +
                         '<span class="stock">' + v2.stock + '</span>' +
@@ -515,10 +552,10 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
                 html += '</span>' +
                         '<span class="operate" _id=' + v2.productId + ' moq="' + v2.moq + '" logo="' + v2.mfrLogo + '" mfrPartNum="' + v2.sku + '">';
                 if(v2.stock){
-                    html += '<a href="javascript:;" class="addToCartBtn">Add to cart</a>' +
-                            '<a href="javascript:;" class="buyBtn">Purchase</a>';
+                    html += '<a href="javascript:;" class="addToCartBtn textLink">Add to cart</a>' +
+                            '<a href="javascript:;" class="buyBtn textLink">Purchase</a>';
                 }                
-                html += '<a href="/inquiry/index.html?id=' + v2.productId + '&part=' + v2.sku + '" target="_blank" class="btnInquiry">Post inquiry</a>' +
+                html += '<a href="javascript:;" _id="' + v2.productId + '" class="btnInquiry inquiry textLink">Post inquiry</a>' +
                         '</span>' +
                         '<div class="Clear"></div>' +
                     '</div>' +
@@ -533,7 +570,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
         var html = '<ul>';
         $.each(data, function(k, v){
             html += '<li>' +
-                '<a class="downloadDatasheet" href="/open_datasheet.html?url=' + encodeURIComponent(window.btoa(v.url)) + '" title="' + v.text + '" target="_blank"></a>' +
+                '<a class="downloadDatasheet" href="/open_datasheet.html?url=' + encodeURIComponent(base64.encode(v.url)) + '" title="' + v.text + '" target="_blank"></a>' +
                 '<p>' + v.text + '</p>' + 
             '</li>';
         });
@@ -561,7 +598,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
                 '<td>' + v.areaCode + '-' + v.linkPhone + '</td>' +
                 '<td>' + (v.companyName || '') +  '</td>' +
                 '<td>' + v.address + '</td>' +
-                '<td><a href="javascript:;" class="editBtn">Edit</a> / <a href="javascript:;" class="deleteBtn">Delete</a></td>' +
+                '<td><a href="javascript:;" class="editBtn textLink">Edit</a> / <a href="javascript:;" class="deleteBtn textLink">Delete</a></td>' +
                 '<td class="operate"><a href="javascript:;" class="emphasesColor" style="display:'+(v.isDefault?'none':'block')+'">Set as default</a></td>' +
             '</tr>';
             // html += '<ul _id="' + v.id + '">'+
@@ -616,9 +653,9 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
                         // '<td>' + v.userName + '</td>' +
                         // '<td>' + (v.mfrPartNum || '') + '</td>' +
                         '<td>' + v.lookingFor + '</td>' +
-                        '<td>' + (v.file ? '<a href="' + v.file + '" target="_blank">file</a>' : '') + '</td>' +
+                        '<td>' + (v.file ? '<a href="' + v.file + '" target="_blank" class="textLink">file</a>' : '') + '</td>' +
                         '<td class="status">' + v.statusText + '</td>' +
-                        '<td>' + (v.status != 8 ? '<a href="javascript:;" class="deleteBtn" _id="' + v.id + '">Cancel</a>':'') + '</td>' +
+                        '<td>' + (v.status != 8 ? '<a href="javascript:;" class="deleteBtn textLink" _id="' + v.id + '">Cancel</a>':'') + '</td>' +
                     '</tr>';
         });
         return html;
@@ -645,7 +682,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
         // });
         var statusInfo = {
            '0': {
-                text : 'Unpaid',
+                text : 'To be confirm',
                 className : 'emphasesColor' 
            },
            '1': {
@@ -666,7 +703,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
            }
         };
         $.each(data, function(k, v){
-            html += '<table class="orderTable" cellspacing="0" cellpadding="0" _id="' + v.orderCode + '">' +
+            html += '<table class="orderTable" cellspacing="0" cellpadding="0" _id="' + v.id + '">' +
                         '<caption>' +
                             '<span>Order No. ' + v.orderCode + '</span>' +
                             '<span>LinkMan: ' + v.linkMan + '</span>' +
@@ -676,7 +713,7 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
                         $.each(v.orderItems, function(k2, v2){
                             html += '<tr>' +
                                 '<td class="imgWrapper">' +
-                                    '<a href="/product/detail.html?id='+v2.productId+'&part='+v2.productName+'" class="imgContainer"><img src="' + (v2.productImg || '/static/img/default_pic.jpg') + '" /></a>' +
+                                    '<a href="/product/detail.html?id='+v2.productId+'&part='+v2.productName+'" class="imgContainer"><img src="' + (v2.productImg || '/static/img/default_pic.png') + '" /></a>' +
                                 '</td>' +
                                 '<td class="description">' +
                                     '<div>' + v2.description + '</div>' +
@@ -694,8 +731,8 @@ define('main/temple', ['jquery','main/utils',], function($, utils){
                                 '<td rowspan="' + orderItemslength + '" class="totalAmt"><span class="emphases">$' + v.totalAmt + '</span></td>' +
                                 '<td rowspan="' + orderItemslength + '"  class="orderStatus">' +
                                     '<div><span class="' + statusInfo[v.orderStatus].className + '">' + statusInfo[v.orderStatus].text + '</span></div>' +
-                                    '<div>' + (v.orderStatus == 0 ? '<a href="javascript:;" class="deleteBtn">Cancel</a>':'') + '</div>' +
-                                    '<div><a href="/order/detail.html?id='+ v.orderCode +'" target="_blank" class="viewDetails">View Details</a></div>' +
+                                    '<div>' + (v.orderStatus == 0 ? '<a href="javascript:;" class="deleteBtn textLink">Cancel</a>':'') + '</div>' +
+                                    '<div><a href="/order/detail.html?id='+ v.orderCode +'" target="_blank" class="viewDetails textLink">View Details</a></div>' +
                                 '</td>';
                             }
                             html +='</tr>';

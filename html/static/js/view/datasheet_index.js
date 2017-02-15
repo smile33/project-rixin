@@ -14,16 +14,27 @@ define('main/datasheet_index', ['jquery','main/utils','main/server','main/common
             utils.loading();
             if(data.data){
                 data = data.data;
-                $body.find('.headline strong').html(data.total);
-                $body.find('.dataItem').html(temple.datasheetList(data.items));
-                PageTurningPlugin.setPageObj({
-                    pageIndex : data.page,
-                    pageLast : data.maxPage
-                },exports.getDatasheet);
+                if((data.items && !data.items.length) && data.page === 1){
+                    showNoData();
+                }else{
+                    $body.find('.headline strong').html(data.total);
+                    $body.find('.dataItem').html(temple.datasheetList(data.items));
+                    PageTurningPlugin.setPageObj({
+                        pageIndex : data.page,
+                        pageLast : data.maxPage
+                    },exports.getDatasheet);
+                    $body.find('.searchResultContainer').show();
+                }
+            }else{
+                showNoData();
             }
 
         });
     };
+    function showNoData(){
+        $body.find('.SiteMap').hide();
+        $body.find('.noDataContainer').show().find('.key').html(key);
+    }
     function setSearchInputValue(){
         setTimeout(function(){
             if($body.find('.tabSearch').length){
@@ -34,11 +45,21 @@ define('main/datasheet_index', ['jquery','main/utils','main/server','main/common
             }
         },500);
     }
+    // 事件
+    exports.action = function(){
+        $body.on('click','.redirectInquiryPage',function(){
+            var self = $(this);
+            if(self.hasClass('redirectInquiryPage')){
+                window.location.href = '/inquiry/index.html?part='+key;
+            }
+        });
+    };
     exports.init = function(){
         common.init();
         setSearchInputValue();
         $body.find('.currentLocation').html('Datasheet');
         exports.getDatasheet();
+        exports.action();
     };
     return exports;
 })

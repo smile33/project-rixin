@@ -105,6 +105,7 @@ define('main/post_inquiry', ['jquery','jqform','main/utils','main/server','main/
         $body.on('click','.inquiry,.postInquirySubmit,.title',function(){
             var self = $(this);
             if(self.hasClass('inquiry')){
+                id = utils.getSearchParam('id') ? utils.getSearchParam('id'): self.attr('_id');
                 $("#postInquiry").dialog("open");
             }else if(self.hasClass('postInquirySubmit')){
                 exports.toPostInquiry(id,function(){

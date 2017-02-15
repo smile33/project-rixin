@@ -7,8 +7,6 @@ define('main/reset_password', ['jquery','main/utils','main/server','main/common'
     $error = $body.find('#error_msg'),
     rExpPwd = /^[\w\W]{6,16}$/,
     isSend = false; //是否在发送中  
-    // 初始化
-   
     exports.check = function(){
         $error.text("");
         var oData = {};
@@ -60,8 +58,66 @@ define('main/reset_password', ['jquery','main/utils','main/server','main/common'
         .on('focus','input',function(){
             $error.text('');
         });
-    };
+        $new_password.keyup(function(){
+            var pwd = $(this).val();
+            console.log(pwd);
+             if (pwd==null||pwd==''){
+                $body.find('.passwordStatus').removeClass('passwordWeekBg passwordMiddleBg passwordStrongBg');
+             }else{
+                 S_level=checkStrong(pwd);
+                console.log( S_level);
+                 switch(S_level) {
+                 case 0:
+                 case 1:
+                    $body.find('.passwordWeek').addClass('passwordWeekBg');
+                    $body.find('.passwordMiddle').removeClass('passwordMiddleBg');
+                    $body.find('.passwordStrong').removeClass('passwordStrongBg');
+                 break;
+                 case 2:
+                    $body.find('.passwordWeek').addClass('passwordWeekBg');
+                    $body.find('.passwordMiddle').addClass('passwordMiddleBg');
+                    $body.find('.passwordStrong').removeClass('passwordStrongBg');
+                 break;
+                 default:
+                    $body.find('.passwordWeek').addClass('passwordWeekBg');
+                    $body.find('.passwordMiddle').addClass('passwordMiddleBg');
+                    $body.find('.passwordStrong').addClass('passwordStrongBg');
+                 }
+             } 
 
+        });
+    };
+    //测试某个字符是属于哪一类.
+    function CharMode(iN){
+        if (iN>=48 && iN <=57) //数字
+            return 1;
+        if (iN>=65 && iN <=90) //大写字母
+            return 2;
+        if (iN>=97 && iN <=122) //小写
+            return 4;
+        else
+            return 8; //特殊字符
+    }
+    //计算出当前密码当中一共有多少种模式
+    function bitTotal(num){
+        var modes = 0;
+        for (i=0;i<4;i++){
+            if (num & 1) modes++;
+            num /= 2;
+        }
+        return modes;
+    }
+    //返回密码的强度级别
+    function checkStrong(sPW){
+        if (sPW.length<=4)
+            return 0; //密码太短
+        var Modes = 0;
+        for (i=0;i<sPW.length;i++){
+            //测试每一个字符的类别并统计一共有多少种模式.
+            Modes|=CharMode(sPW.charCodeAt(i));//|= 按位或．然后赋值
+        }
+        return bitTotal(Modes);
+    }
     exports.init = function(){
         common.init();
         common.userSideBar();

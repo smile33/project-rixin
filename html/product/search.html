@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Search</title>
+<title>Product Search</title>
 <link type="image/x-icon" rel="shortcut icon"   href="static/css/img/favicon.ico" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 <meta name="renderer" content="webkit" />
@@ -14,12 +14,89 @@
 
 </head>
 <body>
-    <div id="site-nav"></div>
+    <div id="site-nav">
+        <div class="top">
+            <div class="Container pageWidth">  
+                <div class="topSum">
+                    <span style="margin:5px;">Hello! Welcome to </span>
+                    <a href="/member/login.html" target="_blank" id="aLogin">Login</a> |        
+                    <a href="/member/register.html" target="_blank" id="aLogout">Register</a>
+                </div>
+                <div class="topMenu">
+                    <div class="item">
+                        <a href="javascript:void(0)" link="/member/index.html" class="Link needLogin">My Account</a>
+                        <ul style="display: none;">
+                            <li><a href="javascript:void(0)" link="/account/index.html" class="needLogin">Account Information</a></li>
+                            <li><a href="javascript:void(0)" link="/account/address.html" class="needLogin">Shipping Address</a></li>
+                            <li><a href="/member/logout.html" class="logout">Logout</a></li>
+                        </ul>
+                    </div>
+                    <div class="item">
+                        <a href="javascript:void(0)" link="/order/index.html" class="Link needLogin">My Orders</a>
+                        <ul style="display: none;">
+                            <li><a href="javascript:void(0)" link="/order/index.html" class="needLogin">My Orders</a></li>
+                            <li><a href="javascript:void(0)" link="/quote/index.html" class="needLogin">My Inquiry</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="item">
+                        <a href="javascript:void(0)" class="Link">Site Map</a>
+                        <ul style="display: none;">
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/brand/index.html">Brand</a></li>
+                            <li><a href="/product/index.html">Product</a></li>
+                            <li><a href="/datasheet/index.html">DataSheet</a></li>
+                        </ul>
+                    </div>
+                    <div class="item lang">
+                        <a class="Link">English</a>
+                    </div>
+                </div>
+                <div class="Clear"></div>
+            </div>
+        </div>
+    </div>
     <div id="wrapper" class="Container">
-        <header id="header"></header>
+        <header id="header">
+            <div class="pageWidth Container">
+                <div class="Logo"><a href="/"><img src="/static/img/logo.png"></a></div>
+                <div class="headRight">
+                    <div class="searchBox">
+                        <div id="tabSearch" class="searSelect">
+                            <a href="javascript:void(0)" class="sele tabSearch" v="Product">Products</a>
+                            <span>|</span>
+                            <a href="javascript:void(0)" class="tabSearch" v="DataSheet">DataSheet</a>
+                        </div>
+                        <div class="searTxt">
+                            <input type="text" id="searchInput" name="part" placeholder="Enter the keyword you want to find" autocomplete="off" value=""><input type="button" value="Search" class="searchSubmit">
+                        </div>
+                    </div>
+                    <a href="javascript:;" class="quickInquiry"><i class="ci-left"></i>Quick Inquiry</a>
+                    <div class="Clear"></div>
+                </div>
+                <div class="Clear"></div>
+            </div>
+            <div class="navigation">
+                <div class="pageWidth Container">
+                    <div class="nav_Left">
+                        <a class="proCate" href="javascript:;">Categories<i class="arrowIcon down"></i></a>
+                        <a class="navTab" href="/">Home</a>
+                        <a class="navTab" href="/product/index.html">Product Index</a>
+                        <a class="navTab" href="/brand/index.html">Brand Index</a>
+                        <a class="navTab" href="/datasheet/index.html">DataSheet</a>
+                        <a class="navTab" href="/article/about.html?tpl=about_us">About US</a>
+                    </div>
+                    <div class="categoryContainer">
+                        <ul class="categoryList"></ul>
+                    </div>
+                    <div class="Clear"></div>
+                </div>
+                <div class="Clear"></div>  
+            </div>
+        </header>
         <div id="main">
             <div class="SiteMap"></div>
-            <div class="SearchContainer">
+            <div class="searchResultContainer">
                 <div class="SearchResults">
                     <div class="headline typeMatch">
                         <i></i><a href="javascript:;" class="emphasesColor"></a> Model matching results（<strong class="emphasesColor">0 stock</strong>）:
@@ -38,12 +115,16 @@
                 </div> -->
                 <div id="ProductArea"></div>
             </div>
-            <div class="inquiryContainer wayBtn">
+            <div class="noDataContainer">
+                <h2>Sorry,we find nothing about "<span class="key"></span>"</h2>
+                <p>Try another characters or <a href="javascript:;" class="redirectInquiryPage">Post Quick inquiry</a>  to tell us what<br/>you want to buy</p>
+                <a href="javascript:;" class="redirectInquiryPage btnPrimary postQuickInquiry">Post Quick inquiry</a>
+            </div>
+<!--             <div class="inquiryContainer wayBtn">
                 <h3 class="pageTitle"></h3>
                 <form id="fileForm" method="post"  enctype="multipart/form-data"  name="inquery">
                     <div class="textInput">
                         <label>Part No. :</label>
-                        <!-- <span class="partNum">partNum</span> -->
                         <input type="text" id="partNum" placeholder="Pleast enter your Part No.">
                     </div>
                     <div class="textInput">
@@ -73,7 +154,44 @@
                     <div id="error" class="error_msg"></div>
                     <div><input type="button" class="submitBtn checkBtn" value="Submit"></div>
                 </form>
-            </div>
+            </div> -->
+        </div>
+        <div id="postInquiry" class="inquiryPopup">
+            <h3><i></i>Post Inquiry</h3>
+            <form id="fileForm" method="post"  enctype="multipart/form-data"  name="inquery">
+                <ul class="postInquiryContainer">
+                    <li>
+                        <label><span>*</span>Name:</label>
+                        <input type="text" id="post_inquiry_name">
+                    </li>
+                    <li>
+                        <label><span>*</span>Email:</label>
+                        <input type="text" id="post_inquiry_email">
+                    </li>
+                    <li>
+                        <label><span>*</span>Target Price:</label>
+                        <input type="text" id="post_inquiry_price" placeholder="USD">
+                    </li>
+                    <li>
+                        <label><span>*</span>Quantity:</label>
+                        <input type="text" id="post_inquiry_quantity">
+                    </li>
+                    <li class="remarkWay">
+                        <label><span>*</span>Remark:</label>
+                        <textarea id="post_inquiry_content"></textarea> 
+                    </li>
+                    <li>
+                        <div class="title">Upload BOM from EXCEL Spreadsheet</div>
+                        <input type="file" id="file" name="file"  enctype="multipart/form-data">
+                    </li>
+                    <li>
+                        <span class="error_msg"></span>
+                    </li>
+                </ul>
+                <div class="inquiryBtn">
+                    <input type="button" value="Submit" class="postInquirySubmit btnPrimary">
+                </div>
+            </form>
         </div>
         <footer id="footer"></footer>
         <div id="inputBox"  title="Please enter the quantity">

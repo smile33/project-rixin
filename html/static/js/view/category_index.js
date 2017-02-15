@@ -15,7 +15,6 @@ define('main/category_index', ['jquery','main/utils','main/server','main/common'
 			utils.loading();
             if(data.data && data.data.items){
                 data = data.data;
-                console.log(data.items);
                 $body.find('#productTable tbody').html(temple.productCategory(data.items));
                 $body.find('.headline strong').html(data.total);
                 PageTurningPlugin.setPageObj({

@@ -1,90 +1,120 @@
 @mainColor: #183761;
 @borderColor: #e6e6e6;
 @pageWidth: 1200px;
-.searchContainer {
+.searchContainer
+{
+    margin: 10px 0;
+    padding: 20px;
     // height: 26px;
     // line-height: 26px;
-    background-color: #F5F5F5;
-    padding: 20px;
-    margin: 10px 0px;
-    select{
-        padding-left: 10px;
+
+    background-color: #f5f5f5;
+    select
+    {
         width: 150px;
         height: 32px;
+        padding-left: 10px;
+
         border: 1px solid @borderColor;
     }
-    input{
+    input
+    {
         line-height: 28px;
+
         border: 1px solid @borderColor;
     }
-    input[type=text]{
+    input[type=text]
+    {
+        width: 350px;
         margin-left: 40px;
         padding-left: 10px;
-        width: 350px;
     }
-    input[type=button]{
-        margin-left: -5px;
-        width: 80px;
+    input[type=button]
+    {
         font-weight: bold;
+
+        width: 80px;
+        margin-left: -5px;
+
         text-align: center;
-        background:linear-gradient(top,#FEFEFE,#F2F2F2);
-        background:-moz-linear-gradient(top,#FEFEFE,#F2F2F2);
-        background:-webkit-linear-gradient(top,#FEFEFE,#F2F2F2);
+
+        background:         linear-gradient(top,#fefefe,#f2f2f2);
+        background:    -moz-linear-gradient(top,#fefefe,#f2f2f2);
+        background: -webkit-linear-gradient(top,#fefefe,#f2f2f2);
     }
 }
-.keyTitle{
-    padding-left: 30px;
-    height: 36px;
+.keyTitle
+{
+    font-weight: bold;
     line-height: 36px;
-    font-weight: bold;
-    background: @mainColor;
-    color: #fff;
-}
-.brandIndex a {
-    color: #333;
 
-    font-size: 14px;
+    height: 36px;
+    padding-left: 30px;
+
+    color: #fff;
+    background: @mainColor;
 }
-.brandIndex .select {
+.brandIndex a
+{
+    font-size: 14px;
+
+    color: #333;
+}
+.brandIndex .select
+{
     font-weight: bold;
 }
-.brandItem{
-    border-left: 1px solid @borderColor;
+.brandItem
+{
     border-right: 1px solid @borderColor;
+    border-left: 1px solid @borderColor;
 }
-.brandItem li {
+.brandItem li
+{
     height: 125px;
+
     border-bottom: 1px solid @borderColor;
     // margin-left: 10px;
     // line-height: 22px;
     // width: 290px;
     // float: left;
 }
-.brandItem li .logoWrapper{
+.brandItem li .logoWrapper
+{
     display: inline-block;
-    padding: 0 10px;
+
     width: 200px;
+    padding: 0 10px;
 }
-.brandItem li .logo{
+.brandItem li .logo
+{
     display: table-cell;
+    overflow: hidden;
+
     width: 200px;
     height: 125px;
+
     text-align: center;
     vertical-align: middle;
-    overflow: hidden;
-    img{
+    img
+    {
         max-width: 100%;
         max-height: 100%;
     }
 }
-.brandItem li .description{
+.brandItem li .description
+{
     display: inline-block;
-    margin-top: 20px;
     // margin-left: 10px;
+
     width: @pageWidth - 222;
+    margin-top: 20px;
+
     vertical-align: top;
 }
-.brandItem li a {
+.brandItem li a
+{
     font-weight: bold;
+
     color: #333;
 }

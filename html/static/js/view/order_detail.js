@@ -28,7 +28,7 @@ define('main/order_detail', ['jquery','main/utils','main/server','main/temple'],
                 $body.find('.salesName').html(data.salesName); 
 				$body.find('.shipViaTag').html("Ship Via : "+data.shipVia);
                 $body.find('.shipVia').html(data.shipNo);
-                $body.find('.customerNum').html(data.customerNum);
+                $body.find('.customerNum').html(data.linkMan);
                 $body.find('.orderDate').html(utils.tranTimeYMD(data.orderDate || 0));
                 $body.find('.terms').html(data.terms);
                 $body.find('.billToCompany').html(data.billToCompany);

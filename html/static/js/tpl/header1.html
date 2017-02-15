@@ -1,0 +1,73 @@
+<div class="pageWidth Container">
+    <div class="Logo"><a href="/"><img src="/static/img/logo.png"></a></div>
+    <!--Search start-->
+    <div class="headRight">
+        <div class="searchBox">
+            <div id="tabSearch" class="searSelect">
+                <a href="javascript:void(0)" class="sele tabSearch" v="Product">Products</a>
+                <span>|</span>
+                <a href="javascript:void(0)" class="tabSearch" v="DataSheet">DataSheet</a>
+            </div>
+            <div class="searTxt">
+                <input type="text" id="searchInput" name="part" placeholder="Enter the keyword you want to find" autocomplete="off" value=""><input type="button" value="Search" class="searchSubmit">
+            </div>
+        </div>
+        <a href="javascript:;" class="quickInquiry"><i class="ci-left"></i>Quick Inquiry</a>
+<!--         <div class="cart">
+            <a href="/home/cart.html" class="shopCart">
+                <i class="ci-left"></i><i class="ci-right">&gt;</i><span>Shopping Cart (<span class="shopCartCount">0</span>)</span>
+            </a>    
+            <ul class="item" id="ShoppingCart">
+                <li class="emptyCart"><a href="/product/index.html">Shopping Cart empty Oh! Just try to find sth</a></li>
+            </ul>
+        </div> -->
+        <div class="Clear"></div>
+    </div>
+    <div class="Clear"></div>
+</div>
+    <!--Navigation start-->
+<div class="navigation">
+    <div class="pageWidth Container">
+        <div class="nav_Left">
+            <a class="proCate" href="javascript:;">Categories<i class="arrowIcon down"></i></a>
+            <a class="navTab" href="/">Home</a>
+            <a class="navTab" href="/product/index.html">Product Index</a>
+            <a class="navTab" href="/brand/index.html">Brand Index</a>
+            <a class="navTab" href="/datasheet/index.html">DataSheet</a>
+            <a class="navTab" href="/article/about.html?tpl=about_us">About US</a>
+        </div>
+        <div class="categoryContainer">
+            <ul class="categoryList"></ul>
+        </div>
+        <div class="Clear"></div>
+    </div>
+    <div class="Clear"></div>  
+</div>
+<div id="quickInquiry" class="inquiryPopup">
+    <h3><i></i>Quick Inquiry</h3>
+    <ul class="quickInquiryContainer">
+        <li>
+            <label><span>*</span>Name:</label>
+            <input type="text" id="quick_inquiry_name">
+        </li>
+        <li>
+            <label><span>*</span>Email:</label>
+            <input type="text" id="quick_inquiry_email">
+        </li>
+        <li class="kaptchaImgCont">
+            <label><span>*</span>Authcode:</label>
+            <input type="text" size="8" name="kaptcha" id="kaptcha" class="inputBg">
+            <img id="kaptchaImg" src="" alt="kaptcha" class="kaptcha" title="Click to refresh image.">
+        </li>
+        <li>
+            <label><span>*</span>Looking for:</label>
+            <textarea id="quick_inquiry_content"></textarea>
+        </li>
+      <li>
+            <span class="error_msg"></span>
+        </li>
+    </ul>
+    <div class="inquiryBtn">
+        <input type="button" value="Submit" class="quickInquirySubmit btnPrimary">
+    </div>
+</div>

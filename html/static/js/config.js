@@ -32,6 +32,7 @@ require.config({
         "main/cart": "./js/view/cart",
         "main/post_inquiry": "./js/view/post_inquiry",
         "main/simple": "./js/view/simple",
+        "main/base64": "./js/view/base64",
         "main/utils": "./js/view/utils",
         "main/server": "./js/view/server",
         "page_turning_plugin": './js/view/page_turning_plugin',

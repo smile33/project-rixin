@@ -1,4 +1,4 @@
-define('main/product_search', ['jquery','jqform','main/utils','main/server','main/common','main/temple','jqui'], function($, jqform, utils, server, common, temple, jqui){
+define('main/product_search', ['jquery','jqform','main/utils','main/server','main/common','main/temple','jqui','main/post_inquiry'], function($, jqform, utils, server, common, temple, jqui, post_inquiry){
     var exports  = {},
     profile,
     $body = $('body'),
@@ -8,14 +8,14 @@ define('main/product_search', ['jquery','jqform','main/utils','main/server','mai
     $error_msg = $inputBox.find(".error_msg"),
     $typeMatch = $body.find('.typeMatch'),
 
-    $partNum = $body.find('#partNum'),
-    $name = $body.find('#name'),
-    $email = $body.find('#email'),
-    $price = $body.find('#price'),
-    $inquiry_quantity = $body.find('#quantity'),
-    $content = $body.find('#content'),
-    $file = $body.find('#file');
-    $error = $body.find('#error'),
+    // $partNum = $body.find('#partNum'),
+    // $name = $body.find('#name'),
+    // $email = $body.find('#email'),
+    // $price = $body.find('#price'),
+    // $inquiry_quantity = $body.find('#quantity'),
+    // $content = $body.find('#content'),
+    // $file = $body.find('#file');
+    // $error = $body.find('#error'),
     isSend = false, //是否在发送中  
     rExpEmail = /^([a-zA-Z0-9]+[_|\_|\.-]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/,
     rExpNumber = /^\+?[1-9][0-9]*$/,
@@ -41,111 +41,121 @@ define('main/product_search', ['jquery','jqform','main/utils','main/server','mai
         },function(data){
             if(data.data){
                 data = data.data;
-                skuArray = data.skus;
-                $body.find('.typeItem .itemContainer').html(temple.searchMatch(data.matchResult));
-                $typeMatch.find('a').html(key);
-                $typeMatch.find('strong').html(data.totalPartNum + 'stock');
-                $body.find('.filterItem .itemContainer').html(temple.searchDeliveryTime(data.deliveryTime));
-                $body.find('#ProductArea').html(temple.searchProductArea(data.skus,key));
-                // $body.find('.supplierTab span').html(data.skus && data.skus.length);
-                $body.find('.SearchContainer').show();
+                if((data.items && !data.items.length) && data.page === 1){
+                    showNoData();
+                }else{
+                    skuArray = data.skus;
+                    $body.find('.typeItem .itemContainer').html(temple.searchMatch(data.matchResult));
+                    $typeMatch.find('a').html(key);
+                    $typeMatch.find('strong').html(data.totalPartNum + 'stock');
+                    $body.find('.filterItem .itemContainer').html(temple.searchDeliveryTime(data.deliveryTime));
+                    $body.find('#ProductArea').html(temple.searchProductArea(data.skus,key));
+                    // $body.find('.supplierTab span').html(data.skus && data.skus.length);
+                    $body.find('.searchResultContainer').show();
+                }
             }else{
-                $body.find('.inquiryContainer').show().find('#partNum').val(key);
+                showNoData();
+
+                // $body.find('.inquiryContainer').show().find('#partNum').val(key);
 
             }
             utils.loading();
         });
     };
-    //校验Inquiry参数
-    exports.inquiry = function(){
-        var oData = {
-            productId : '0'
-        };
-        oData.partNum = $partNum.val();
-        if($.trim(oData.partNum) == ''){
-            $partNum.focus();
-            $error.text("Please enter your  Part No.");
-            return false;
-        }
-        oData.name = $name.val();
-        if($.trim(oData.name) == ''){
-            $name.focus();
-            $error.text("Please enter your name.");
-            return false;
-        }
-        oData.email = $email.val();
-        if($.trim(oData.email) == '' || !rExpEmail.test(oData.email)){
-            $email.focus();
-            $error.text("Please enter correct email.");
-            return false;
-        }
-        oData.targetPrice = $price.val();
-        if(!rExpPositive.test(oData.targetPrice)){
-            $price.focus();
-            $error.text("Pleast enter correct target price.");
-            return false;
-        }
-        oData.quantity = $inquiry_quantity.val();
+    function showNoData(){
+        $body.find('.SiteMap').hide();
+        $body.find('.noDataContainer').show().find('.key').html(key);
+    }
+    // //校验Inquiry参数
+    // exports.inquiry = function(){
+    //     var oData = {
+    //         productId : '0'
+    //     };
+    //     oData.partNum = $partNum.val();
+    //     if($.trim(oData.partNum) == ''){
+    //         $partNum.focus();
+    //         $error.text("Please enter your  Part No.");
+    //         return false;
+    //     }
+    //     oData.name = $name.val();
+    //     if($.trim(oData.name) == ''){
+    //         $name.focus();
+    //         $error.text("Please enter your name.");
+    //         return false;
+    //     }
+    //     oData.email = $email.val();
+    //     if($.trim(oData.email) == '' || !rExpEmail.test(oData.email)){
+    //         $email.focus();
+    //         $error.text("Please enter correct email.");
+    //         return false;
+    //     }
+    //     oData.targetPrice = $price.val();
+    //     if(!rExpPositive.test(oData.targetPrice)){
+    //         $price.focus();
+    //         $error.text("Pleast enter correct target price.");
+    //         return false;
+    //     }
+    //     oData.quantity = $inquiry_quantity.val();
 
-        if(!rExpNumber.test(oData.quantity)){
-            $inquiry_quantity.focus();
-            $error.text("Pleast enter correct quantity.");
-            return false;
-        }
-        oData.lookingFor = $content.val();
-        if($.trim(oData.lookingFor) == ''){
-            $content.focus();
-            $error.text("Please enter looking for.");
-            return false;
-        }
-        if(isSend) return false;
-        isSend = true;
-        if($file.val()){
-            $("#fileForm").ajaxSubmit({
-                url: window._c.path + 'upload/uploadSigle.wb',
-                type:"post",
-                dataType: 'json',
-                success: function(data){
-                   if(data.flag  === 0 && data.data){
-                        oData.fileMd5 = data.data.attMd5; 
-                        exports.inquirySearch(oData);                    
-                    }else{
-                        $error.text(data.msg);
-                        isSend = false;                
-                    }                            
-                },
-                error:function(data){
-                    $error.text(data.msg);
-                    isSend = false;
-                },
-                // clearForm: true, 
-                timeout: 300000                         
-            }); 
-        }else{
-            exports.inquirySearch(oData);
-        }
-    };
+    //     if(!rExpNumber.test(oData.quantity)){
+    //         $inquiry_quantity.focus();
+    //         $error.text("Pleast enter correct quantity.");
+    //         return false;
+    //     }
+    //     oData.lookingFor = $content.val();
+    //     if($.trim(oData.lookingFor) == ''){
+    //         $content.focus();
+    //         $error.text("Please enter looking for.");
+    //         return false;
+    //     }
+    //     if(isSend) return false;
+    //     isSend = true;
+    //     if($file.val()){
+    //         $("#fileForm").ajaxSubmit({
+    //             url: window._c.path + 'upload/uploadSigle.wb',
+    //             type:"post",
+    //             dataType: 'json',
+    //             success: function(data){
+    //                if(data.flag  === 0 && data.data){
+    //                     oData.fileMd5 = data.data.attMd5; 
+    //                     exports.inquirySearch(oData);                    
+    //                 }else{
+    //                     $error.text(data.msg);
+    //                     isSend = false;                
+    //                 }                            
+    //             },
+    //             error:function(data){
+    //                 $error.text(data.msg);
+    //                 isSend = false;
+    //             },
+    //             // clearForm: true, 
+    //             timeout: 300000                         
+    //         }); 
+    //     }else{
+    //         exports.inquirySearch(oData);
+    //     }
+    // };
 
-    // 发布商品inquiry
-    exports.inquirySearch = function(data){
-        server.inquirySearch(data,function(data){
-            $name.val('');
-            $email.val('');
-            $price.val('');
-            $inquiry_quantity.val('');
-            $content.val('');
-            $file.val('');
-            $error.text('');
-            utils.tips('submit success');
-            setTimeout(function(){
-                window.location.href = "/inquiry/success.html";
-            },1000);
-            isSend = false;  
-        },function(data){
-            $error.text(data.msg);
-            isSend = false;   
-        });
-    };
+    // // 发布商品inquiry
+    // exports.inquirySearch = function(data){
+    //     server.inquirySearch(data,function(data){
+    //         $name.val('');
+    //         $email.val('');
+    //         $price.val('');
+    //         $inquiry_quantity.val('');
+    //         $content.val('');
+    //         $file.val('');
+    //         $error.text('');
+    //         utils.tips('submit success');
+    //         setTimeout(function(){
+    //             window.location.href = "/inquiry/success.html";
+    //         },1000);
+    //         isSend = false;  
+    //     },function(data){
+    //         $error.text(data.msg);
+    //         isSend = false;   
+    //     });
+    // };
 
     exports.quantityPopup = function(){
         $inputBox.dialog({
@@ -192,7 +202,7 @@ define('main/product_search', ['jquery','jqform','main/utils','main/server','mai
             $inputBox.dialog( "close" );
             $error_msg.html('');
             utils.tips('add success');
-            // common.headShopCart();
+            common.headShopCart();
         });
     };
     function toBuy(){
@@ -241,7 +251,7 @@ define('main/product_search', ['jquery','jqform','main/utils','main/server','mai
     }
     // 事件
     exports.action = function(){
-        $body.on('click','.setDeliveryTime,.morePrice,.lessPrice,.addToCartBtn,.buyBtn,.quantityBtn,.moreDatasheet,.checkBtn',function(){
+        $body.on('click','.setDeliveryTime,.morePrice,.lessPrice,.addToCartBtn,.buyBtn,.quantityBtn,.moreDatasheet,.redirectInquiryPage',function(){
             var self = $(this);
             if(self.hasClass('setDeliveryTime')){
                 var delivery = self.attr('delivery');
@@ -272,9 +282,12 @@ define('main/product_search', ['jquery','jqform','main/utils','main/server','mai
                 var index = parseInt(self.closest('.productList').attr('p_index'));
                 $datasheetContainer.html(temple.moreDatasheet(skuArray[index].datasheets));
                 exports.datasheetPopup();
-            }else if(self.hasClass('checkBtn')){
-                exports.inquiry();
+            }else if(self.hasClass('redirectInquiryPage')){
+                window.location.href = '/inquiry/index.html?part='+key;
             }
+            // else if(self.hasClass('checkBtn')){
+            //     exports.inquiry();
+            // }
         });
     };
     function setSearchInputValue(){
@@ -293,6 +306,7 @@ define('main/product_search', ['jquery','jqform','main/utils','main/server','mai
         $body.find('.currentLocation').html('<a href="/product/index.html">Product List</a> &gt; '+key);
         exports.getProductSearchData();
         exports.action();
+        post_inquiry.init();
     };
     return exports;
 })

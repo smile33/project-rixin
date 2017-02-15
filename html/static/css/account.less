@@ -1,94 +1,151 @@
-.frameEdit{
-    margin-left: 30px;
+@subFontColor: #555;
+.frameEdit
+{
     margin-top: 20px;
-    color: #555;
-    li {
-        margin: 12px 0px;
-        label {
-            display: inline-block;
-            width: 130px;
-            text-align: right;
-            padding-right: 10px;
-        }
+    margin-left: 30px;
 
-        input {
-            padding: 5px;
-            margin: 0px 7px;
-            border: 1px solid #dddddd;
+    color: @subFontColor;
+    li
+    {
+        margin: 12px 0;
+        label
+        {
+            display: inline-block;
+
+            width: 130px;
+            padding-right: 10px;
+
+            text-align: right;
         }
-        input[type="checkbox"]{
-            margin: 0 0 0 30px;
+        input
+        {
+            margin: 0 7px;
+            padding: 5px;
+
+            border: 1px solid #ddd;
+        }
+        input[type='checkbox']
+        {
             width: 18px;
             height: 18px;
+            margin: 0 0 0 30px;
+
             vertical-align: middle;
         }
-        .saveBtn {
-            margin: 10px 0px 10px 148px;
-            padding: 0px;
+        .saveBtn
+        {
             width: 160px;
+            margin: 10px 0 20px 150px;
+            padding: 0;
+
             border: 0;
         }
     }
+    .passwordStatusContainer{
+        margin: 10px 0 0 150px;
+        height: 18px;
+    }
+    .passwordStatus{
+        display: inline-block;
+        margin-right: 10px;
+        width: 100px;
+        height: 18px;
+        line-height: 18px;
+        text-align: center;
+        color: #fff;
+        background: #aaa;
+    }
+    .passwordWeekBg{
+        background: #FA0000;
+    }
+    .passwordMiddleBg{
+        background: #FFB20E;
+    }
+    .passwordStrongBg{
+        background: #6EC958;
+    }
 }
 
-.linkBtn{
-    margin-left:20px;
-    color:#0029FF;
+.linkBtn
+{
+    margin-left: 20px;
+
+    color: #0029ff;
 }
-.region {
+.region
+{
+    width: 383px;
     margin-left: 7px;
     padding: 5px 0;
-    width: 383px;
-    border: 1px solid #E5E5E5;
+
+    border: 1px solid #e5e5e5;
 }
-.error_msg {
+.error_msg
+{
     padding-left: 148px;
+
     color: red;
 }
 
 /*地址管理 Start*/
-.addHead {
-    margin-bottom: 10px;
+.addHead
+{
     line-height: 18px;
+
+    margin-bottom: 10px;
 }
-.addHead .addBtn {
-    float: left;
-    border-radius: 2px;
-    padding: 0 14px;
-    height: 28px;
+.addHead .addBtn
+{
     font-size: 14px;
+
+    float: left;
+
+    height: 28px;
     margin-right: 20px;
+    padding: 0 14px;
+
+    border-radius: 2px;
 }
-.addHead span {
+.addHead span
+{
     color: #999;
 }
-.addHead span b {
-    color: #CF0000;
-    margin: 0px 5px;
+.addHead span b
+{
+    margin: 0 5px;
+
+    color: #cf0000;
 }
-.addressContent ul{
-    margin: 10px 0px;
+.addressContent ul
+{
+    margin: 10px 0;
     padding: 10px;
+
     border: 2px solid #e6e6e6;
-    li {
-        margin: 12px 0px;
-        label {
+    li
+    {
+        margin: 12px 0;
+        label
+        {
             display: inline-block;
+
             width: 128px;
-            text-align: right;
             padding-right: 10px;
-            color: #666;
+
+            text-align: right;
+
+            color: @subFontColor;
         }
     }
-    .operate {
+    .operate
+    {
         text-align: right;
-        a {
-            color: #005ea7;
+        a
+        {
             margin-right: 16px;
+
+            color: #005ea7;
         }
     }
 }
 /*地址管理 end*/
-
-
-

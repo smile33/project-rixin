@@ -1,106 +1,137 @@
 @mainColor: #183761;
 @borderColor: #e6e6e6;
-// @emphasesColor: #DA4F4C;
-// .emphasesColor{
-//     color: @emphasesColor;
-// }
-.cancelColor{
+// @emphasesColor: #d73c38;
+.cancelColor
+{
     color: #333;
 }
-.completeColor{
-    color: #9CD98F;
+.completeColor
+{
+    color: #6ec958;
 }
-.confirmColor{
-    color: #E5A316;
+.confirmColor
+{
+    color: #e49c00;
 }
-.orderTable {
-    margin: 10px 0;
+.orderTable
+{
     width: 100%;
+    margin: 10px 0;
+
     border: 1px solid @borderColor;
-    caption{
-        position: relative;
-        padding: 5px 20px;
+    caption
+    {
         line-height: 36px;
+
+        position: relative;
+
+        padding: 5px 20px;
+
+        text-align: left;
+
         border: 1px solid @borderColor;
         border-bottom: 0;
-        background: #F5F5F5;
-        text-align: left;
-        span{
+        background: #f5f5f5;
+        span
+        {
             display: inline-block;
+
             margin-right: 30px;
         }
-        .orderTime{
-            margin: 0;
+        .orderTime
+        {
             position: absolute;
             right: 20px;
+
+            margin: 0;
         }
     }
-    div{
+    div
+    {
         margin-bottom: 5px;
     }
     // td{
     //     padding: 20px;
     // }
-    .freight{
+    .freight
+    {
         border-left: 2px solid @borderColor;
     }
-    .imgContainer{
+    .imgContainer
+    {
         display: inline-block;
+
         width: 90px;
         height: 90px;
         // margin-right: 10px;
+
         border: 1px solid @borderColor;
-        img{
+        img
+        {
             max-width: 100%;
             max-height: 100%;
         }
     }
-    .viewDetails{
-        color: @mainColor;
+    .viewDetails
+    {
         text-decoration: underline;
-    }
 
+        color: @mainColor;
+    }
 }
-.tableTitle{
+.tableTitle
+{
     text-align: center;
 }
-.imgWrapper{
-    padding: 20px;
+.imgWrapper
+{
     width: 90px;
+    padding: 20px;
 }
-.description{
-    padding-right: 20px;
+.description
+{
     width: 200px;
+    padding-right: 20px;
 }
-.unitPrice{
-    padding-right: 10px;
+.unitPrice
+{
     width: 170px;
+    padding-right: 10px;
 }
-.freight ,.wireTransferFee{
+.freight,
+.wireTransferFee
+{
     // padding: 0 5px;
     width: 80px;
+
     text-align: center;
 }
-.orderAmt ,.totalAmt{
+.orderAmt,
+.totalAmt
+{
     width: 100px;
+
     text-align: center;
 }
-.orderStatus{
+.orderStatus
+{
     // width: 100px;
     text-align: center;
 }
-.deleteBtn{
-    display: inline-block;
-    width: 60px;
+.deleteBtn
+{
     line-height: 24px;
+
+    display: inline-block;
+
+    width: 60px;
+
+    text-align: center;
+
     color: #333;
     border: 1px solid @borderColor;
     border-radius: 2px;
-    text-align: center;
-    background:linear-gradient(top,#FEFEFE,#F2F2F2);
-    background:-moz-linear-gradient(top,#FEFEFE,#F2F2F2);
-    background:-webkit-linear-gradient(top,#FEFEFE,#F2F2F2);
+    background:         linear-gradient(top,#fefefe,#f2f2f2);
+    background:    -moz-linear-gradient(top,#fefefe,#f2f2f2);
+    background: -webkit-linear-gradient(top,#fefefe,#f2f2f2);
 }
-
-
-

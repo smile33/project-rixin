@@ -35,6 +35,8 @@ define('main/server', ['jquery','main/utils'], function($, utils){
     exports.path_product_detail = path+'product/detail.wb';
     // 商品详情-相似商品
     exports.path_relate_products = path+'/product/relate_products.wb';
+    // 商品详情-浏览历史商品
+    exports.path_get_products = path+'/product/get_products.wb';
     // 商品搜索
     exports.path_product_search = path+'search/product.wb';
     // 获取商品单价
@@ -45,6 +47,8 @@ define('main/server', ['jquery','main/utils'], function($, utils){
     exports.path_add_shop_cart = path+'shop_cart/my/add.wb';
     // 删除购物车
     exports.path_delete_shop_cart = path+'shop_cart/my/delete.wb';
+    // 批量删除购物车
+    exports.path_multi_delete_shop_cart = path+'shop_cart/my/multi_delete.wb';
     // 下单
     exports.path_add_order = path+'order/my/add.wb';
     // 合并购物车
@@ -243,6 +247,15 @@ define('main/server', ['jquery','main/utils'], function($, utils){
             data : data
         },callback);
     };
+    // 商品详情-浏览历史商品
+    exports.getProducts = function(data,callback){
+        exports.ajax({
+            url : exports.path_get_products,
+            type : 'get',
+            data : data
+        },callback);
+    };
+
     // 商品搜索
     exports.productSearch = function(data,callback){
         exports.ajax({
@@ -284,6 +297,15 @@ define('main/server', ['jquery','main/utils'], function($, utils){
             data : data
         },callback,callback2);
     };
+    // 批量删除购物车
+    exports.multiDeleteShopCart = function(data,callback,callback2){
+        exports.ajax({
+            url : exports.path_multi_delete_shop_cart,
+            type : 'post',
+            data : data
+        },callback,callback2);
+    };
+    
     // 下单
     exports.addOrder = function(data,callback,callback2){
         exports.ajax({

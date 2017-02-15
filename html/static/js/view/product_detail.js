@@ -97,7 +97,7 @@ define('main/product_detail', ['jquery','main/utils','main/server','main/common'
             quantity : shopCart.quantity
         };
         common.addShopCart(oData,productUnitPrice,function(data){
-            window.location.href = "/home/cart.html";
+            window.open("/home/cart.html");
         });
     };
 
@@ -120,20 +120,23 @@ define('main/product_detail', ['jquery','main/utils','main/server','main/common'
                 if(profile.productExtPrices){
                     $body.find('.extendedPrice').html(temple.extendedPrice(profile.productExtPrices));
                     var product = profile.productExtPrices[0];
-                    $txtCount.val(product.priceBreak);
-                    setQuantityHtml(product,product.priceBreak);
-                    shopCart.moq = product.priceBreak;
-                    shopCart.quantity = product.priceBreak;
+                    if(product && product.length){
+                        $txtCount.val(product.priceBreak);
+                        setQuantityHtml(product,product.priceBreak);
+                        shopCart.moq = product.priceBreak;
+                        shopCart.quantity = product.priceBreak;
+                    }
+                    setQuantityVal();
                 }
                 // if(data.favorProduct){
                 //     $body.find('.favorProductContainer').html(temple.favorProduct(data.favorProduct));
                 // }
                 if(profile.productAttrs){
-                    $body.find('.attributes-table-main tbody').html(temple.productAttributes(profile.productAttrs));
+                    $body.find('.productTable tbody').html(temple.productAttributes(profile.productAttrs));
                 }
                 shopCart.productId = profile.productId;
                 shopCart.mfrPartNum = profile.mfrPartNum;
-                document.title = profile.mfrPartNum + ',' + profile.description;
+                document.title = profile.mfrPartNum + ',' + profile.description + ' - ' + window._c.websiteName;
                 var keyword = 'PartNo:' + profile.mfrPartNum + ';Manufacturer:' + profile.manufacturerName + ';Description:' + profile.description;
                 $('meta[name=keywords]').attr('content',keyword);
                 $('meta[name=description]').attr('content',keyword)
@@ -147,7 +150,6 @@ define('main/product_detail', ['jquery','main/utils','main/server','main/common'
             productId : id
         },function(data){
             data = data.data || {};
-            console.log(data);
             // if(data.favorProduct){
                 $body.find('.favorProductContainer').html(temple.favorProduct(data));
             $(".fullSlide").slide({ 
@@ -164,6 +166,51 @@ define('main/product_detail', ['jquery','main/utils','main/server','main/common'
             // }
         });
     };
+    function noIncludeSelf(productId,id){
+
+        if(productId.indexOf(id) >= 0){//当前商品是否已经存在历史浏览记录中
+            var index = 0;
+            for(key in productId){
+                if(productId[key]===id){
+                    index = key;
+                }
+            }
+            productId.splice(index,1);
+        }
+        return productId;
+    }
+    // 添加当前商品到浏览历史
+    function setProductId(productId){
+        if(productId){
+            productId = productId.split(',');
+            productId = noIncludeSelf(productId,id);
+            productId.unshift(id);
+            if(productId.length > 5){//缓存大于5个商品数据
+                productId.length = 5;
+            }
+            productId = productId.join(',');
+        }else{
+            productId = id;
+        }
+        utils.STORE.setItem('productId',productId);
+    }
+    // 获取浏览历史商品
+    exports.getProducts = function(){
+        var productId = utils.STORE.getItem('productId');
+        if(productId){
+            server.getProducts({
+                ids : noIncludeSelf(productId.split(','),id).join(',')
+            },function(data){
+                data = data.data || {};
+                if(data.length){
+                    $body.find('.productRow').removeClass('noHistoryContainer');
+                    $body.find('.historyProduct').html(temple.historyProduct(data));
+                }
+            });
+        }
+        setProductId(productId);
+    }
+
     // exports.quantityPopup = function(){
     //     $inputBox.dialog({
     //       autoOpen: true,
@@ -221,6 +268,7 @@ define('main/product_detail', ['jquery','main/utils','main/server','main/common'
         exports.getProductDetailData();
         exports.getRelateProducts();
         exports.action();
+        exports.getProducts();
         post_inquiry.init(id);
     };
     return exports;

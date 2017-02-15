@@ -1,4 +1,6 @@
-﻿body {
+﻿@subFontColor: #555;
+
+body {
 }
 * {
     font-family: 'Microsoft YaHei',Arial,Verdana,Calibri;
@@ -173,7 +175,7 @@ a, address, b, big, blockquote, body, center, cite, code, dd, del, div, dl, dt, 
         position: relative;
         zoom: 1;
     }
-    .shopCart span{color: #666;}
+    .shopCart span{color: @subFontColor;}
     .shopCart i {
     display: block;
     position: absolute;
@@ -351,7 +353,7 @@ a, address, b, big, blockquote, body, center, cite, code, dd, del, div, dl, dt, 
     font-size: 18px;
     font-weight: normal;
     margin-bottom: 6px;
-    color: #666;
+    color: @subFontColor;
     padding-left: 35px;
     background-image: url(/Image/Support.png);
     background-repeat: no-repeat;
@@ -380,7 +382,7 @@ a, address, b, big, blockquote, body, center, cite, code, dd, del, div, dl, dt, 
     margin-left: 18px;
 }
     .Container .Footer .Support dl dd a {
-    color: #666;
+    color: @subFontColor;
 }
 
 

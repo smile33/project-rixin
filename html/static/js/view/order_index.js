@@ -73,7 +73,7 @@ define('main/order_index', ['jquery','main/utils','main/server','main/common','m
         $body.on('click','.deleteBtn,.searchBtn',function(){
             var self = $(this);
             if(self.hasClass('deleteBtn')){
-                id = self.closest('.table').attr('_id');
+                id = self.closest('.orderTable').attr('_id');
                 $("#deleteDialog").dialog("open");
             }else if(self.hasClass('searchBtn')){
                 exports.orderList();

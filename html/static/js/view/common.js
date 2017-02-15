@@ -61,8 +61,6 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
 
     };
     
-
-
     // 头部-用户登录模块
     function setLoiginSiteNav(data){
         var html = '';
@@ -86,13 +84,14 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
             },500);
         }
     }
-    // //渲染头部购物车样式
-    // function setHeadShopCart(data){
-    //     if(data.length){
-    //         $body.find('#ShoppingCart').html(temple.headShopCart(data));
-    //         $body.find('.Cart .shopCartCount').html(data.length);
-    //     }
-    // }
+    //渲染购物车样式
+    function setHeadShopCart(data){
+        $body.find('.floatWrapper .shop_cart span').html(data.length);
+        // if(data.length){//头部购物车样式
+        //     $body.find('#ShoppingCart').html(temple.headShopCart(data));
+        //     $body.find('.Cart .shopCartCount').html(data.length);
+        // }
+    }
     //判断头部购物车是否清空
     // function isEmptyHeadShopCart(){
     //     var $ShoppingCart = $body.find('#ShoppingCart');
@@ -121,25 +120,27 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
     exports.setPageTitle = function(){
         document.title = document.title + ' - ' + window._c.websiteName;
     };
-    // 导航栏
-    exports.siteNav = function(){
-        utils.TPL.loadTemplates(['site_nav'],function(){        
-            var html = utils.TPL.get.call(exports.TPL,'site_nav');
-            $body.find('#site-nav').html(html);
-        });
-    };
+    // // 导航栏
+    // exports.siteNav = function(){
+    //     // utils.TPL.loadTemplates(['site_nav'],function(){        
+    //     //     var html = utils.TPL.get.call(exports.TPL,'site_nav');
+    //     //     $body.find('#site-nav').html(html);
+    //     // });
+    //     var html = temple.siteNavHtml();
+    //     $body.find('#site-nav').html(html);
+    // };
     // 头部
     exports.header = function(){
+        var url = window.location.pathname;
+        if(url === '/article/about.html'){
+            url += '?tpl=about_us';
+        }
+        var $header = $body.find('#header');
+        $header.find('.navTab[href="'+url+'"]').addClass('highlight');
+        exports.homeCagtegory();
         utils.TPL.loadTemplates(['header'],function(){        
             var html = utils.TPL.get.call(exports.TPL,'header');
-            var $header = $body.find('#header');
-            $header.html(html);
-            var url = window.location.pathname;
-            if(url === '/article/about.html'){
-                url += '?tpl=about_us';
-            }
-            $header.find('.navTab[href="'+url+'"]').addClass('highlight');
-            exports.homeCagtegory();
+            $header.append(html);
             exports.inquiryDialog($('#quickInquiry'));
             // exports.headShopCart();
         });
@@ -158,6 +159,7 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
         utils.TPL.loadTemplates(['footer'],function(){        
             var html = utils.TPL.get.call(exports.TPL,'footer');
             $body.find('#footer').html(html);
+            exports.headShopCart();
         });
     };
     exports.siteMap = function(){
@@ -190,8 +192,9 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
             utils.TPL.loadTemplates([tpl],function(){        
                 var html = utils.TPL.get.call(exports.TPL,tpl);
                 $body.find('.content').html(html);
-                $body.find('.currentLocation').html($body.find('.topic').html());
-                // select
+                var title = $body.find('.topic').html();
+                $body.find('.currentLocation').html(title);
+                document.title = title + ' - ' + window._c.websiteName;
             });
         }
     };
@@ -210,33 +213,34 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
         });
     };
 
-    // // 获取头部购物车数据
-    // exports.headShopCart = function(){
-    //     if(!isLogin){
-    //         setTimeout(function(){
-    //             exports.headShopCart();
-    //         },500);
-    //     }else{
-    //         if(isLogin === 1){//已登录，则请求购物车数据
-    //             server.myShopCart({
-    //                 size: 50,
-    //                 index: 1
-    //             },function(data){
-    //                 if(data.data){
-    //                     setHeadShopCart(data.data);
-    //                 }
-    //             });
-    //         }else if(isLogin === -1){//未登录，则读取缓存数据
-    //             var data = utils.STORE.getItem('shopCart') || [];
-    //             setHeadShopCart(data);
-    //         }
-    //     }
-    // };
+    // 获取购物车数据
+    exports.headShopCart = function(){
+        if(!isLogin){
+            setTimeout(function(){
+                exports.headShopCart();
+            },500);
+        }else{
+            if(isLogin === 1){//已登录，则请求购物车数据
+                server.myShopCart({
+                    size: 50,
+                    index: 1
+                },function(data){
+                    if(data.data){
+                        setHeadShopCart(data.data);
+                    }
+                });
+            }else if(isLogin === -1){//未登录，则读取缓存数据
+                var data = utils.STORE.getItem('shopCart') || [];
+                setHeadShopCart(data);
+            }
+        }
+    };
     //添加购物车
     exports.addShopCart = function(oData,unloginCbf,cbf){
         if(isLogin === 1){
             //已登录，添加购物车
             server.addShopCart(oData,function(data){
+                exports.headShopCart();
                 cbf();
             },function(data){
                 utils.tips('fail!');
@@ -245,6 +249,7 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
             //未登录，缓存本地
             unloginCbf();
             setTimeout(function(){
+                exports.headShopCart();
                 cbf();
             },500);//本地缓存数据需要时间
             // utils.STORE.setItem('shopCart',oData);
@@ -323,13 +328,15 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
             }
         }).on('mouseover','.proCate',function(){
             $body.find('.categoryContainer').show();
+            $body.find('.proCate i').removeClass('down').addClass('up');
             showCategoryList(0);
         }).on('mouseover','.categoryList li',function(){
             var index = $(this).index('.categoryList li');
             showCategoryList(index)
         }).on('mouseleave','.categoryContainer',function(){
             $body.find('.categoryContainer').hide();
-        }).on('click','.tabSearch,.searchSubmit,.headDeleteShopCartBtn,.needLogin,.quickInquiry,.quickInquirySubmit,.kaptcha',function(){
+            $body.find('.proCate i').removeClass('up').addClass('down');
+        }).on('click','.tabSearch,.searchSubmit,.headDeleteShopCartBtn,.needLogin,.quickInquiry,.quickInquirySubmit,.kaptcha,.floatWrapper .displayBtn',function(){
             var self = $(this);
             var index;
             if(self.hasClass('tabSearch')){//头部切换搜索
@@ -355,7 +362,7 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
                 if(isLogin === 1){
                     window.location.href = self.attr('link');
                 }else{
-                    window.location.href = '/member/login.html?redirect_url='+self.attr('link');
+                    window.open('/member/login.html?redirect_url='+self.attr('link'));
                 }
                 
             }else if(self.hasClass('quickInquiry')){//弹出quick inquiry popup
@@ -365,7 +372,15 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
                 quickInquiry();
             }else if(self.hasClass('kaptcha')){//图片验证码 
                 self.attr('src',path+'kaptcha.wb?t='+Math.random());
-            } 
+            }else if(self.hasClass('displayBtn')){
+                if(self.find('i').hasClass('up')){
+                    self.siblings('.applictionContainer').hide();
+                    self.find('i').removeClass('up').addClass('down').closest('a');
+                }else{
+                    self.siblings('.applictionContainer').show();
+                    self.find('i').removeClass('down').addClass('up').closest('a');
+                }
+            }
         });
 
 
@@ -379,7 +394,7 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
     exports.init = function(isNeedLogin){
         isNeedLogin = isNeedLogin || '';
         exports.isLogin(isNeedLogin);
-        exports.siteNav();
+        // exports.siteNav();
         exports.header();
         exports.siteMap();
         exports.footer();

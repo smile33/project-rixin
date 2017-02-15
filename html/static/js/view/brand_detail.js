@@ -14,6 +14,7 @@ define('main/brand_detail', ['jquery','main/utils','main/server','main/common','
             $body.find('.supplier-description h1').html(data.mfrName);
             $body.find('.supplier-description p').html(data.shortDescription);
             $body.find('.currentLocation').html('<a href="/brand/index.html">Brand Index</a> &gt; '+data.mfrName);
+            document.title = data.mfrName + ' - ' + window._c.websiteName;
         });
     };
     exports.brandNewProduct = function(params){

@@ -26,7 +26,7 @@ define('main/product_index', ['jquery','main/utils','main/server','main/common',
     };
     exports.fetchCategoryLeftProductData = function(){
         server.categoryLeft({},function(data){
-            $body.find('.category').html(temple.categoryLeftProduct(data.data));
+            $body.find('.category').html(temple.categoryLeftProduct(data.data,cid));
         });
     };
     exports.action = function(){
@@ -34,6 +34,8 @@ define('main/product_index', ['jquery','main/utils','main/server','main/common',
             var self = $(this);
             if(self.hasClass('firstCategory')){
                 cid = self.attr('cid');
+                $body.find('.category .choose').removeClass('choose');
+                self.addClass('choose');
                 exports.fetchProductData();
             }else if(self.hasClass('secondCategory')){
                 cid = self.attr('cid');

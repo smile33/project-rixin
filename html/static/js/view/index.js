@@ -69,7 +69,8 @@ define('main/index', ['jquery','main/utils','main/server','main/temple','main/co
                 vis:"auto", 
                 autoPlay:isSlide, 
                 autoPage:isSlide, 
-                trigger:"click" 
+                trigger:"click",
+                interTime: 5000
             });
             $body.find('.hotProductViews').html(temple.hotProductViews(data.homeHotProductViews));
             $body.find('.specialProductContainer').html(temple.specialProductView(data.specialProductView));

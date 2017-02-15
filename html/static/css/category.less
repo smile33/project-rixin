@@ -22,34 +22,50 @@
 //     }
 // }
 
-#productTable {
+#productTable
+{
     // clear: right;
     width: 100%;
+
     border-collapse: collapse;
-    thead {
-        background-color: @mainColor;
+    thead
+    {
         color: #fff;
+        background-color: @mainColor;
     }
 }
 // #productTable,#productTable th,#productTable tr,#productTable td{
 //     border:1px solid #d3d3d3;
 // }
-#productTable th,#productTable tr,#productTable td{
-    padding:5px 10px;
+#productTable th,
+#productTable tr,
+#productTable td
+{
+    padding: 5px 10px;
 }
-#productTable thead tr+tr td{
-    padding:0;
+#productTable thead tr + tr td
+{
+    padding: 0;
 }
-#productTable thead{
-    background-color:@mainColor;
-    color:#fff;
+#productTable thead
+{
+    color: #fff;
+    background-color: @mainColor;
 }
-#productTable .tr-image img{
-    border:solid 1px #eee;
-    vertical-align:middle;
+#productTable .tr-image img
+{
+    vertical-align: middle;
+
+    border: solid 1px #eee;
 }
-.imgContainer{
+.imgContainer
+{
     display: inline-block;
+
     margin-left: 10px;
+
     border: 1px solid @borderColor;
+    img{
+        vertical-align: bottom;
+    }
 }

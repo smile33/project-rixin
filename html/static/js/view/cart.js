@@ -3,6 +3,8 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
     $body = $('body'),
     $addressBox = $body.find("#addressBox"),
     $error = $body.find('#error_msg'),
+    $mail = $body.find('#mail'),
+    $companyName = $body.find('#companyName');
     $linkMan = $body.find('#linkMan'),
     $phone1 = $body.find('#phone1'),
     $phone2 = $body.find('#phone2'),
@@ -10,18 +12,21 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
     $address = $body.find('#address'),
     $telephone = $body.find('#telephone'),
     $postCode   = $body.find('#postCode'),
+    $fax   = $body.find('#fax'),
+    $setAsDefault = $body.find(".frameEdit input[type='checkbox']"),
     rExpNumber = /^\+?[1-9][0-9]*$/,
     isDefault = 0,
     orderData = {},
     addressArray = [],
+    rExpEmail = /^([a-zA-Z0-9]+[_|\_|\.-]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/,
     isSend = false,//是否在发送中
-    id = '',
-    trObj,
-    index; 
+    id = '';
+    // trObj,
+    // index; 
     function setAddress(data){
         //$body.find('.addReceiptAddress').hide();
         $body.find('.changeAddress').show();
-        $body.find('.changeAddress .addressContent').html(temple.shopCartAddressList([data]));
+        $body.find('.changeAddress .addressContent').html(temple.shopCartAddressList(data));
     }
     //选择全部
     function selectAll(sender) {
@@ -63,24 +68,30 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
         };
         return orderData;
     }
-    function getItems(){
+    function getIds($tr){
+        return $tr.attr('product_id');
+    }
+    function getItems($tr){
+        return {
+            productId: $tr.attr('product_id'),
+            quantity: parseInt($tr.find('.count').val()),
+            remark: $tr.find('.remark').val()
+        };
+    }
+    function getChecked(cbf){
         var $trs = $body.find('#ShoppingCartItems tr');
-        var items = [];
+        var infos = [];
         for (var i = 0, max = $trs.length; i < max; i++) {
             //获取选中
             var cb = $trs.eq(i).find("input[name='shopCartOrder']")[0];
-            var item = {};
+            var info = {};
             if (cb.checked) {
                 var $tr = $trs.eq(i);
-                item = {
-                    productId: $tr.attr('product_id'),
-                    quantity: parseInt($tr.find('.count').val()),
-                    remark: $tr.find('.remark').val()
-                }
-                items.push(item);
+                info = cbf($tr);
+                infos.push(info);
             }
         }
-        return items;
+        return infos;
     }
     function setChangeAddressDialog(){
         $addressBox.dialog({
@@ -97,7 +108,8 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
           modal: true,
           buttons : {
             "Confirm" : function() {
-              common.deleteShopCart(id,trObj,index);
+              // common.deleteShopCart(id,trObj,index);
+              exports.multiDeleteShopCart();
               $(this).dialog("close");
             // },
             // "Cancel" : function() {
@@ -106,6 +118,30 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
           }
         });
     }
+    exports.multiDeleteShopCart = function(){
+        server.multiDeleteShopCart({
+            ids: getChecked(getIds).join(',')
+        },function(data){
+            utils.tips('delete success');
+            var $trs = $body.find('#ShoppingCartItems tr');
+            var infos = [];
+            for (var i = 0, max = $trs.length; i < max; i++) {
+                //获取选中
+                var cb = $trs.eq(i).find("input[name='shopCartOrder']")[0];
+                var info = {};
+                if (cb.checked) {
+                    $trs.eq(i).remove();
+                }
+            }
+
+            // setTimeout(function(){
+            //     window.location.reload();
+            // },2000);
+        },function(data){
+            utils.tips(data.msg);
+        });
+    };
+
     //获取购物车内容
     exports.getMyShopCart = function(){
         server.myShopCart({
@@ -130,31 +166,27 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
                 addressArray = data.data.items; 
                 if(addressArray.length > 0){
                     $body.find('.changeAddressBtn').show();
+                    setAddress(addressArray);
+                    
+                    var index = 0;
+                    for(key in addressArray){
+                        if(addressArray[key].isDefault){
+                            index = key;
+                        }
+                    }
+                    var chooseAddressData = addressArray[index];
+                    orderData = getOrderData(chooseAddressData);
                 } else {
-					$body.find('.addReceiptAddress').show();
-					$body.find('.changeAddress').hide();
-					exports.country();
-				}
-                $body.find('#addressBox .addressContent').html(temple.shopCartAddressList(addressArray));
-                var chooseAddressData = addressArray[0];
-                setAddress(chooseAddressData);
-                orderData = getOrderData(chooseAddressData);
+                    $body.find('.addReceiptAddress').show();
+                    $body.find('.changeAddress').hide();
+                    exports.country();
+                }
             }else{
                 $body.find('.addReceiptAddress').show();
                 $body.find('.changeAddress').hide();
                 exports.country();
             }
         });
-        // server.getDeliveryAddressDefault(function(data){
-        //     if(data.data){
-        //         setAddress(data.data);
-        //         orderData = getOrderData(data.data);
-        //     }else{
-        //         $body.find('.addReceiptAddress').show();
-        //         $body.find('.changeAddress').hide();
-        //         exports.country();
-        //     }
-        // });
     };
     // 添加收货地址
     exports.addDeliveryAddress = function(){
@@ -164,7 +196,7 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
         oData.linkMan = $linkMan.val();
         if(oData.linkMan == ''){
             $linkMan.focus();
-            $error.text("Please enter the username.");
+            $error.text("Please enter the consignee.");
             return false;
         }
         // country
@@ -188,6 +220,17 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
         }
         oData.areaCode =  phone1;
         oData.linkPhone = phone2;
+        // Mail
+        oData.email = $mail.val();
+        if($.trim(oData.email) == '' || !rExpEmail.test(oData.email)){
+            $mail.focus();
+            $error.text("Please enter the email.");
+            return false;
+        }
+        // Company Name
+        oData.companyName = $companyName.val();
+        // Fax
+        oData.fax = $fax.val();
 
         // address
         oData.address = $address.val();
@@ -204,16 +247,16 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
             $error.text("Please enter the postcode.");
             return false;
         }
-        oData.isDefault = isDefault;
+        oData.isDefault = $setAsDefault.is(':checked') ? 1: 0;
         // loading
         if(isSend) return;
         isSend = true;
         server.addDeliveryAddress(oData,function(data){
             isSend = false;
-            setAddress(oData);
+            setAddress([oData]);
             orderData = getOrderData(oData);
             utils.tips('success!');
-			$body.find('.addReceiptAddress').hide();
+            $body.find('.addReceiptAddress').hide();
         },function(data){
             $error.text(data.msg);
             isSend = false;
@@ -227,14 +270,15 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
             return false;
         }
         orderData.items = {
-            "items": getItems()
+            "items": getChecked(getItems)
         };
+        console.log(orderData);
         orderData.items = JSON.stringify(orderData.items);
         server.addOrder(orderData,function(data){
             utils.tips('success');
             setTimeout(function(){
                 //window.location.reload();
-				window.location.href = "/order/index.html";
+                window.location.href = "/order/index.html";
             },2000);
         },function(data){
             utils.tips('fail');
@@ -249,16 +293,17 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
     };
     // 事件
     exports.action = function(){
-        $body.on('click','.changeAddressBtn,.saveBtn,.deleteBtn,.selectAll,.submitOrder,#addressBox .addressList',function(){
+        $body.on('click','.saveBtn,.deleteBtn,.selectAll,.submitOrder,.addressList',function(){
             var self = $(this);
-            if(self.hasClass('changeAddressBtn')){
-                $addressBox.dialog("open");
-            }else if(self.hasClass('saveBtn')){
+            // if(self.hasClass('changeAddressBtn')){
+            //     $addressBox.dialog("open");
+            // }else 
+            if(self.hasClass('saveBtn')){
                 exports.addDeliveryAddress();
             }else if(self.hasClass('deleteBtn')){
-                trObj = self.closest('tr');
-                index = self.closest('tr').index('tbody tr');
-                id = trObj.attr('_id');
+                // trObj = self.closest('tr');
+                // index = self.closest('tr').index('tbody tr');
+                // id = trObj.attr('_id');
                 $("#deleteDialog").dialog("open");
                 // if(confirm('Are you sure to delete?')){
                 //     common.deleteShopCart(id,trObj,index);
@@ -269,10 +314,12 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
             }else if(self.hasClass('submitOrder')){
                 exports.addOrder();
             }else if(self.hasClass('addressList')){
-                var addressData = addressArray[self.index('#addressBox .addressList')];
-                setAddress(addressData);
+                self.siblings('.select').removeClass('select');
+                self.addClass('select');
+                var addressData = addressArray[self.index('.addressList')];
+                // setAddress(addressData);
                 orderData = getOrderData(addressData);
-                $addressBox.dialog( "close" );
+                // $addressBox.dialog( "close" );
                 
             }
         })        // 清除错误信息

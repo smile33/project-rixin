@@ -1,25 +1,33 @@
 define('main/inquiry_index', ['jquery','jqform','main/utils','main/server','main/common','main/temple'], function($, jqform, utils, server, common, temple){
     var exports  = {},
     $body = $('body'),
-    $name = $body.find('#name'),
-    $email = $body.find('#email'),
-    $price = $body.find('#price'),
-    $quantity = $body.find('#quantity'),
-    $content = $body.find('#content'),
+    $partNum = $body.find('#post_inquiry_partNum'),
+    $name = $body.find('#post_inquiry_name'),
+    $email = $body.find('#post_inquiry_email'),
+    $price = $body.find('#post_inquiry_price'),
+    $quantity = $body.find('#post_inquiry_quantity'),
+    $content = $body.find('#post_inquiry_content'),
     $file = $body.find('#file');
-    $error = $body.find('#error_msg'),
+    $error = $body.find('.error_msg'),
     rExpEmail = /^([a-zA-Z0-9]+[_|\_|\.-]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/,
     rExpNumber = /^\+?[1-9][0-9]*$/,
 	rExpPositive = /^[0-9].*$/,
     isSend = false; //是否在发送中  
-    var id = utils.getSearchParam('id') || '';
+    // var id = utils.getSearchParam('id') || '';
     var part = utils.getSearchParam('part') || '';
-    $body.find('.pageTitle').html(part);
+    $body.find('.partName').html(part);
+    $partNum.val(part);
     //校验Inquiry参数
     exports.inquiry = function(){
         var oData = {
-            productId : id
+            productId : '0'
         };
+        oData.partNum = $partNum.val();
+        if($.trim(oData.partNum) == ''){
+            $partNum.focus();
+            $error.text("Please enter your  Part No.");
+            return false;
+        }
         oData.name = $name.val();
         if($.trim(oData.name) == ''){
             $name.focus();
@@ -64,7 +72,7 @@ define('main/inquiry_index', ['jquery','jqform','main/utils','main/server','main
                 success: function(data){
                    if(data.flag  === 0 && data.data){
                         oData.fileMd5 = data.data.attMd5; 
-                        exports.inquiryProduct(oData);                    
+                        exports.inquirySearch(oData);                    
                     }else{
                         $error.text(data.msg);
                         isSend = false;                
@@ -78,7 +86,7 @@ define('main/inquiry_index', ['jquery','jqform','main/utils','main/server','main
                 timeout: 300000                         
             }); 
         }else{
-            exports.inquiryProduct(oData);
+            exports.inquirySearch(oData);
         }
 
         // $("#fileForm").ajaxSubmit({
@@ -112,8 +120,8 @@ define('main/inquiry_index', ['jquery','jqform','main/utils','main/server','main
     };
 
     // 发布商品inquiry
-    exports.inquiryProduct = function(data){
-        server.inquiryProduct(data,function(data){
+    exports.inquirySearch = function(data){
+        server.inquirySearch(data,function(data){
             $name.val('');
             $email.val('');
             $price.val('');
@@ -121,6 +129,7 @@ define('main/inquiry_index', ['jquery','jqform','main/utils','main/server','main
             $content.val('');
             $file.val('');
             $error.text('');
+            $body.find('.postInquiryContainer .title').html('Upload BOM from EXCEL Spreadsheet');
             utils.tips('submit success');
             setTimeout(function(){
                 window.location.href = "/inquiry/success.html";
@@ -131,34 +140,49 @@ define('main/inquiry_index', ['jquery','jqform','main/utils','main/server','main
             isSend = false;   
         });
     };
-    //获取产品详情内容
-    exports.getProductDetailData = function(){
-        server.productDetail({
-            productId : id
-        },function(data){
-            data = data.data || {};
-            profile = data.profile;
-            $body.find('.productDetail').html(temple.inquiryProductInfo(profile));
+    // //获取产品详情内容
+    // exports.getProductDetailData = function(){
+    //     server.productDetail({
+    //         productId : id
+    //     },function(data){
+    //         data = data.data || {};
+    //         profile = data.profile;
+    //         $body.find('.productDetail').html(temple.inquiryProductInfo(profile));
             
-        });
-    };
+    //     });
+    // };
 
 
     // 事件
     exports.action = function(){
-        $body.on('click','.checkBtn',function(){
-            exports.inquiry();
+        $body.on('click','.postInquirySubmit,.postInquiryContainer .title',function(){
+            
+            var self = $(this);
+            if(self.hasClass('postInquirySubmit')){
+                console.log(34);
+                exports.inquiry();
+            }else if(self.hasClass('title')){
+                $body.find('#file').click();
+            }
         })
         // 清除错误信息
         .on('focus','input',function(){
             $error.text('');
         });
+        $body.find('#file').change(function(){
+            var fileVal = $body.find('#file').val();
+            var html = 'Upload BOM from EXCEL Spreadsheet';
+            if(fileVal){
+                html = fileVal;
+            }
+            $body.find('.postInquiryContainer .title').html(html);
+        })
     };
 
     exports.init = function(){
         common.init();
         $body.find('.currentLocation').html('Inquiry');
-        exports.getProductDetailData();
+        // exports.getProductDetailData();
         exports.action();
     };
     return exports;
