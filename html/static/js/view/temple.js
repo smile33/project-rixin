@@ -206,7 +206,7 @@ define('main/temple', ['jquery','main/utils','main/base64'], function($, utils, 
             html += '<tr _id="'+v.id+'" product_id="'+v.productId+'">' +
                             '<td><input type="checkbox" checked="checked" name="shopCartOrder"></td>' +
                             '<td class="imgWrapp">' +
-                                '<a href="/product/detail.html?id=' + v.productId + '&part=' + v.productName + '" class="imgContainer">' +
+                                '<a href="/product/detail.html?id=' + v.productId + '&part=' + v.mfrPartNum + '" target="_blank" class="imgContainer">' +
                                     '<img height="72" src="' + (v.productImg || '/static/img/default_pic.png') + '" alt="' + v.productName + '" title="' + v.productName + '">' +
                                 '</a>' +
                             '</td>' +
@@ -224,24 +224,24 @@ define('main/temple', ['jquery','main/utils','main/base64'], function($, utils, 
         });
         return html;
     };
-    // //头部购物车展示购物车商品
-    // exports.headShopCart = function(data){
-    //     var html = '';
-    //     $.each(data, function(k, v){
-    //         html += '<li class="blockItem" _id="' + (v.id || k) + '">' +
-    //                     '<img src="'+(v.productImg || v.logo || '/static/img/default_pic.png' )+'">' +
-    //                     '<p>' +
-    //                         '<a href="/product/detail.html?id=' + v.productId + '&part=' + v.mfrPartNum + '" target="_blank">' + v.mfrPartNum + '</a>' +
-    //                         '<span>Price:' + utils.accMul(v.unitPrice,v.quantity) + ' Quantity:' + v.quantity + '</span>' +
-    //                     '</p>' +
-    //                     '<a href="javascript:;" class="headDeleteShopCartBtn delete">delete</a>' +
-    //                 '</li>';
-    //     });
-    //     if(data.length){
-    //         html += '<li class="CartGoto"><a href="/home/cart.html">Go to Shopping Cart</a></li>';
-    //     }
-    //     return html;
-    // };
+    //头部购物车展示购物车商品
+    exports.headShopCart = function(data){
+        var html = '';
+        $.each(data, function(k, v){
+            html += '<li class="blockItem" _id="' + (v.id || k) + '">' +
+                        '<img src="'+(v.productImg || v.logo || '/static/img/default_pic.png' )+'">' +
+                        '<p>' +
+                            '<a href="/product/detail.html?id=' + v.productId + '&part=' + v.mfrPartNum + '" target="_blank">' + v.mfrPartNum + '</a>' +
+                            '<span>Price:' + utils.accMul(v.unitPrice,v.quantity) + ' Quantity:' + v.quantity + '</span>' +
+                        '</p>' +
+                        '<a href="javascript:;" class="headDeleteShopCartBtn delete">delete</a>' +
+                    '</li>';
+        });
+        if(data.length){
+            html += '<li class="CartGoto"><a href="/home/cart.html">Go to Shopping Cart</a></li>';
+        }
+        return html;
+    };
     //productIndex左栏
     exports.categoryLeftProduct = function(data,id){
         console.log(id);

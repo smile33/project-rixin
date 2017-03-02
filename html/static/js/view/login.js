@@ -66,7 +66,7 @@ define('main/login', ['jquery','main/server','main/common','main/utils','md5'], 
     };
     exports.mergeShopCart = function(){
         var oData = {};
-        var shopCartArray = utils.STORE.getItem('shopCart') || [];
+        var shopCartArray = utils.STORE.getItem('unloginShopCart') || [];
         var array = [];
         $.each(shopCartArray,function(k,v){
             var sc = v.productId +',' +v.quantity;
@@ -75,7 +75,7 @@ define('main/login', ['jquery','main/server','main/common','main/utils','md5'], 
         oData.sc = array.join('|');
         if(shopCartArray.length){
             server.mergeShopCart(oData,function(){
-                STORE.removeItem('shopCart');
+                STORE.removeItem('unloginShopCart');
                 redirectUrl();
             },function(){
                 redirectUrl();

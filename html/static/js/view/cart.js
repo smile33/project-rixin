@@ -1,7 +1,8 @@
 define('main/cart', ['jquery','main/server','main/common','main/temple','main/utils','jqui'], function($, server, common, temple, utils, jqui){
     var exports  = {},
     $body = $('body'),
-    $addressBox = $body.find("#addressBox"),
+    $deleteDialog = $("#deleteDialog"),
+    $submitSuccessDialog = $("#submitSuccessDialog")
     $error = $body.find('#error_msg'),
     $mail = $body.find('#mail'),
     $companyName = $body.find('#companyName');
@@ -72,11 +73,16 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
         return $tr.attr('product_id');
     }
     function getItems($tr){
-        return {
-            productId: $tr.attr('product_id'),
-            quantity: parseInt($tr.find('.count').val()),
-            remark: $tr.find('.remark').val()
-        };
+        if(parseFloat($tr.find('.unitPrice').attr('unit_price'))<0){
+            utils.tips('Do not reach the MOQ!');
+            return 'Do not reach the MOQ!';
+        }else{
+            return {
+                productId: $tr.attr('product_id'),
+                quantity: parseInt($tr.find('.count').val()),
+                remark: $tr.find('.remark').val()
+            };
+        }
     }
     function getChecked(cbf){
         var $trs = $body.find('#ShoppingCartItems tr');
@@ -93,17 +99,20 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
         }
         return infos;
     }
-    function setChangeAddressDialog(){
-        $addressBox.dialog({
+    //设置提交成功popup
+    function setSubmitSuccessDialog(){
+        $submitSuccessDialog.dialog({
           autoOpen: false,
-          width: 1000,
-          minHeight: 300,
-          show: { effect: "blind", duration: 300 },
-          modal: true
+          width: '520px',
+          modal: true,
+          close: function(event, ui){
+            window.location.href = "/order/index.html";
+          }
         });
     }
+    //设置删除确认popup
     function setDeleteDialog(){
-        $("#deleteDialog").dialog({
+        $deleteDialog.dialog({
           autoOpen: false,
           modal: true,
           buttons : {
@@ -118,22 +127,26 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
           }
         });
     }
+    //多项删除购物车
     exports.multiDeleteShopCart = function(){
+        var idsArray = getChecked(getIds);
         server.multiDeleteShopCart({
-            ids: getChecked(getIds).join(',')
+            ids: idsArray.join(',')
         },function(data){
             utils.tips('delete success');
             var $trs = $body.find('#ShoppingCartItems tr');
             var infos = [];
+            var $ShoppingCart = $body.find('#ShoppingCart .blockItem');
             for (var i = 0, max = $trs.length; i < max; i++) {
                 //获取选中
                 var cb = $trs.eq(i).find("input[name='shopCartOrder']")[0];
                 var info = {};
                 if (cb.checked) {
                     $trs.eq(i).remove();
+                    $ShoppingCart.eq(i).remove();
                 }
             }
-
+            common.refreshShopCartCount(idsArray.length);
             // setTimeout(function(){
             //     window.location.reload();
             // },2000);
@@ -269,19 +282,18 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
             utils.tips('Please Add Address');
             return false;
         }
+        var items = getChecked(getItems);
+        if(items.indexOf('Do not reach the MOQ!')>=0){
+            return false;
+        }
         orderData.items = {
-            "items": getChecked(getItems)
+            "items": items
         };
-        console.log(orderData);
         orderData.items = JSON.stringify(orderData.items);
         server.addOrder(orderData,function(data){
-            utils.tips('success');
-            setTimeout(function(){
-                //window.location.reload();
-                window.location.href = "/order/index.html";
-            },2000);
+            $submitSuccessDialog.dialog("open");
         },function(data){
-            utils.tips('fail');
+            utils.tips(data && data.msg || 'fail');
             console.log(data);
         });
     }
@@ -295,19 +307,10 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
     exports.action = function(){
         $body.on('click','.saveBtn,.deleteBtn,.selectAll,.submitOrder,.addressList',function(){
             var self = $(this);
-            // if(self.hasClass('changeAddressBtn')){
-            //     $addressBox.dialog("open");
-            // }else 
             if(self.hasClass('saveBtn')){
                 exports.addDeliveryAddress();
             }else if(self.hasClass('deleteBtn')){
-                // trObj = self.closest('tr');
-                // index = self.closest('tr').index('tbody tr');
-                // id = trObj.attr('_id');
-                $("#deleteDialog").dialog("open");
-                // if(confirm('Are you sure to delete?')){
-                //     common.deleteShopCart(id,trObj,index);
-                // }
+                $deleteDialog.dialog("open");
             }else if(self.hasClass('selectAll')){
                 selectAll(self);
                 calTotalAmount();
@@ -319,7 +322,6 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
                 var addressData = addressArray[self.index('.addressList')];
                 // setAddress(addressData);
                 orderData = getOrderData(addressData);
-                // $addressBox.dialog( "close" );
                 
             }
         })        // 清除错误信息
@@ -377,8 +379,7 @@ define('main/cart', ['jquery','main/server','main/common','main/temple','main/ut
         exports.getMyShopCart();
         exports.action();
         setDeleteDialog();
-        setChangeAddressDialog();
-
+        setSubmitSuccessDialog();
     };
     return exports;
 })

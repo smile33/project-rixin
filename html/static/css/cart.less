@@ -151,16 +151,12 @@ input[type="checkbox"]{
     line-height: 30px;
 
     margin-right: 20px;
-
-    // color: #000;
 }
 .selectDele a
 {
     padding: 5px 10px;
 
     text-decoration: underline;
-    // color: #093cff;
-    // background-color: #fffaf0;
 }
 .settleButton
 {
@@ -408,3 +404,24 @@ input[type="checkbox"]{
     background: -webkit-linear-gradient(top, #eca100, #de9800);
     background-color: #e5a316;
 }
+/*提交成功popup begin*/
+#submitSuccessDialog{
+    display: none;
+    .successContent
+    {
+        margin-top: -10px;
+        padding: 0 20px 10px;
+        text-align: center;
+        img{
+            margin-bottom: 20px;
+            vertical-align: bottom;
+        }
+        p{
+            line-height: 32px;
+            font-size: 18px;
+            text-align: left;
+            color: @subFontColor;
+        }
+    }
+}
+/*提交成功popup end*/

@@ -41,14 +41,14 @@ define('main/product_detail', ['jquery','main/utils','main/server','main/common'
         });
     }
     function setLargePic(productImg){
-        $Large.html('<img src="' + (productImg.bigImg || '/static/img/default_pic.jpg') + '" title="'+productImg.imgTip+'">');
+        $Large.html('<img src="' + (productImg.bigImg || '/static/img/default_pic.png') + '" title="'+productImg.imgTip+'">');
     }
     function productUnitPrice(){
         var oData = {
             quantity : shopCart.quantity,
             productId : shopCart.productId
         };
-        var shopCartArray = utils.STORE.getItem('shopCart') || [];
+        var shopCartArray = utils.STORE.getItem('unloginShopCart') || [];
         $.each(shopCartArray,function(k,v){
             if(oData.productId === v.productId){
                 oData.quantity = parseInt(oData.quantity) + parseInt(v.quantity);
@@ -61,9 +61,9 @@ define('main/product_detail', ['jquery','main/utils','main/server','main/common'
             if(data.data !== -1){
                 shopCart.unitPrice = data.data;
                 shopCartArray.push(shopCart);
-                utils.STORE.setItem('shopCart',shopCartArray);
+                utils.STORE.setItem('unloginShopCart',shopCartArray);
             }else{
-                utils.tips('fail');
+                utils.tips(data && data.msg || 'fail');
             }
         });
     }
@@ -119,8 +119,9 @@ define('main/product_detail', ['jquery','main/utils','main/server','main/common'
                 }
                 if(profile.productExtPrices){
                     $body.find('.extendedPrice').html(temple.extendedPrice(profile.productExtPrices));
-                    var product = profile.productExtPrices[0];
-                    if(product && product.length){
+                    var productExtPrices = profile.productExtPrices;
+                    if(productExtPrices && productExtPrices.length){
+                        var product = productExtPrices[0];
                         $txtCount.val(product.priceBreak);
                         setQuantityHtml(product,product.priceBreak);
                         shopCart.moq = product.priceBreak;

@@ -698,9 +698,9 @@ body{
 
             width: 200px;
             height: 20px;
-            padding: 0 5px;
+            padding: 2px 5px;
 
-            color: @subFontColor;
+            color: #000;
             &:hover
             {
                 text-decoration: underline;
@@ -831,32 +831,37 @@ body{
         .applicationContainer
         {
             position: relative;
+            height: 32px;
             a
             {
-                position: absolute;
-                left: 0;
+                // position: absolute;
+                // left: 0;
 
                 display: inline-block;
 
                 width: 32px;
                 height: 32px;
+                background: url('/static/img/icon_application.png') no-repeat;
             }
             .twitter
             {
-                left: 35px;
+                background-position: -35px 0;
             }
             .google
             {
-                left: 70px;
+                background-position: -70px 0;
             }
-            .email
-            {
-                left: 105px;
+            .linkin{
+                background: url('/static/img/icon_linkin.jpg') no-repeat;
             }
-            .skpe
-            {
-                left: 140px;
-            }
+            // .email
+            // {
+            //     left: 105px;
+            // }
+            // .skpe
+            // {
+            //     left: 140px;
+            // }
         }
         .picContact
         {
@@ -1297,7 +1302,7 @@ body{
 /*float begin*/
 .floatWrapper{
     position: fixed;
-    top: 200px;
+    top: 150px;
     right: 30px;
     width: 50px;
     text-align: center;
@@ -1319,6 +1324,7 @@ body{
         color: #fff;
     }
     .shop_cart{
+        position: relative;
         height: 85px;
         background: #000;
         i{
@@ -1368,6 +1374,83 @@ body{
         }
     }
 }
+.cart {
+    display: none;
+    position: fixed;
+    top: 150px;
+    right: 430px;
+    .item{
+        // display: none;
+        position: absolute;
+        border:1px solid #DFDFDF;
+        // margin-left: -159px;
+        background-color: #F9F9F9;
+        z-index: 99;
+        min-width: 90px;
+        // margin-top: 75px;
+        width: 350px;
+        z-index:100;
+        li a {
+            color: @mainColor;
+        }
+        .blockItem {
+            height:62px;
+            border-bottom:1px dotted #ccc;
+            padding:6px;
+        }
+        .blockItem img {
+            width:60px;
+            height:60px;
+            margin-right:8px;
+            float:left;
+            border:1px solid #ccc;
+        }
+        .blockItem p {
+            width:200px;
+            float:left; 
+            height:62px;
+            line-height:22px;
+            overflow:hidden;
+        }
+        .blockItem p span{
+            color:@emphasesColor;
+            display:block;
+        }
+        .blockItem .delete {
+            float: left;
+            width:50px;
+            text-align:center; 
+            background-color:@mainColor;
+            color:#fff; 
+            padding:6px;
+            margin-top:20px;
+        }
+        .CartGoto{
+            text-align: right;
+            padding:15px;
+            font-size: 14px;
+            font-weight: normal;
+        }
+        .CartGoto a{
+            color: @mainColor;
+            font-size: 14px;
+        }
+    }
+    .shopCart{
+        height: 47px;
+        border-bottom-width:0px;
+        position:relative;
+        z-index:10000;
+    }
+    .item{
+        display: block; 
+    }
+    .item .emptyCart{
+        text-align:center;
+        padding:20px;
+        color:@subFontColor;
+    }
+}  
 /*float end*/
 
 /*sure to delete popup begin*/

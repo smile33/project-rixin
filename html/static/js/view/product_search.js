@@ -230,7 +230,7 @@ define('main/product_search', ['jquery','jqform','main/utils','main/server','mai
             quantity : shopCart.quantity,
             productId : shopCart.productId
         };
-        var shopCartArray = utils.STORE.getItem('shopCart') || [];
+        var shopCartArray = utils.STORE.getItem('unloginShopCart') || [];
         $.each(shopCartArray,function(k,v){
             if(oData.productId === v.productId){
                 oData.quantity = parseInt(oData.quantity) + parseInt(v.quantity);
@@ -243,9 +243,9 @@ define('main/product_search', ['jquery','jqform','main/utils','main/server','mai
             if(data.data !== -1){
                 shopCart.unitPrice = data.data;
                 shopCartArray.push(shopCart);
-                utils.STORE.setItem('shopCart',shopCartArray);
+                utils.STORE.setItem('unloginShopCart',shopCartArray);
             }else{
-                utils.tips('fail');
+                utils.tips(data && data.msg || 'fail');
             }
         });
     }

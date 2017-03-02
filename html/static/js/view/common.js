@@ -66,39 +66,39 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
         var html = '';
         if(isLogin === 1){
             html = '<span style="margin:5px;">Hello! Welcome to ' + window._c.websiteName + '!</span>' +
-                '<a href="/member/index.html" id="aLogin">'+(data.data.realname || data.data.account)+'</a>' +
+                ' <a href="/member/index.html" id="aLogin">'+(data.realname || data.account)+'</a>' +
                 '<a href="/member/logout.html" id="aLogout">Logout</a>';
             $body.find('.topSum').html(html);    
         }else{
-            html = '<span style="margin:5px;">Hello! Welcome to ' + window._c.websiteName + '!</span>';
+            html = 'Hello! Welcome to ' + window._c.websiteName + '!';
             $body.find('.topSum span').html(html);
             $body.find('.logout').remove();
         }
     };
-    function hasLoadedSiteNav(data){
-        if($body.find('.topSum').length && isLogin !== 0 ){
-            setLoiginSiteNav(data);
-        }else{
-            setTimeout(function(){
-                hasLoadedSiteNav(data);
-            },500);
-        }
-    }
+    // function hasLoadedSiteNav(data){
+    //     if($body.find('.topSum').length && isLogin !== 0 ){
+    //         setLoiginSiteNav(data);
+    //     }else{
+    //         setTimeout(function(){
+    //             hasLoadedSiteNav(data);
+    //         },500);
+    //     }
+    // }
     //渲染购物车样式
     function setHeadShopCart(data){
         $body.find('.floatWrapper .shop_cart span').html(data.length);
-        // if(data.length){//头部购物车样式
-        //     $body.find('#ShoppingCart').html(temple.headShopCart(data));
-        //     $body.find('.Cart .shopCartCount').html(data.length);
-        // }
+        if(data.length){//头部购物车样式
+            $body.find('#ShoppingCart').html(temple.headShopCart(data));
+            $body.find('.Cart .shopCartCount').html(data.length);
+        }
     }
     //判断头部购物车是否清空
-    // function isEmptyHeadShopCart(){
-    //     var $ShoppingCart = $body.find('#ShoppingCart');
-    //     if(!$ShoppingCart.find('.blockItem').length){
-    //         $ShoppingCart.html('<li class="emptyCart"><a href="/product/index.html">Shopping Cart empty Oh! Just try to find sth</a></li>');
-    //     }
-    // }
+    function isEmptyHeadShopCart(){
+        var $ShoppingCart = $body.find('#ShoppingCart');
+        if(!$ShoppingCart.find('.blockItem').length){
+            $ShoppingCart.html('<li class="emptyCart"><a href="/product/index.html">Shopping Cart empty Oh! Just try to find sth</a></li>');
+        }
+    }
 
     function handlerKeyup(e) {
         if (e.keyCode === 13) {
@@ -145,14 +145,27 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
             // exports.headShopCart();
         });
     };
+    // Category列表callback
+    function homeCagtegoryCbf(data){
+        var html = temple.homeCagtegory(data.categories);
+        $body.find('.categoryList').html(html.cagtegoryHtml);
+        $body.find('.categoryList').after(html.subCagtegoryHtml);
+    }
     // Category列表
     exports.homeCagtegory = function(){
-        server.homeCagtegory(function(data){
-            data = data.data;
-            var html = temple.homeCagtegory(data.categories);
-            $body.find('.categoryList').html(html.cagtegoryHtml);
-            $body.find('.categoryList').after(html.subCagtegoryHtml);
-        });
+        var homeCagtegoryInfo = utils.STORE.getItem('homeCagtegoryInfo');
+        if(homeCagtegoryInfo){
+            homeCagtegoryCbf(homeCagtegoryInfo);
+        }else{
+            server.homeCagtegory(function(data){
+                data = data.data;
+                utils.STORE.setItem('homeCagtegoryInfo',data, 1*60*60*1000);
+                homeCagtegoryCbf(data);
+                // var html = temple.homeCagtegory(data.categories);
+                // $body.find('.categoryList').html(html.cagtegoryHtml);
+                // $body.find('.categoryList').after(html.subCagtegoryHtml);
+            });
+        }
     };
     // 尾部
     exports.footer = function(){
@@ -198,19 +211,31 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
             });
         }
     };
+    //已登录callback
+    function hasLoginCbf(data){
+        isLogin = 1;
+        setLoiginSiteNav(data);
+    }
     //获取登录信息
     exports.isLogin = function(isNeedLogin){
-        server.loginInfo(function(data){
-            window.userInfo = data.data;
-            hasLoadedSiteNav(data);
-            isLogin = 1;
-        },function(data){
-            isLogin = -1;
-            if(isNeedLogin){
-                window.location.href = '/member/login.html?redirect_url='+window.location.pathname+window.location.search;
-            }
-            hasLoadedSiteNav(data);
-        });
+        var loginInfo = utils.STORE.getItem('loginInfo');
+        if(loginInfo){
+            // console.log(loginInfo);
+            hasLoginCbf(loginInfo);
+        }else{
+
+            server.loginInfo(function(data){
+                // console.log(data);
+                utils.STORE.setItem('loginInfo',data.data, 0.5*60*60*1000);
+                hasLoginCbf(data.data);
+            },function(data){
+                isLogin = -1;
+                if(isNeedLogin){
+                    window.location.href = '/member/login.html?redirect_url='+window.location.pathname+window.location.search;
+                }
+                setLoiginSiteNav();
+            });
+        }
     };
 
     // 获取购物车数据
@@ -230,7 +255,7 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
                     }
                 });
             }else if(isLogin === -1){//未登录，则读取缓存数据
-                var data = utils.STORE.getItem('shopCart') || [];
+                var data = utils.STORE.getItem('unloginShopCart') || [];
                 setHeadShopCart(data);
             }
         }
@@ -243,7 +268,7 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
                 exports.headShopCart();
                 cbf();
             },function(data){
-                utils.tips('fail!');
+                utils.tips(data && data.msg || 'fail!');
             });
         }else if(isLogin === -1){
             //未登录，缓存本地
@@ -252,7 +277,6 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
                 exports.headShopCart();
                 cbf();
             },500);//本地缓存数据需要时间
-            // utils.STORE.setItem('shopCart',oData);
         };
     };
 
@@ -261,31 +285,30 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
         var params = {
             id: id
         };
-        var $ShoppingCart = $body.find('#ShoppingCart');
         if(isLogin === 1){
             server.deleteShopCart(params,function(data){
                 utils.tips('success');
                 obj.remove();
-                var num = parseInt($body.find('.Cart .shopCartCount').html());
-                $body.find('.Cart .shopCartCount').html(num-1);
-                if(index !== undefined){//若删除的是购物车页面，则需要删除头部购物车数据
-                    $ShoppingCart.find('.blockItem').eq(index).remove();
-                }
-                // isEmptyHeadShopCart();
+                exports.refreshShopCartCount();
             },function(data){
                 utils.tips(data.msg);
             });
         }else if(isLogin === -1){
-            var shopCartArray = utils.STORE.getItem('shopCart') || [];
+            var shopCartArray = utils.STORE.getItem('unloginShopCart') || [];
             shopCartArray.splice(id,1);
-            utils.STORE.setItem('shopCart',shopCartArray);
+            utils.STORE.setItem('unloginShopCart',shopCartArray);
             utils.tips('success');
             obj.remove();
-            var num = parseInt($body.find('.Cart .shopCartCount').html());
-            $body.find('.Cart .shopCartCount').html(num-1);
-            // isEmptyHeadShopCart();
+            exports.refreshShopCartCount();
         };
     }
+    exports.refreshShopCartCount = function(count){
+        count = count || 1;
+        var $ShopCartCount = $body.find('.floatWrapper .shop_cart span');
+        var num = parseInt($ShopCartCount.html());
+        $ShopCartCount.html(num-count);
+        isEmptyHeadShopCart();
+    };
     exports.inquiryDialog = function(dialogObj){
         dialogObj.dialog({
           autoOpen: false,
@@ -336,6 +359,10 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
         }).on('mouseleave','.categoryContainer',function(){
             $body.find('.categoryContainer').hide();
             $body.find('.proCate i').removeClass('up').addClass('down');
+        }).on('mouseover','.floatWrapper .shop_cart',function(){
+            $body.find('.cart').show();
+        }).on('mouseleave','.cart',function(){
+            $body.find('.cart').hide();
         }).on('click','.tabSearch,.searchSubmit,.headDeleteShopCartBtn,.needLogin,.quickInquiry,.quickInquirySubmit,.kaptcha,.floatWrapper .displayBtn',function(){
             var self = $(this);
             var index;
@@ -354,10 +381,10 @@ define('main/common', ['jquery','main/utils','main/server','main/temple','jqui']
                 }else{
                     window.location.href = '/datasheet/index.html?key='+searchValue;
                 }
-            // }else if(self.hasClass('headDeleteShopCartBtn')){//头部购物车
-            //     var itemObj = self.closest('.blockItem');
-            //     var id = itemObj.attr('_id');
-            //     exports.deleteShopCart(id,itemObj);
+            }else if(self.hasClass('headDeleteShopCartBtn')){//头部购物车
+                var itemObj = self.closest('.blockItem');
+                var id = itemObj.attr('_id');
+                exports.deleteShopCart(id,itemObj);
             }else if(self.hasClass('needLogin')){//点击链接，判断是否需要登录
                 if(isLogin === 1){
                     window.location.href = self.attr('link');

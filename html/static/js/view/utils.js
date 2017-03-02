@@ -152,17 +152,69 @@ define('main/utils', ['jquery'], function($){
             return exports.TPL.templates[name];
         }
     };
+    // function set(key,value){
 
+    // }
+    // function get(key,exp){
+    //     var data = localStorage.getItem(key);
+    //     var dataObj = JSON.parse(data);
+    //     if (new Date().getTime() - dataObj.time>exp) {
+    //         console.log('信息已过期');
+    //         //alert("信息已过期")
+    //     }else{
+    //         //console.log("data="+dataObj.data);
+    //         //console.log(JSON.parse(dataObj.data));
+    //         var dataObjDatatoJson = JSON.parse(dataObj.data)
+    //         return dataObjDatatoJson;
+    //     }
+    // }
     exports.STORE = {
-        setItem:function(key,val){
-            window.localStorage.setItem(prefix+key,JSON.stringify(val));
+        setItem:function(key,val,time){
+            var curTime = new Date().getTime();
+            var effectiveTime = curTime + (time || 365*24*60*60*1000);
+            window.localStorage.setItem(prefix+key,JSON.stringify({data:val,time:effectiveTime}));
         },
         getItem:function(key){
-            return JSON.parse(window.localStorage.getItem(prefix+key));
+            var data = window.localStorage.getItem(prefix+key);
+            if(data){
+                var dataObj = JSON.parse(data);
+                if (dataObj.time - new Date().getTime() < 0) {
+                    console.log('信息已过期');
+                    window.localStorage.removeItem(prefix+key);
+                    return '';
+                }else{
+                    var dataObjDatatoJson = dataObj.data;
+                    return dataObjDatatoJson;
+                }
+            }else{
+                return '';
+            }
         },
         removeItem:function(key){
             window.localStorage.removeItem(prefix+key);
         }
-    };    
+    };
+    var SESSEIONSTORE = window.sessionStorage ? window.sessionStorage : {
+        setItem:function(){},
+        getItem:function(){},
+        removeItem:function(){}
+    }
+    exports.SESSIONSTORE = {
+        getSessionStoreItem: function (key) {
+            try {
+                return SESSEIONSTORE.getItem(prefix + key) ?  JSON.parse(SESSEIONSTORE.getItem(prefix + key)) : '';
+            } catch (err) {
+                console.log("JSON.parse sessionStorage err : " + err);
+                return '';
+            }
+        },
+        setSessionStoreItem: function (key, value) {
+            SESSEIONSTORE.setItem(prefix + key, JSON.stringify(value));
+        },
+        removeSessionStoreItem: function (key) {
+            SESSEIONSTORE.removeItem(prefix + key);
+        }
+    };
+
     return exports;
 })
